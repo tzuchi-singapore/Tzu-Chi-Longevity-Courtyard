@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Longevity Courtyard – Batch 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --jade:#2d6a4f;--jade2:#40916c;--jade3:#74c69d;--jade-pale:#d8f3dc;
+  --gold:#b5843a;--gold-light:#e9c46a;--gold-pale:#fef9ec;
+  --ink:#1a1a2e;--ink2:#2d2d44;--mid:#5a5a72;--soft:#9898aa;--line:#e8e8f0;
+  --bg:#f7f6f2;--white:#ffffff;
+  --danger:#c0392b;--warn:#e67e22;
+  --shadow:rgba(26,26,46,0.10);--shadow2:rgba(26,26,46,0.18);
+  --radius:14px;--radius-sm:8px;
+}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--jade3);border-radius:99px}
+.nav{background:var(--ink);padding:0 1.5rem;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:300;box-shadow:0 2px 20px rgba(0,0,0,.35)}
+.nav-left{display:flex;align-items:center;gap:.9rem}
+.nav-logo-img{width:40px;height:40px;border-radius:50%;object-fit:contain;background:white;padding:3px;flex-shrink:0}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--white);letter-spacing:.01em;line-height:1.2}
+.nav-logo span{color:var(--gold-light)}
+.nav-logo small{display:block;font-family:'Nunito',sans-serif;font-size:.65rem;color:rgba(255,255,255,.4);letter-spacing:.04em;text-transform:uppercase}
+.nav-member{font-size:.78rem;color:var(--soft);text-align:right;line-height:1.5}
+.nav-member strong{color:var(--jade3);display:block}
+.announce-bar{background:linear-gradient(90deg,var(--gold) 0%,var(--gold-light) 100%);padding:.65rem 1.5rem;display:flex;align-items:center;gap:.6rem;font-size:.82rem;font-weight:600;color:var(--ink)}
+.announce-bar.hidden{display:none}
+.announce-close{background:none;border:none;cursor:pointer;font-size:1.1rem;opacity:.6;margin-left:auto}
+.main{max-width:960px;margin:0 auto;padding:1.5rem 1.2rem 5rem}
+.hero{background:linear-gradient(135deg,var(--jade) 0%,var(--jade2) 60%,#1b4332 100%);border-radius:var(--radius);padding:2rem 2.5rem;margin-bottom:1.8rem;color:white;position:relative;overflow:hidden;display:flex;align-items:center;gap:1.5rem}
+.hero::before{content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;background:rgba(255,255,255,.04);border-radius:50%}
+.hero-logo{width:72px;height:72px;border-radius:50%;background:white;padding:5px;object-fit:contain;flex-shrink:0;box-shadow:0 4px 16px rgba(0,0,0,.2);position:relative}
+.hero-text{position:relative}
+.hero h1{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:.3rem}
+.hero p{font-size:.9rem;opacity:.82}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:.2rem .8rem;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.6rem}
+.member-bar{background:var(--white);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;box-shadow:0 2px 12px var(--shadow);flex-wrap:wrap}
+.member-bar label{font-weight:700;font-size:.85rem;white-space:nowrap;color:var(--jade)}
+.member-bar select{flex:1;min-width:180px;border:2px solid var(--line);border-radius:var(--radius-sm);padding:.6rem 1rem;font-size:.9rem;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);outline:none;transition:border-color .2s;cursor:pointer}
+.member-bar select:focus{border-color:var(--jade)}
+.mia-badge{font-size:.75rem;font-weight:700;padding:.25rem .7rem;border-radius:999px;white-space:nowrap}
+.mia-ok{background:#d8f3dc;color:var(--jade)}.mia-warn{background:#fef3cd;color:#8a6200}.mia-danger{background:#fde8e8;color:var(--danger)}
+.tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;background:var(--white);padding:.4rem;border-radius:var(--radius);box-shadow:0 2px 8px var(--shadow);overflow-x:auto}
+.tab{flex:1;min-width:80px;padding:.6rem 1rem;text-align:center;border-radius:calc(var(--radius) - 4px);font-size:.82rem;font-weight:700;cursor:pointer;border:none;background:none;font-family:'Nunito',sans-serif;color:var(--mid);transition:all .2s;white-space:nowrap}
+.tab.active{background:var(--jade);color:white;box-shadow:0 2px 10px rgba(45,106,79,.35)}
+.tab:hover:not(.active){background:var(--jade-pale);color:var(--jade)}
+.week-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;gap:.5rem}
+.week-label{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--ink);text-align:center;flex:1}
+.week-label small{display:block;font-family:'Nunito',sans-serif;font-size:.75rem;color:var(--soft);font-style:normal;margin-top:.1rem}
+.wbtn{background:var(--white);border:2px solid var(--line);border-radius:var(--radius-sm);padding:.4rem .9rem;cursor:pointer;font-size:.85rem;color:var(--mid);transition:all .2s;font-family:'Nunito',sans-serif}
+.wbtn:hover:not(:disabled){border-color:var(--jade);color:var(--jade)}
+.wbtn:disabled{opacity:.35;cursor:not-allowed}
+.schedule-grid{display:grid;gap:1rem}
+.day-block{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px var(--shadow)}
+.day-header{padding:.8rem 1.2rem;display:flex;align-items:center;justify-content:space-between;background:var(--ink2);color:white}
+.day-header h3{font-family:'Playfair Display',serif;font-size:1rem}
+.day-header .day-date{font-size:.75rem;opacity:.65}
+.class-type-tag{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.2rem .6rem;border-radius:999px;background:rgba(255,255,255,.12)}
+.day-header.strength .class-type-tag{background:rgba(229,196,106,.25);color:var(--gold-light)}
+.day-header.stretch .class-type-tag{background:rgba(116,198,157,.25);color:var(--jade3)}
+.day-header.blocked-hdr{background:#4a3030}
+.blocked-msg{padding:1rem 1.2rem;font-size:.85rem;color:var(--danger);display:flex;align-items:center;gap:.5rem}
+.slots-list{padding:.8rem}
+.slot{display:flex;align-items:center;justify-content:space-between;padding:.65rem .8rem;border-radius:var(--radius-sm);margin-bottom:.4rem;border:1.5px solid var(--line);transition:all .2s;gap:.5rem}
+.slot:last-child{margin-bottom:0}
+.slot.bookable:hover{border-color:var(--jade2);background:var(--jade-pale)}
+.slot-time{font-weight:700;font-size:.9rem;color:var(--ink);min-width:65px}
+.slot-count{font-size:.75rem;color:var(--soft);flex:1;text-align:center}
+.slot-action{flex-shrink:0;display:flex;gap:.35rem;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.pill{display:inline-block;font-size:.7rem;font-weight:700;padding:.22rem .6rem;border-radius:999px;white-space:nowrap}
+.pill-book{background:var(--jade);color:white;cursor:pointer;border:none;font-family:'Nunito',sans-serif;font-weight:700;padding:.35rem .9rem;border-radius:999px;font-size:.78rem;transition:background .2s}
+.pill-book:hover{background:var(--jade2)}
+.pill-book:disabled{background:var(--soft);cursor:not-allowed}
+.pill-booked{background:var(--jade-pale);color:var(--jade);border:1.5px solid var(--jade3)}
+.pill-full{background:#f3e8e8;color:var(--danger)}
+.pill-past{background:#f0f0f0;color:#aaa}
+.pill-cancel{background:none;border:1.5px solid #ddd;color:var(--soft);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;padding:.28rem .7rem;border-radius:999px;font-size:.72rem;transition:all .2s}
+.pill-cancel:hover{border-color:var(--danger);color:var(--danger)}
+.slot-booked{border-color:var(--jade3);background:#f5fcf8}
+.slot-past{opacity:.42}
+.bookings-empty{text-align:center;padding:3rem 1rem;color:var(--soft)}
+.bookings-empty .empty-icon{font-size:3rem;margin-bottom:.5rem}
+.booking-card{background:var(--white);border-radius:var(--radius);padding:1.1rem 1.4rem;margin-bottom:.8rem;box-shadow:0 2px 10px var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.booking-card-left strong{display:block;font-size:.95rem;color:var(--ink)}
+.booking-card-left span{font-size:.78rem;color:var(--mid)}
+.status-tag{font-size:.7rem;font-weight:700;padding:.2rem .6rem;border-radius:999px}
+.status-upcoming{background:var(--jade-pale);color:var(--jade)}
+.status-past{background:#f0f0f0;color:var(--soft)}
+.btn-cancel-booking{background:none;border:1.5px solid #ddd;color:var(--soft);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;padding:.3rem .75rem;border-radius:999px;font-size:.75rem;transition:all .2s}
+.btn-cancel-booking:hover{border-color:var(--danger);color:var(--danger)}
+.btn-cancel-booking:disabled{opacity:.4;cursor:not-allowed}
+.rules-card{background:var(--white);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 2px 10px var(--shadow)}
+.rules-card h3{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--jade);margin-bottom:.8rem}
+.rule-item{display:flex;gap:.7rem;padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.87rem;line-height:1.6;color:var(--ink2)}
+.rule-item:last-child{border-bottom:none}
+.rule-icon{flex-shrink:0;font-size:1rem;margin-top:.1rem}
+.admin-login{background:var(--white);border-radius:var(--radius);padding:2rem;max-width:360px;margin:0 auto;box-shadow:0 4px 20px var(--shadow2)}
+.admin-login h2{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:1.2rem;text-align:center;color:var(--jade)}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:.8rem;font-weight:700;color:var(--mid);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.04em}
+.form-group input,.form-group select,.form-group textarea{width:100%;border:2px solid var(--line);border-radius:var(--radius-sm);padding:.65rem 1rem;font-size:.9rem;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);outline:none;transition:border-color .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--jade)}
+.form-group textarea{resize:vertical;min-height:80px}
+.btn{display:inline-block;padding:.7rem 1.5rem;border-radius:var(--radius-sm);font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;border:none;transition:all .2s}
+.btn-jade{background:var(--jade);color:white;width:100%}
+.btn-jade:hover{background:var(--jade2)}
+.btn-danger{background:var(--danger);color:white;border:none}
+.btn-danger:hover{opacity:.85}
+.btn-outline{background:none;border:2px solid var(--jade);color:var(--jade)}
+.btn-outline:hover{background:var(--jade-pale)}
+.btn-sm{padding:.4rem .9rem;font-size:.78rem}
+.admin-section{background:var(--white);border-radius:var(--radius);padding:1.4rem;margin-bottom:1.2rem;box-shadow:0 2px 10px var(--shadow)}
+.admin-section h3{font-family:'Playfair Display',serif;font-size:1rem;color:var(--jade);margin-bottom:1rem;padding-bottom:.6rem;border-bottom:2px solid var(--jade-pale)}
+.admin-table{width:100%;border-collapse:collapse;font-size:.82rem}
+.admin-table th{text-align:left;padding:.5rem .7rem;background:var(--bg);color:var(--mid);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em}
+.admin-table td{padding:.55rem .7rem;border-bottom:1px solid var(--line);vertical-align:middle}
+.admin-table tr:last-child td{border-bottom:none}
+.block-item{display:flex;align-items:center;justify-content:space-between;padding:.6rem .8rem;background:var(--bg);border-radius:var(--radius-sm);font-size:.83rem;margin-bottom:.4rem}
+.announce-item{padding:.7rem 1rem;background:var(--gold-pale);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:.83rem;display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.4rem}
+.member-manage-item{display:flex;align-items:center;justify-content:space-between;padding:.6rem 1rem;background:var(--bg);border-radius:var(--radius-sm);font-size:.87rem;margin-bottom:.4rem}
+.modal-overlay{position:fixed;inset:0;background:rgba(26,26,46,.55);z-index:500;display:flex;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(3px)}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--white);border-radius:var(--radius);padding:2rem;max-width:420px;width:100%;box-shadow:0 10px 50px rgba(0,0,0,.25);animation:modalIn .25s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal h2{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:.5rem;color:var(--jade)}
+.modal p{font-size:.88rem;color:var(--mid);margin-bottom:1.2rem;line-height:1.6}
+.modal-btns{display:flex;gap:.7rem;justify-content:flex-end}
+.toast{position:fixed;bottom:5.5rem;right:1.5rem;z-index:900;padding:.8rem 1.3rem;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;color:white;box-shadow:0 4px 20px rgba(0,0,0,.2);animation:toastIn .3s ease;max-width:300px;line-height:1.4}
+.toast-success{background:var(--jade)}.toast-error{background:var(--danger)}.toast-warn{background:var(--warn)}
+@keyframes toastIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+/* Loading overlay */
+.loading-screen{position:fixed;inset:0;background:var(--ink);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;gap:1rem}
+.loading-screen.done{display:none}
+.spinner{width:44px;height:44px;border:4px solid rgba(255,255,255,.15);border-top-color:var(--jade3);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.chat-bubble{position:fixed;bottom:1.5rem;right:1.5rem;z-index:400}
+.chat-toggle{width:58px;height:58px;background:var(--jade);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(45,106,79,.45);font-size:1.5rem;border:none;transition:transform .2s}
+.chat-toggle:hover{transform:scale(1.1)}
+.chat-window{position:absolute;bottom:72px;right:0;width:320px;background:var(--white);border-radius:var(--radius);box-shadow:0 8px 40px rgba(0,0,0,.2);display:none;flex-direction:column;height:440px;overflow:hidden;animation:popUp .3s ease}
+.chat-window.open{display:flex}
+@keyframes popUp{from{opacity:0;transform:scale(.92) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.chat-header{background:var(--ink);color:white;padding:.9rem 1.1rem;display:flex;align-items:center;gap:.6rem}
+.chat-dot{width:8px;height:8px;background:#4ade80;border-radius:50%;flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.chat-header-text{flex:1}
+.chat-header-text strong{display:block;font-size:.88rem}
+.chat-header-text span{font-size:.7rem;opacity:.55}
+.chat-close{background:none;border:none;color:rgba(255,255,255,.5);cursor:pointer;font-size:1.1rem}
+.chat-messages{flex:1;overflow-y:auto;padding:.9rem;display:flex;flex-direction:column;gap:.6rem}
+.msg{max-width:88%;padding:.6rem .9rem;border-radius:12px;font-size:.82rem;line-height:1.5}
+.msg.bot{background:var(--bg);color:var(--ink);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.user{background:var(--jade);color:white;align-self:flex-end;border-bottom-right-radius:4px}
+.chat-chips{display:flex;flex-wrap:wrap;gap:.3rem;padding:0 .9rem .6rem}
+.chip{background:var(--jade-pale);color:var(--jade);border:1px solid var(--jade3);border-radius:999px;padding:.25rem .65rem;font-size:.72rem;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;transition:all .2s}
+.chip:hover{background:var(--jade);color:white}
+.chat-input-row{display:flex;border-top:1px solid var(--line);padding:.55rem;gap:.4rem}
+.chat-input-row input{flex:1;border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:.5rem .8rem;font-size:.82rem;font-family:'Nunito',sans-serif;outline:none;background:var(--bg)}
+.chat-input-row input:focus{border-color:var(--jade)}
+.chat-send{background:var(--jade);color:white;border:none;border-radius:var(--radius-sm);padding:.5rem .9rem;cursor:pointer;font-size:.82rem;font-weight:700;font-family:'Nunito',sans-serif}
+@media(max-width:600px){
+  .hero{flex-direction:column;align-items:flex-start;gap:.8rem;padding:1.5rem}
+  .hero h1{font-size:1.4rem}
+  .nav-logo{font-size:1rem}
+  .chat-window{width:280px}
+  .main{padding:1rem .8rem 5rem}
+}
+</style>
+
+</head>
+<body>
+
+<!-- LOADING SCREEN -->
+
+<div class="loading-screen" id="loadingScreen">
+  <div class="spinner"></div>
+  <p style="font-family:'Playfair Display',serif;font-size:1.1rem">Longevity Courtyard</p>
+  <p style="font-size:.8rem;opacity:.5">Connecting to database…</p>
+</div>
+
+<!-- NAV -->
+
+<nav class="nav">
+  <div class="nav-left">
+    <img class="nav-logo-img" src="https://upload.wikimedia.org/wikipedia/en/thumb/7/7c/Tzu_Chi_Foundation_Logo.svg/200px-Tzu_Chi_Foundation_Logo.svg.png"
+      onerror="this.onerror=null;this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%232d6a4f%22/><text x=%2250%22 y=%2263%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2244%22 font-family=%22serif%22>慈</text></svg>'" alt="Tzu Chi">
+    <div class="nav-logo">Longevity <span>Courtyard</span><small>Tzu Chi · Batch 2</small></div>
+  </div>
+  <div class="nav-member" id="navMemberInfo" style="display:none">
+    Logged in as<strong id="navMemberName">—</strong>
+  </div>
+</nav>
+
+<!-- ANNOUNCEMENT BANNER -->
+
+<div class="announce-bar hidden" id="announceBanner">
+  <span>📢</span>
+  <span id="announceText" style="flex:1"></span>
+  <button class="announce-close" onclick="dismissAnnounce()">✕</button>
+</div>
+
+<div class="main">
+  <!-- HERO -->
+  <div class="hero">
+    <img class="hero-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/7/7c/Tzu_Chi_Foundation_Logo.svg/200px-Tzu_Chi_Foundation_Logo.svg.png"
+      onerror="this.style.display='none'" alt="Tzu Chi">
+    <div class="hero-text">
+      <div class="hero-badge">Batch 2 · Members Only</div>
+      <h1>Longevity Courtyard</h1>
+      <p>Book your weekly fitness classes — Functional Strength Training &amp; Stretch &amp; Flow</p>
+    </div>
+  </div>
+
+  <!-- MEMBER SELECT -->
+
+  <div class="member-bar">
+    <label>👤 Select Member</label>
+    <select id="memberSelect" onchange="onMemberChange()">
+      <option value="">— Choose your name —</option>
+    </select>
+    <span class="mia-badge mia-ok" id="miaBadge" style="display:none">0/3 MIA</span>
+  </div>
+
+  <!-- TABS -->
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('book',this)">📅 Book Class</button>
+    <button class="tab" onclick="switchTab('mybookings',this)">🗓 My Bookings</button>
+    <button class="tab" onclick="switchTab('rules',this)">📋 Rules</button>
+    <button class="tab" onclick="switchTab('admin',this)">🔑 Admin</button>
+  </div>
+
+  <!-- TAB: BOOK -->
+
+  <div id="tab-book">
+    <div class="week-nav">
+      <button class="wbtn" id="prevWeekBtn" onclick="changeWeek(-1)" disabled>◀ Prev</button>
+      <div class="week-label" id="weekLabel">This Week<small id="weekRange"></small></div>
+      <button class="wbtn" id="nextWeekBtn" onclick="changeWeek(1)">Next ▶</button>
+    </div>
+    <div class="schedule-grid" id="scheduleGrid"></div>
+  </div>
+
+  <!-- TAB: MY BOOKINGS -->
+
+  <div id="tab-mybookings" style="display:none"><div id="myBookingsContent"></div></div>
+
+  <!-- TAB: RULES -->
+
+  <div id="tab-rules" style="display:none">
+    <div class="rules-card">
+      <h3>📅 Class Schedule</h3>
+      <div class="rule-item"><span class="rule-icon">💪</span><div><strong>Functional Strength Training</strong><br>Mon &amp; Wed: 8:45am, 9:30am, 10:15am, 11:00am, 1:45pm, 2:30pm, 3:15pm, 4:00pm<br>Fri: 8:45am, 9:30am, 10:15am, 11:00am (morning only)</div></div>
+      <div class="rule-item"><span class="rule-icon">🧘</span><div><strong>Stretch &amp; Flow (Chair Yoga + Gym)</strong><br>Tue &amp; Thu: 10:00am, 11:00am, 1:30pm</div></div>
+    </div>
+    <div class="rules-card">
+      <h3>📌 Booking Rules</h3>
+      <div class="rule-item"><span class="rule-icon">✅</span><div>You can book <strong>as many days as you like</strong> — no weekly limit.</div></div>
+      <div class="rule-item"><span class="rule-icon">🚫</span><div>You <strong>cannot book twice on the same day</strong>.</div></div>
+      <div class="rule-item"><span class="rule-icon">📆</span><div>You can only book for <strong>this week or next week</strong>. Schedule releases weekly.</div></div>
+      <div class="rule-item"><span class="rule-icon">⏰</span><div>Booking closes <strong>5 minutes before class starts</strong>. (e.g. 8:45am → closes 8:39am)</div></div>
+    </div>
+    <div class="rules-card">
+      <h3>❌ Cancellation &amp; MIA Policy</h3>
+      <div class="rule-item"><span class="rule-icon">↩️</span><div>Cancellations must be made <strong>at least 1 hour before</strong> class starts.</div></div>
+      <div class="rule-item"><span class="rule-icon">⚠️</span><div>Maximum <strong>3 MIA (no-show without reason)</strong> allowed.</div></div>
+      <div class="rule-item"><span class="rule-icon">🔴</span><div>After 3 MIA, management may <strong>revoke membership — no refund</strong>.</div></div>
+    </div>
+  </div>
+
+  <!-- TAB: ADMIN -->
+
+  <div id="tab-admin" style="display:none">
+    <div id="adminLoginBox">
+      <div class="admin-login">
+        <h2>🔑 Management Login</h2>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="adminPwInput" placeholder="Enter management password" onkeydown="if(event.key==='Enter')adminLogin()">
+        </div>
+        <button class="btn btn-jade" onclick="adminLogin()">Login</button>
+      </div>
+    </div>
+    <div id="adminPanel" style="display:none">
+      <div class="admin-section">
+        <h3>📢 Announcements</h3>
+        <div class="form-group"><label>Post New Announcement</label>
+          <textarea id="announceInput" placeholder="e.g. Gym closed this Friday. All classes cancelled."></textarea></div>
+        <button class="btn btn-jade btn-sm" style="width:auto;margin-bottom:1rem" onclick="addAnnounce()">Post</button>
+        <div id="announceList"></div>
+      </div>
+      <div class="admin-section">
+        <h3>🚫 Block Dates / Time Slots</h3>
+        <div style="display:flex;gap:.7rem;flex-wrap:wrap;align-items:flex-end;margin-bottom:.8rem">
+          <div class="form-group" style="flex:1;min-width:130px;margin:0"><label>Date</label><input type="date" id="blockDate"></div>
+          <div class="form-group" style="flex:1;min-width:110px;margin:0"><label>Time (blank=all day)</label><input type="time" id="blockTime"></div>
+          <div class="form-group" style="flex:1;min-width:140px;margin:0"><label>Reason</label><input type="text" id="blockReason" placeholder="e.g. Public Holiday"></div>
+          <button class="btn btn-jade btn-sm" style="width:auto;height:38px;margin-bottom:1rem" onclick="addBlock()">Block</button>
+        </div>
+        <div id="blockList"></div>
+      </div>
+      <div class="admin-section">
+        <h3>👥 Manage Members</h3>
+        <div style="display:flex;gap:.7rem;margin-bottom:1rem;align-items:flex-end">
+          <div class="form-group" style="flex:1;margin:0"><label>Add New Member</label>
+            <input type="text" id="newMemberInput" placeholder="Full name" onkeydown="if(event.key==='Enter')addMember()"></div>
+          <button class="btn btn-jade btn-sm" style="width:auto;height:38px;margin-bottom:0" onclick="addMember()">Add</button>
+        </div>
+        <div id="memberManageList"></div>
+      </div>
+      <div class="admin-section">
+        <h3>📋 All Member Bookings</h3>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.8rem">
+          <select id="adminFilterMember" onchange="renderAdminBookings()" style="border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:.4rem .7rem;font-family:'Nunito',sans-serif;font-size:.82rem;background:var(--bg)"><option value="">All Members</option></select>
+          <select id="adminFilterWeek" onchange="renderAdminBookings()" style="border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:.4rem .7rem;font-family:'Nunito',sans-serif;font-size:.82rem;background:var(--bg)">
+            <option value="">All</option><option value="this">This Week</option><option value="next">Next Week</option>
+          </select>
+          <button class="btn btn-outline btn-sm" onclick="renderAdminBookings()" style="width:auto">🔄 Refresh</button>
+        </div>
+        <div id="adminBookingsTable" style="overflow-x:auto"></div>
+      </div>
+      <div class="admin-section">
+        <h3>⚠️ MIA Tracker</h3>
+        <div id="miaTable" style="overflow-x:auto"></div>
+      </div>
+      <button class="btn btn-outline btn-sm" style="width:auto" onclick="adminLogout()">Logout</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+
+<div class="modal-overlay hidden" id="confirmModal">
+  <div class="modal">
+    <h2 id="modalTitle">Confirm</h2>
+    <p id="modalBody"></p>
+    <div class="modal-btns">
+      <button class="btn btn-outline" style="width:auto" onclick="closeModal()">Back</button>
+      <button class="btn btn-jade" id="modalConfirmBtn" style="width:auto">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHATBOT -->
+
+<div class="chat-bubble">
+  <button class="chat-toggle" onclick="toggleChat()">🤖</button>
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-dot"></div>
+      <div class="chat-header-text"><strong>CourtBot</strong><span>Booking Assistant</span></div>
+      <button class="chat-close" onclick="toggleChat()">✕</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg bot">Hi! 👋 I'm CourtBot. I can help with class schedules, booking rules, or any questions. Try the quick buttons below!</div>
+    </div>
+    <div class="chat-chips">
+      <span class="chip" onclick="chipAsk('What classes are available?')">Classes?</span>
+      <span class="chip" onclick="chipAsk('What are the booking rules?')">Rules</span>
+      <span class="chip" onclick="chipAsk('How do I cancel?')">Cancel?</span>
+      <span class="chip" onclick="chipAsk('What is the MIA policy?')">MIA</span>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="chat-send" onclick="sendChat()">Send</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// SUPABASE REST API HELPERS
+// ═══════════════════════════════════════════
+const SUPABASE_URL = 'https://pshbwmxllkghecqelnye.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_QhxOWANyHIbnVCr_Xu_WwA_TpIZ9vDt';
+
+function headers(extra={}){
+  return {
+    'Content-Type':'application/json',
+    'apikey': SUPABASE_KEY,
+    'Authorization': 'Bearer '+SUPABASE_KEY,
+    ...extra
+  };
+}
+
+// SELECT: dbGet('members','*','order=name') -> array
+async function dbGet(table, select='*', params=''){
+  const url=`${SUPABASE_URL}/rest/v1/${table}?select=${select}${params?'&'+params:''}`;
+  const r=await fetch(url,{headers:headers({'Prefer':'return=representation'})});
+  if(!r.ok){ const e=await r.text(); throw new Error(e); }
+  return r.json();
+}
+
+// INSERT: dbInsert('members',{name:'Alice'}) -> inserted row
+async function dbInsert(table, row){
+  const r=await fetch(`${SUPABASE_URL}/rest/v1/${table}`,{
+    method:'POST',
+    headers:headers({'Prefer':'return=representation'}),
+    body:JSON.stringify(row)
+  });
+  const text=await r.text();
+  if(!r.ok) throw new Error(text);
+  return JSON.parse(text);
+}
+
+// UPDATE: dbUpdate('mia_records','member=eq.Alice',{count:2})
+async function dbUpdate(table, filter, row){
+  const r=await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`,{
+    method:'PATCH',
+    headers:headers({'Prefer':'return=representation'}),
+    body:JSON.stringify(row)
+  });
+  if(!r.ok){ const e=await r.text(); throw new Error(e); }
+  return r.json();
+}
+
+// DELETE: dbDelete('members','name=eq.Alice')
+async function dbDelete(table, filter){
+  const r=await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`,{
+    method:'DELETE',
+    headers:headers()
+  });
+  if(!r.ok){ const e=await r.text(); throw new Error(e); }
+}
+
+const ADMIN_PASSWORD = 'tzuchi.123';
+
+// ── LOCAL CACHE (refreshed from DB) ──
+let members = [];
+let bookings = [];
+let miaRecord = {}; // { name: count }
+let blockedSlots = [];
+let announcements = [];
+let currentMember = '';
+let isAdmin = false;
+let currentWeekOffset = 0;
+let pendingAction = null;
+
+// ═══════════════════════════════════════════
+// DATE HELPERS
+// ═══════════════════════════════════════════
+function today(){ return new Date(); }
+function toYMD(d){ return d.toISOString().split('T')[0]; }
+function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
+function getWeekMonday(off){
+  const now=today(); const dow=now.getDay();
+  const diff=dow===0?-6:1-dow;
+  const mon=addDays(now,diff+off*7); mon.setHours(0,0,0,0); return mon;
+}
+function fmtDate(d){ return d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}); }
+function timeLabel(t){
+  const [h,m]=t.split(':').map(Number);
+  return `${h%12||12}:${String(m).padStart(2,'0')}${h<12?'am':'pm'}`;
+}
+function isSlotPast(ymd,t){ return new Date(ymd+'T'+t+':00') < today(); }
+function isBookingClosed(ymd,t){
+  const s=new Date(ymd+'T'+t+':00');
+  return today() >= new Date(s-5*60*1000);
+}
+function canCancelSlot(ymd,t){
+  const s=new Date(ymd+'T'+t+':00');
+  return today() < new Date(s-60*60*1000);
+}
+function isBlocked(ymd,t){ return blockedSlots.some(b=>b.date===ymd&&(!b.time||b.time===t)); }
+function isDayBlocked(ymd){ return blockedSlots.some(b=>b.date===ymd&&!b.time); }
+
+// ═══════════════════════════════════════════
+// SCHEDULE DEFINITION
+// ═══════════════════════════════════════════
+const SCHEDULE=[
+  {dow:1,type:'strength',label:'Functional Strength Training',times:['08:45','09:30','10:15','11:00','13:45','14:30','15:15','16:00']},
+  {dow:2,type:'stretch', label:'Stretch & Flow (Chair Yoga + Gym)',times:['10:00','11:00','13:30']},
+  {dow:3,type:'strength',label:'Functional Strength Training',times:['08:45','09:30','10:15','11:00','13:45','14:30','15:15','16:00']},
+  {dow:4,type:'stretch', label:'Stretch & Flow (Chair Yoga + Gym)',times:['10:00','11:00','13:30']},
+  {dow:5,type:'strength',label:'Functional Strength Training',times:['08:45','09:30','10:15','11:00']},
+];
+const DOWNAMES=['','Monday','Tuesday','Wednesday','Thursday','Friday'];
+
+// ═══════════════════════════════════════════
+// DB LOAD
+// ═══════════════════════════════════════════
+async function loadAll(){
+  const [mRes, bRes, miRes, blRes, anRes] = await Promise.all([
+    dbGet('members','*','order=name'),
+    dbGet('bookings','*'),
+    dbGet('mia_records','*'),
+    dbGet('blocked_slots','*'),
+    dbGet('announcements','*','order=created_at.desc'),
+  ]);
+  members = mRes.map(r=>r.name);
+  bookings = bRes.map(r=>({
+    id:r.id, member:r.member, date:r.date,
+    time:r.time, classType:r.class_type, classLabel:r.class_label
+  }));
+  miaRecord = {};
+  miRes.forEach(r=>{ miaRecord[r.member]=r.count; });
+  blockedSlots = blRes.map(r=>({id:r.id,date:r.date,time:r.time,reason:r.reason}));
+  announcements = anRes.map(r=>({id:r.id,text:r.text}));
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+async function init(){
+  try {
+    await loadAll();
+    populateMemberDropdown();
+    renderSchedule();
+    showAnnounceBanner();
+    document.getElementById('loadingScreen').classList.add('done');
+  } catch(e){
+    document.getElementById('loadingScreen').innerHTML =
+      `<div style="text-align:center;padding:2rem;color:#ff8888">
+        <div style="font-size:2rem;margin-bottom:.5rem">⚠️</div>
+        <strong>Could not connect to database.</strong><br>
+        <span style="font-size:.8rem;opacity:.7">Please check your internet connection and refresh.</span>
+      </div>`;
+  }
+}
+
+// ═══════════════════════════════════════════
+// MEMBER DROPDOWN
+// ═══════════════════════════════════════════
+function populateMemberDropdown(){
+  const sel=document.getElementById('memberSelect');
+  const cur=sel.value;
+  sel.innerHTML='<option value="">— Choose your name —</option>';
+  members.slice().sort().forEach(m=>{
+    const o=document.createElement('option');
+    o.value=m; o.textContent=m;
+    if(m===cur) o.selected=true;
+    sel.appendChild(o);
+  });
+}
+
+// ═══════════════════════════════════════════
+// RENDER SCHEDULE
+// ═══════════════════════════════════════════
+function renderSchedule(){
+  const grid=document.getElementById('scheduleGrid');
+  grid.innerHTML='';
+  const mon=getWeekMonday(currentWeekOffset);
+  const fri=addDays(mon,4);
+  document.getElementById('weekLabel').innerHTML=
+    (currentWeekOffset===0?'This Week':'Next Week')+
+    `<small>${fmtDate(mon)} – ${fmtDate(fri)}</small>`;
+  document.getElementById('prevWeekBtn').disabled=currentWeekOffset<=0;
+  document.getElementById('nextWeekBtn').disabled=currentWeekOffset>=1;
+
+  SCHEDULE.forEach(sch=>{
+    const date=addDays(mon,sch.dow-1);
+    const ymd=toYMD(date);
+    const dayBlocked=isDayBlocked(ymd);
+    const card=document.createElement('div'); card.className='day-block';
+    const hdr=document.createElement('div');
+    hdr.className='day-header '+sch.type+(dayBlocked?' blocked-hdr':'');
+    hdr.innerHTML=`<div><h3>${DOWNAMES[sch.dow]}</h3><div class="day-date">${fmtDate(date)}</div></div>
+      <span class="class-type-tag">${sch.type==='strength'?'💪 Strength':'🧘 Stretch & Flow'}</span>`;
+    card.appendChild(hdr);
+    if(dayBlocked){
+      const bk=blockedSlots.find(b=>b.date===ymd&&!b.time);
+      const msg=document.createElement('div'); msg.className='blocked-msg';
+      msg.innerHTML=`🚫 Day blocked${bk&&bk.reason?' — '+bk.reason:''}`;
+      card.appendChild(msg); grid.appendChild(card); return;
+    }
+    const slotsList=document.createElement('div'); slotsList.className='slots-list';
+    sch.times.forEach(t=>{
+      const slotBlocked=isBlocked(ymd,t);
+      const past=isSlotPast(ymd,t);
+      const closed=isBookingClosed(ymd,t);
+      const myBooking=currentMember&&bookings.find(b=>b.member===currentMember&&b.date===ymd&&b.time===t);
+      const bookedToday=currentMember&&!myBooking&&bookings.find(b=>b.member===currentMember&&b.date===ymd);
+      const totalBooked=bookings.filter(b=>b.date===ymd&&b.time===t).length;
+      const slotEl=document.createElement('div');
+      let cls='slot';
+      if(past||slotBlocked) cls+=' slot-past';
+      if(myBooking) cls+=' slot-booked';
+      const canBook=currentMember&&!past&&!closed&&!slotBlocked&&!myBooking&&!bookedToday;
+      if(canBook) cls+=' bookable';
+      slotEl.className=cls;
+      let act='';
+      if(slotBlocked) act=`<span class="pill pill-past">Blocked</span>`;
+      else if(past) act=`<span class="pill pill-past">Past</span>`;
+      else if(myBooking){
+        const cc=canCancelSlot(ymd,t);
+        act=`<span class="pill pill-booked">✓ Booked</span>${cc?`<button class="pill-cancel" onclick="promptCancel('${ymd}','${t}','${sch.label.replace(/'/g,"\\'")}')">Cancel</button>`:'<span style="font-size:.68rem;color:var(--soft)">No cancel</span>'}`;
+      } else if(!currentMember) act=`<span class="pill pill-past" style="font-size:.68rem">Select name first</span>`;
+      else if(closed) act=`<span class="pill pill-past">Closed</span>`;
+      else if(bookedToday) act=`<span class="pill pill-full">Day taken</span>`;
+      else act=`<button class="pill-book" onclick="promptBook('${ymd}','${t}','${sch.label.replace(/'/g,"\\'")}','${sch.type}')">Book</button>`;
+      slotEl.innerHTML=`<span class="slot-time">${timeLabel(t)}</span><span class="slot-count">${totalBooked} booked</span><span class="slot-action">${act}</span>`;
+      slotsList.appendChild(slotEl);
+    });
+    card.appendChild(slotsList); grid.appendChild(card);
+  });
+}
+
+// ═══════════════════════════════════════════
+// BOOKING ACTIONS
+// ═══════════════════════════════════════════
+function promptBook(ymd,t,label,type){
+  if(!currentMember){showToast('Please select your name first!','error');return;}
+  pendingAction={action:'book',ymd,t,label,classType:type};
+  document.getElementById('modalTitle').textContent='Confirm Booking';
+  document.getElementById('modalBody').innerHTML=
+    `Booking for <strong>${currentMember}</strong><br>📌 ${label}<br>📅 ${fmtDate(new Date(ymd))} at <strong>${timeLabel(t)}</strong>`;
+  document.getElementById('modalConfirmBtn').textContent='Book Now';
+  document.getElementById('modalConfirmBtn').onclick=executeAction;
+  document.getElementById('confirmModal').classList.remove('hidden');
+}
+function promptCancel(ymd,t,label){
+  pendingAction={action:'cancel',ymd,t,label};
+  document.getElementById('modalTitle').textContent='Cancel Booking';
+  document.getElementById('modalBody').innerHTML=
+    `Cancel booking for:<br><strong>${label}</strong><br>📅 ${fmtDate(new Date(ymd))} at <strong>${timeLabel(t)}</strong>`;
+  document.getElementById('modalConfirmBtn').textContent='Yes, Cancel';
+  document.getElementById('modalConfirmBtn').onclick=executeAction;
+  document.getElementById('confirmModal').classList.remove('hidden');
+}
+async function executeAction(){
+  closeModal();
+  if(!pendingAction) return;
+  const {action,ymd,t,label,classType}=pendingAction;
+  pendingAction=null;
+  try{
+    if(action==='book'){
+      await dbInsert('bookings',{member:currentMember,date:ymd,time:t,class_type:classType,class_label:label});
+      showToast(`✅ Booked! ${timeLabel(t)} on ${fmtDate(new Date(ymd))}`,'success');
+    } else if(action==='cancel'){
+      const b=bookings.find(bk=>bk.member===currentMember&&bk.date===ymd&&bk.time===t);
+      if(!b) return;
+      await dbDelete('bookings','id=eq.'+b.id);
+      showToast('Booking cancelled.','warn');
+    }
+    await loadAll(); renderSchedule(); renderMyBookings();
+  }catch(e){console.error(e);showToast('Error: '+e.message,'error');}
+}
+function closeModal(){ document.getElementById('confirmModal').classList.add('hidden'); }
+
+// ═══════════════════════════════════════════
+// MY BOOKINGS
+// ═══════════════════════════════════════════
+function renderMyBookings(){
+  const el=document.getElementById('myBookingsContent');
+  if(!currentMember){
+    el.innerHTML='<div class="bookings-empty"><div class="empty-icon">👤</div><p>Select your name to see your bookings.</p></div>';return;
+  }
+  const mine=bookings.filter(b=>b.member===currentMember)
+    .sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+  if(!mine.length){
+    el.innerHTML='<div class="bookings-empty"><div class="empty-icon">🗓</div><p>No bookings yet! Tap <strong>Book Class</strong> to reserve your spot.</p></div>';return;
+  }
+  let html=`<h3 style="font-family:'Playfair Display',serif;font-size:1.05rem;margin-bottom:1rem;color:var(--jade)">Bookings for ${currentMember}</h3>`;
+  mine.forEach(b=>{
+    const past=isSlotPast(b.date,b.time);
+    const cc=!past&&canCancelSlot(b.date,b.time);
+    html+=`<div class="booking-card">
+      <div class="booking-card-left"><strong>${b.classLabel}</strong><span>📅 ${fmtDate(new Date(b.date))} at ${timeLabel(b.time)}</span></div>
+      <div style="display:flex;align-items:center;gap:.5rem">
+        <span class="status-tag ${past?'status-past':'status-upcoming'}">${past?'Past':'Upcoming'}</span>
+        ${!past?`<button class="btn-cancel-booking" ${cc?'':'disabled title="Cannot cancel within 1hr"'} onclick="promptCancel('${b.date}','${b.time}','${b.classLabel.replace(/'/g,"\\'")}')">Cancel</button>`:''}
+      </div></div>`;
+  });
+  el.innerHTML=html;
+}
+
+// ═══════════════════════════════════════════
+// MEMBER CHANGE
+// ═══════════════════════════════════════════
+function onMemberChange(){
+  currentMember=document.getElementById('memberSelect').value;
+  document.getElementById('navMemberInfo').style.display=currentMember?'block':'none';
+  document.getElementById('navMemberName').textContent=currentMember;
+  updateMiaBadge(); renderSchedule(); renderMyBookings();
+}
+function updateMiaBadge(){
+  const b=document.getElementById('miaBadge');
+  if(!currentMember){b.style.display='none';return;}
+  const c=miaRecord[currentMember]||0;
+  b.style.display='inline-block';
+  b.textContent=`${c}/3 MIA`;
+  b.className='mia-badge '+(c>=3?'mia-danger':c>=2?'mia-warn':'mia-ok');
+}
+function changeWeek(dir){
+  currentWeekOffset=Math.max(0,Math.min(1,currentWeekOffset+dir));
+  renderSchedule();
+}
+function switchTab(name,btn){
+  ['book','mybookings','rules','admin'].forEach(t=>
+    document.getElementById('tab-'+t).style.display=t===name?'block':'none');
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(name==='mybookings') renderMyBookings();
+  if(name==='admin'&&isAdmin){ renderAdminBookings();renderAdminMIA();renderBlockList();renderAnnounceList();renderMemberManageList(); }
+}
+
+// ═══════════════════════════════════════════
+// ADMIN
+// ═══════════════════════════════════════════
+function adminLogin(){
+  if(document.getElementById('adminPwInput').value===ADMIN_PASSWORD){
+    isAdmin=true;
+    document.getElementById('adminLoginBox').style.display='none';
+    document.getElementById('adminPanel').style.display='block';
+    populateAdminMemberFilter();
+    renderAdminBookings();renderAdminMIA();renderBlockList();renderAnnounceList();renderMemberManageList();
+  } else {
+    showToast('Incorrect password.','error');
+    document.getElementById('adminPwInput').value='';
+  }
+}
+function adminLogout(){
+  isAdmin=false;
+  document.getElementById('adminLoginBox').style.display='block';
+  document.getElementById('adminPanel').style.display='none';
+  document.getElementById('adminPwInput').value='';
+}
+function populateAdminMemberFilter(){
+  const s=document.getElementById('adminFilterMember');
+  s.innerHTML='<option value="">All Members</option>';
+  members.slice().sort().forEach(m=>s.innerHTML+=`<option>${m}</option>`);
+}
+
+// ── MEMBERS ──
+async function addMember(){
+  const v=document.getElementById('newMemberInput').value.trim();
+  if(!v){showToast('Enter a name.','error');return;}
+  if(members.includes(v)){showToast('Already exists.','warn');return;}
+  try{
+    await dbInsert('members',{name:v});
+    document.getElementById('newMemberInput').value='';
+    await loadAll();
+    populateMemberDropdown();populateAdminMemberFilter();renderMemberManageList();renderAdminMIA();
+    showToast(`${v} added! ✅`,'success');
+  }catch(e){console.error(e);showToast('Error adding: '+e.message,'error');}
+}
+async function deleteMember(name){
+  if(!confirm(`Remove "${name}"? Their bookings will also be deleted.`)) return;
+  try{
+    await dbDelete('bookings','member=eq.'+encodeURIComponent(name));
+    await dbDelete('mia_records','member=eq.'+encodeURIComponent(name));
+    await dbDelete('members','name=eq.'+encodeURIComponent(name));
+    if(currentMember===name){
+      currentMember='';
+      document.getElementById('memberSelect').value='';
+      document.getElementById('navMemberInfo').style.display='none';
+      document.getElementById('miaBadge').style.display='none';
+    }
+    await loadAll();
+    populateMemberDropdown();populateAdminMemberFilter();renderMemberManageList();renderAdminBookings();renderAdminMIA();renderSchedule();
+    showToast(`${name} removed.`,'warn');
+  }catch(e){console.error(e);showToast('Error removing: '+e.message,'error');}
+}
+function renderMemberManageList(){
+  const el=document.getElementById('memberManageList');
+  if(!members.length){el.innerHTML='<p style="font-size:.83rem;color:var(--soft)">No members.</p>';return;}
+  el.innerHTML=members.slice().sort().map(m=>
+    `<div class="member-manage-item"><span>👤 ${m}</span>
+     <button class="btn btn-danger btn-sm" onclick="deleteMember('${m.replace(/'/g,"\\'")}')">Remove</button></div>`).join('');
+}
+
+// ── BOOKINGS ──
+function renderAdminBookings(){
+  const fm=document.getElementById('adminFilterMember').value;
+  const fw=document.getElementById('adminFilterWeek').value;
+  let data=[...bookings];
+  if(fm) data=data.filter(b=>b.member===fm);
+  if(fw==='this'){const mon=getWeekMonday(0),sun=addDays(mon,6);data=data.filter(b=>{const d=new Date(b.date);return d>=mon&&d<=sun;});}
+  if(fw==='next'){const mon=getWeekMonday(1),sun=addDays(mon,6);data=data.filter(b=>{const d=new Date(b.date);return d>=mon&&d<=sun;});}
+  data.sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
+  if(!data.length){document.getElementById('adminBookingsTable').innerHTML='<p style="font-size:.83rem;color:var(--soft);text-align:center;padding:1rem">No bookings.</p>';return;}
+  let h=`<table class="admin-table"><thead><tr><th>Member</th><th>Class</th><th>Date</th><th>Time</th><th>Actions</th></tr></thead><tbody>`;
+  data.forEach(b=>{
+    const past=isSlotPast(b.date,b.time);
+    h+=`<tr><td>${b.member}</td><td>${b.classType==='strength'?'💪':'🧘'} ${b.classType==='strength'?'Strength':'Stretch'}</td>
+    <td>${fmtDate(new Date(b.date))}</td><td>${timeLabel(b.time)}</td>
+    <td style="white-space:nowrap">
+      <button class="btn btn-danger btn-sm" onclick="adminRemoveBooking(${b.id})">Remove</button>
+      ${!past?`<button class="btn btn-sm" style="margin-left:.3rem;background:#fff3cd;color:#856404;border:1px solid #ffc107;border-radius:var(--radius-sm);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;padding:.3rem .7rem;font-size:.78rem" onclick="adminMarkMIA('${b.member}',${b.id})">MIA</button>`:''}
+    </td></tr>`;
+  });
+  h+='</tbody></table>';
+  document.getElementById('adminBookingsTable').innerHTML=h;
+}
+async function adminRemoveBooking(id){
+  try{ await dbDelete('bookings','id=eq.'+id); await loadAll(); renderAdminBookings(); renderSchedule(); showToast('Booking removed.','warn'); }
+  catch(e){showToast('Error: '+e.message,'error');}
+}
+async function adminMarkMIA(member,id){
+  try{
+    const cur=miaRecord[member]||0;
+    if(cur===0) await dbInsert('mia_records',{member,count:1});
+    else await dbUpdate('mia_records','member=eq.'+encodeURIComponent(member),{count:cur+1});
+    await dbDelete('bookings','id=eq.'+id);
+    await loadAll(); renderAdminBookings(); renderAdminMIA(); renderSchedule();
+    if(currentMember===member) updateMiaBadge();
+    showToast(`MIA for ${member}: ${miaRecord[member]||0}/3`,'warn');
+  }catch(e){showToast('Error: '+e.message,'error');}
+}
+async function adminAddMIA(m){
+  try{
+    const c=miaRecord[m]||0;
+    if(c===0) await dbInsert('mia_records',{member:m,count:1});
+    else await dbUpdate('mia_records','member=eq.'+encodeURIComponent(m),{count:c+1});
+    await loadAll(); renderAdminMIA();
+    if(currentMember===m) updateMiaBadge();
+    showToast(`MIA +1 for ${m}: ${miaRecord[m]}/3`,'warn');
+  }catch(e){showToast('Error: '+e.message,'error');}
+}
+async function adminClearMIA(m){
+  try{
+    await dbUpdate('mia_records','member=eq.'+encodeURIComponent(m),{count:0});
+    await loadAll(); renderAdminMIA();
+    if(currentMember===m) updateMiaBadge();
+    showToast(`MIA cleared for ${m}.`,'success');
+  }catch(e){showToast('Error: '+e.message,'error');}
+}
+
+// ── MIA ──
+function renderAdminMIA(){
+  let h=`<table class="admin-table"><thead><tr><th>Member</th><th>MIA</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  members.slice().sort().forEach(m=>{
+    const c=miaRecord[m]||0;
+    const s=c>=3?'🔴 At Limit':c>=2?'🟡 Warning':'🟢 OK';
+    h+=`<tr><td>${m}</td>
+    <td style="font-weight:700;color:${c>=3?'var(--danger)':c>=2?'var(--warn)':'var(--jade)'}">${c}/3</td>
+    <td>${s}</td>
+    <td style="white-space:nowrap">
+      <button class="btn btn-sm btn-outline" onclick="adminAddMIA('${m.replace(/'/g,"\\'")}')">+1 MIA</button>
+      ${c>0?`<button class="btn btn-sm" style="margin-left:.3rem;background:#eee;color:var(--mid);border:none;border-radius:var(--radius-sm);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;padding:.35rem .7rem;font-size:.78rem" onclick="adminClearMIA('${m.replace(/'/g,"\\'")}')">Reset</button>`:''}
+    </td></tr>`;
+  });
+  h+='</tbody></table>';
+  document.getElementById('miaTable').innerHTML=h;
+}
+
+// ── BLOCKS ──
+async function addBlock(){
+  const d=document.getElementById('blockDate').value;
+  const t=document.getElementById('blockTime').value||null;
+  const r=document.getElementById('blockReason').value||'';
+  if(!d){showToast('Pick a date.','error');return;}
+  try{
+    await dbInsert('blocked_slots',{date:d,time:t,reason:r});
+    document.getElementById('blockDate').value='';
+    document.getElementById('blockTime').value='';
+    document.getElementById('blockReason').value='';
+    await loadAll(); renderBlockList(); renderSchedule();
+    showToast('Slot blocked.','success');
+  }catch(e){showToast('Error: '+e.message,'error');}
+}
+async function removeBlock(id){
+  try{ await dbDelete('blocked_slots','id=eq.'+id); await loadAll(); renderBlockList(); renderSchedule(); showToast('Block removed.','warn'); }
+  catch(e){showToast('Error: '+e.message,'error');}
+}
+
+// ── ANNOUNCEMENTS ──
+async function addAnnounce(){
+  const text=document.getElementById('announceInput').value.trim();
+  if(!text){showToast('Enter text.','error');return;}
+  try{
+    await dbInsert('announcements',{text});
+    document.getElementById('announceInput').value='';
+    await loadAll(); renderAnnounceList(); showAnnounceBanner();
+    showToast('Announcement posted!','success');
+  }catch(e){showToast('Error: '+e.message,'error');}
+}
+async function removeAnnounce(id){
+  try{ await dbDelete('announcements','id=eq.'+id); await loadAll(); renderAnnounceList(); if(!announcements.length) document.getElementById('announceBanner').classList.add('hidden'); }
+  catch(e){showToast('Error: '+e.message,'error');}
+}
+function renderAnnounceList(){
+  const el=document.getElementById('announceList');
+  if(!announcements.length){el.innerHTML='<p style="font-size:.8rem;color:var(--soft)">No announcements.</p>';return;}
+  el.innerHTML=announcements.map(a=>
+    `<div class="announce-item"><span>${a.text}</span>
+     <button style="background:none;border:none;cursor:pointer;color:var(--gold);font-size:.9rem;flex-shrink:0" onclick="removeAnnounce(${a.id})">✕</button>
+    </div>`).join('');
+}
+function showAnnounceBanner(){
+  if(!announcements.length) return;
+  document.getElementById('announceText').textContent=announcements[0].text;
+  document.getElementById('announceBanner').classList.remove('hidden');
+}
+function dismissAnnounce(){ document.getElementById('announceBanner').classList.add('hidden'); }
+
+// ═══════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════
+function showToast(msg,type='success'){
+  const o=document.querySelector('.toast'); if(o) o.remove();
+  const t=document.createElement('div');
+  t.className=`toast toast-${type}`; t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),3800);
+}
+
+// ═══════════════════════════════════════════
+// CHATBOT
+// ═══════════════════════════════════════════
+function toggleChat(){ document.getElementById('chatWindow').classList.toggle('open'); }
+function chipAsk(q){ document.getElementById('chatInput').value=q; sendChat(); }
+function sendChat(){
+  const i=document.getElementById('chatInput'); const t=i.value.trim(); if(!t) return;
+  i.value=''; addMsg(t,'user');
+  const ty=addMsg('Thinking…','bot');
+  setTimeout(()=>{ ty.remove(); addMsg(getReply(t),'bot'); },600);
+}
+function addMsg(text,type){
+  const m=document.getElementById('chatMessages');
+  const d=document.createElement('div'); d.className=`msg ${type}`; d.innerHTML=text;
+  m.appendChild(d); m.scrollTop=m.scrollHeight; return d;
+}
+function getReply(q){
+  const t=q.toLowerCase();
+  if(t.match(/class|schedule|available|what.*on/)) return `We have 2 classes:<br><br><strong>💪 Functional Strength Training</strong><br>Mon & Wed: 8:45am–4:00pm (8 slots)<br>Fri: 8:45am–11:00am (4 slots)<br><br><strong>🧘 Stretch & Flow (Chair Yoga + Gym)</strong><br>Tue & Thu: 10:00am, 11:00am, 1:30pm`;
+  if(t.match(/monday|mon\b/)) return `Monday – 💪 Strength Training<br>8:45am, 9:30am, 10:15am, 11:00am<br>1:45pm, 2:30pm, 3:15pm, 4:00pm`;
+  if(t.match(/tuesday|tue\b/)) return `Tuesday – 🧘 Stretch & Flow<br>10:00am, 11:00am, 1:30pm`;
+  if(t.match(/wednesday|wed\b/)) return `Wednesday – 💪 Strength Training<br>8:45am, 9:30am, 10:15am, 11:00am<br>1:45pm, 2:30pm, 3:15pm, 4:00pm`;
+  if(t.match(/thursday|thu\b/)) return `Thursday – 🧘 Stretch & Flow<br>10:00am, 11:00am, 1:30pm`;
+  if(t.match(/friday|fri\b/)) return `Friday – 💪 Strength Training (morning only)<br>8:45am, 9:30am, 10:15am, 11:00am`;
+  if(t.match(/rule|how.*book/)) return `📌 Rules:<br>✅ Book as many days as you want<br>🚫 Only 1 class per day<br>📆 This week & next week only<br>⏰ Closes 5 mins before class<br>↩️ Cancel ≥1 hour before`;
+  if(t.match(/cancel/)) return `Go to <strong>My Bookings</strong> and tap Cancel. Must cancel at least <strong>1 hour before</strong> class.`;
+  if(t.match(/mia|no.show|miss/)) return `⚠️ Max <strong>3 MIA</strong> allowed. After 3, management may revoke membership — no refund.`;
+  if(t.match(/hi|hello|hey/)) return `Hello! 👋 Ask me about schedules, rules, or MIA policy!`;
+  if(t.match(/thank/)) return `You're welcome! See you in class 💪🧘`;
+  return `I can help with:<br>• Class schedules<br>• Booking rules<br>• Cancellation & MIA<br><br>Try: "What's on Monday?"`;
+}
+
+// START
+init();
+</script>
+
+</body>
+</html>
