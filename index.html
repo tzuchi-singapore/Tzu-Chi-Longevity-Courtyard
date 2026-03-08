@@ -311,7 +311,18 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
         <h3>⚠️ MIA Tracker</h3>
         <div id="miaTable" style="overflow-x:auto"></div>
       </div>
-      <button class="btn btn-outline btn-sm" style="width:auto" onclick="adminLogout()">Logout</button>
+      <div class="admin-section">
+        <h3>📥 Export Weekly Timetable</h3>
+        <p style="font-size:.85rem;color:var(--mid);margin-bottom:1rem">Download a formatted timetable image to share in your group chat.</p>
+        <div style="display:flex;gap:.7rem;flex-wrap:wrap;align-items:center">
+          <select id="exportWeekSelect" style="border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:.5rem .9rem;font-family:'Nunito',sans-serif;font-size:.88rem;background:var(--bg)">
+            <option value="0">This Week</option>
+            <option value="1">Next Week</option>
+          </select>
+          <button class="btn btn-jade btn-sm" style="width:auto" onclick="exportTimetable()">📥 Download Timetable (PNG)</button>
+        </div>
+      </div>
+            <button class="btn btn-outline btn-sm" style="width:auto" onclick="adminLogout()">Logout</button>
     </div>
   </div>
 </div>
@@ -977,6 +988,212 @@ function getReply(q){
   if(t.match(/hi|hello|hey/)) return `Hello! 👋 Ask me about schedules, rules, or the MIA policy!`;
   if(t.match(/thank/)) return `You're welcome! See you in class 💪🧘`;
   return `I can help with:<br>• Class schedules<br>• Booking rules & limits<br>• Cancellation & MIA<br>• Password help<br><br>Try: "What's on Monday?"`;
+}
+
+
+// ═══════════════════════════════════════════
+// EXPORT TIMETABLE
+// ═══════════════════════════════════════════
+function exportTimetable(){
+  const weekOffset = parseInt(document.getElementById('exportWeekSelect').value);
+  const mon = getWeekMonday(weekOffset);
+  const weekLabel = weekOffset===0 ? 'This Week' : 'Next Week';
+
+  // Build timetable data
+  const STRENGTH_TIMES = ['08:45','09:30','10:15','11:00','13:45','14:30','15:15','16:00'];
+  const STRETCH_TIMES  = ['10:00','11:00','13:30'];
+  const days = [
+    {dow:1, label:'Monday',   date:addDays(mon,0), type:'strength', times:STRENGTH_TIMES},
+    {dow:2, label:'Tuesday',  date:addDays(mon,1), type:'stretch',  times:STRETCH_TIMES},
+    {dow:3, label:'Wednesday',date:addDays(mon,2), type:'strength', times:STRENGTH_TIMES},
+    {dow:4, label:'Thursday', date:addDays(mon,3), type:'stretch',  times:STRETCH_TIMES},
+    {dow:5, label:'Friday',   date:addDays(mon,4), type:'strength', times:STRENGTH_TIMES.slice(0,4)},
+  ];
+
+  // Canvas setup
+  const COL_W = 220;
+  const TIME_W = 110;
+  const ROW_H = 34;
+  const SLOT_ROWS = 10;
+  const SLOT_BLOCK_H = (SLOT_ROWS+1)*ROW_H; // 10 members + header
+  const HEADER_H = 100;
+  const LEGEND_H = 50;
+  const GAP = 18;
+  const PADDING = 28;
+
+  // Count total height: sum of all time slots per day
+  // We'll lay out days in columns side by side, grouped by activity
+  // Layout: 2 columns — Strength days | Stretch days
+  // Strength: Mon, Wed, Fri (8 or 4 slots each)
+  // Stretch: Tue, Thu (3 slots each)
+
+  // We'll do a vertical layout: each day stacked, time slots as rows, members as columns
+  // Actually do a horizontal per-day card layout on canvas
+
+  // Simple approach: one big canvas, days left to right
+  // For each day: header row + for each time slot: time label + 10 member slots stacked
+  const numDays = 5;
+  const canvasW = PADDING*2 + TIME_W + COL_W*numDays + GAP*(numDays-1);
+
+  // Calculate max rows needed
+  const maxSlots = 8; // strength has 8 times
+  const totalRows = maxSlots * (SLOT_ROWS + 1) + 2; // +2 for time header
+  const canvasH = HEADER_H + LEGEND_H + totalRows * ROW_H + PADDING*2;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = canvasW;
+  canvas.height = canvasH + 20;
+  const ctx = canvas.getContext('2d');
+
+  // Background
+  ctx.fillStyle = '#f7f6f2';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Header
+  const hGrad = ctx.createLinearGradient(0,0,canvas.width,HEADER_H);
+  hGrad.addColorStop(0,'#1a1a2e');
+  hGrad.addColorStop(1,'#2d6a4f');
+  ctx.fillStyle = hGrad;
+  ctx.fillRect(0,0,canvas.width,HEADER_H);
+
+  // Title
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 26px serif';
+  ctx.fillText('Longevity Courtyard – Batch 2', PADDING, 40);
+  ctx.font = '16px sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
+  const wkMon = fmtDate(mon);
+  const wkFri = fmtDate(addDays(mon,4));
+  ctx.fillText(weekLabel + '   ' + wkMon + ' – ' + wkFri, PADDING, 65);
+  ctx.font = '13px sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.45)';
+  ctx.fillText('Generated ' + fmtDate(now()) + '   ·   Max 10 per slot', PADDING, 88);
+
+  // Legend
+  const legY = HEADER_H + 12;
+  ctx.fillStyle = '#2d6a4f';
+  ctx.beginPath(); ctx.roundRect(PADDING, legY, 200, 28, 6); ctx.fill();
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 13px sans-serif';
+  ctx.fillText('💪  Mon / Wed / Fri — Functional Strength', PADDING+10, legY+19);
+
+  ctx.fillStyle = '#40916c';
+  ctx.beginPath(); ctx.roundRect(PADDING+210, legY, 170, 28, 6); ctx.fill();
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText('🧘  Tue / Thu — Stretch & Flow', PADDING+220, legY+19);
+
+  // Draw days
+  const startY = HEADER_H + LEGEND_H + PADDING;
+  const colX = (i) => PADDING + i*(COL_W+GAP);
+
+  days.forEach((day, di) => {
+    const x = colX(di);
+    const isStrength = day.type === 'strength';
+    const headerColor = isStrength ? '#1a1a2e' : '#2d6a4f';
+    const accentColor = isStrength ? '#e9c46a' : '#74c69d';
+    const lightColor  = isStrength ? '#fef9ec' : '#d8f3dc';
+
+    // Day header
+    ctx.fillStyle = headerColor;
+    ctx.beginPath(); ctx.roundRect(x, startY, COL_W, 48, [8,8,0,0]); ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 15px serif';
+    ctx.fillText(day.label, x+10, startY+20);
+    ctx.font = '12px sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.fillText(fmtDate(day.date), x+10, startY+38);
+
+    // Activity tag
+    ctx.fillStyle = accentColor;
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillStyle = accentColor;
+    const tagTxt = isStrength ? '💪 Strength' : '🧘 Stretch & Flow';
+    ctx.fillText(tagTxt, x + COL_W - ctx.measureText(tagTxt).width - 10, startY+20);
+
+    let curY = startY + 48;
+
+    day.times.forEach((t, ti) => {
+      const slotBookings = bookings
+        .filter(b => b.date === toYMD(day.date) && b.time === t)
+        .map(b => b.member);
+      const count = slotBookings.length;
+      const isFull = count >= SLOT_LIMIT;
+
+      // Time slot header row
+      const timeHeaderH = 26;
+      ctx.fillStyle = isFull ? '#c0392b' : (ti%2===0 ? '#e8e8f0' : '#f0f0f8');
+      ctx.fillRect(x, curY, COL_W, timeHeaderH);
+      ctx.fillStyle = isFull ? '#ffffff' : '#1a1a2e';
+      ctx.font = 'bold 13px sans-serif';
+      ctx.fillText(timeLabel(t), x+8, curY+18);
+      ctx.fillStyle = isFull ? 'rgba(255,255,255,0.85)' : '#9898aa';
+      ctx.font = '11px sans-serif';
+      const countTxt = count + '/' + SLOT_LIMIT + (isFull?' FULL':'');
+      ctx.fillText(countTxt, x + COL_W - ctx.measureText(countTxt).width - 8, curY+18);
+      curY += timeHeaderH;
+
+      // Member rows
+      for(let slot=0; slot<SLOT_ROWS; slot++){
+        const member = slotBookings[slot] || '';
+        const rowColor = slot%2===0 ? '#ffffff' : '#fafaf8';
+        ctx.fillStyle = rowColor;
+        ctx.fillRect(x, curY, COL_W, ROW_H);
+
+        // slot number
+        ctx.fillStyle = '#cccccc';
+        ctx.font = '11px sans-serif';
+        ctx.fillText(String(slot+1), x+6, curY+ROW_H-10);
+
+        // member name
+        if(member){
+          ctx.fillStyle = '#1a1a2e';
+          ctx.font = '12px sans-serif';
+          // truncate if too long
+          let name = member;
+          while(ctx.measureText(name).width > COL_W-28 && name.length>4) name = name.slice(0,-1);
+          if(name !== member) name += '…';
+          ctx.fillText(name, x+22, curY+ROW_H-10);
+        }
+
+        // bottom border
+        ctx.strokeStyle = '#e8e8f0';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(x, curY+ROW_H); ctx.lineTo(x+COL_W, curY+ROW_H);
+        ctx.stroke();
+
+        curY += ROW_H;
+      }
+
+      // Gap between time slots
+      ctx.fillStyle = lightColor;
+      ctx.fillRect(x, curY, COL_W, 5);
+      curY += 5;
+    });
+
+    // Bottom rounded cap
+    ctx.strokeStyle = '#e0e0e8';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x, startY, COL_W, curY-startY);
+  });
+
+  // Footer
+  const footY = canvas.height - 22;
+  ctx.fillStyle = '#9898aa';
+  ctx.font = '11px sans-serif';
+  ctx.fillText('Tzu Chi Longevity Courtyard Batch 2   ·   Booking App: danielphua85.github.io/longevity-courtyard', PADDING, footY);
+
+  // Download
+  canvas.toBlob(blob => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const weekStr = weekOffset===0 ? 'this-week' : 'next-week';
+    a.href = url;
+    a.download = 'longevity-timetable-' + weekStr + '-' + toYMD(mon) + '.png';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Timetable downloaded! 📥','success');
+  }, 'image/png');
 }
 
 // ═══════════════════════════════════════════
