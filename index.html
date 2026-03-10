@@ -301,6 +301,30 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
         <div id="memberManageList"></div>
       </div>
       <div class="admin-section">
+        <h3>➕ Add Booking for Member</h3>
+        <p style="font-size:.83rem;color:var(--mid);margin-bottom:1rem">Manually book a slot on behalf of any member.</p>
+        <div style="display:flex;gap:.7rem;flex-wrap:wrap;align-items:flex-end;margin-bottom:.5rem">
+          <div class="form-group" style="flex:1;min-width:140px;margin:0">
+            <label>Member</label>
+            <select id="adminBookMember" style="width:100%;border:2px solid var(--line);border-radius:var(--radius-sm);padding:.6rem 1rem;font-size:.88rem;font-family:'Nunito',sans-serif;background:var(--bg);outline:none">
+              <option value="">— Select member —</option>
+            </select>
+          </div>
+          <div class="form-group" style="flex:1;min-width:130px;margin:0">
+            <label>Date</label>
+            <input type="date" id="adminBookDate" style="width:100%" onchange="onAdminBookDateChange()">
+          </div>
+          <div class="form-group" style="flex:1;min-width:120px;margin:0">
+            <label>Time Slot</label>
+            <select id="adminBookTime" style="width:100%;border:2px solid var(--line);border-radius:var(--radius-sm);padding:.6rem 1rem;font-size:.88rem;font-family:'Nunito',sans-serif;background:var(--bg);outline:none">
+              <option value="">— Pick date first —</option>
+            </select>
+          </div>
+          <button class="btn btn-jade btn-sm" style="width:auto;height:40px" onclick="adminAddBooking()">➕ Add Booking</button>
+        </div>
+        <div id="adminBookMsg" style="font-size:.82rem;margin-top:.4rem"></div>
+      </div>
+      <div class="admin-section">
         <h3>📋 All Member Bookings</h3>
         <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.8rem">
           <select id="adminFilterMember" onchange="renderAdminBookings()" style="border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:.4rem .7rem;font-family:'Nunito',sans-serif;font-size:.82rem;background:var(--bg)"><option value="">All Members</option></select>
@@ -760,7 +784,7 @@ function adminLogin(){
     isAdmin=true;
     document.getElementById('adminLoginBox').style.display='none';
     document.getElementById('adminPanel').style.display='block';
-    populateAdminMemberFilter();renderAdminBookings();renderAdminMIA();renderBlockList();renderAnnounceList();renderMemberManageList();
+    populateAdminMemberFilter();populateAdminBookMember();renderAdminBookings();renderAdminMIA();renderBlockList();renderAnnounceList();renderMemberManageList();
   }else{showToast('Incorrect password.','error');document.getElementById('adminPwInput').value='';}
 }
 function adminLogout(){
@@ -787,7 +811,7 @@ async function addMember(){
     document.getElementById('newMemberName').value='';
     document.getElementById('newMemberPw').value='';
     await loadAll();
-    populateMemberDropdown();populateAdminMemberFilter();renderMemberManageList();renderAdminMIA();
+    populateMemberDropdown();populateAdminMemberFilter();populateAdminBookMember();renderMemberManageList();renderAdminMIA();
     showToast(`${name} added! ✅`,'success');
   }catch(e){console.error(e);showToast('Error: '+e.message,'error');}
 }
@@ -805,7 +829,7 @@ async function deleteMember(name){
       document.getElementById('unlockBtn').style.display='none';
     }
     await loadAll();
-    populateMemberDropdown();populateAdminMemberFilter();renderMemberManageList();renderAdminBookings();renderAdminMIA();renderSchedule();
+    populateMemberDropdown();populateAdminMemberFilter();populateAdminBookMember();renderMemberManageList();renderAdminBookings();renderAdminMIA();renderSchedule();
     showToast(`${name} removed.`,'warn');
   }catch(e){console.error(e);showToast('Error: '+e.message,'error');}
 }
@@ -839,6 +863,78 @@ function renderMemberManageList(){
         <button class="btn btn-danger btn-sm" onclick="deleteMember('${m.name.replace(/'/g,"\\'")}')">Remove</button>
       </div>
     </div>`).join('');
+}
+
+
+// ── ADMIN MANUAL BOOKING ──
+function populateAdminBookMember(){
+  const sel = document.getElementById('adminBookMember');
+  if(!sel) return;
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">— Select member —</option>';
+  members.slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(m=>{
+    const o = document.createElement('option');
+    o.value = m.name; o.textContent = m.name;
+    if(m.name===cur) o.selected=true;
+    sel.appendChild(o);
+  });
+}
+
+function onAdminBookDateChange(){
+  const dateVal = document.getElementById('adminBookDate').value;
+  const timeSel = document.getElementById('adminBookTime');
+  timeSel.innerHTML = '<option value="">— Select time —</option>';
+  if(!dateVal) return;
+  const d = new Date(dateVal+'T12:00:00');
+  const dow = d.getDay(); // 0=Sun,1=Mon...
+  const STRENGTH = ['08:45','09:30','10:15','11:00','13:45','14:30','15:15','16:00'];
+  const STRENGTH_FRI = ['08:45','09:30','10:15','11:00'];
+  const STRETCH = ['10:00','11:00','13:30'];
+  let times = [], classType = '', classLabel = '';
+  if(dow===1||dow===3){ times=STRENGTH; classType='strength'; classLabel='Functional Strength Training'; }
+  else if(dow===5){ times=STRENGTH_FRI; classType='strength'; classLabel='Functional Strength Training'; }
+  else if(dow===2||dow===4){ times=STRETCH; classType='stretch'; classLabel='Stretch & Flow (Chair Yoga + Gym)'; }
+  else {
+    timeSel.innerHTML = '<option value="">No class on this day</option>';
+    return;
+  }
+  times.forEach(t=>{
+    const booked = bookings.filter(b=>b.date===dateVal&&b.time===t).length;
+    const o = document.createElement('option');
+    o.value = t+'|'+classType+'|'+classLabel;
+    o.textContent = timeLabel(t) + ' · ' + booked + '/' + SLOT_LIMIT + (booked>=SLOT_LIMIT?' (FULL)':'');
+    if(booked>=SLOT_LIMIT) o.disabled = true;
+    timeSel.appendChild(o);
+  });
+}
+
+async function adminAddBooking(){
+  const member = document.getElementById('adminBookMember').value;
+  const dateVal = document.getElementById('adminBookDate').value;
+  const timeVal = document.getElementById('adminBookTime').value;
+  const msg = document.getElementById('adminBookMsg');
+  msg.textContent = '';
+  if(!member){ msg.innerHTML='<span style="color:var(--danger)">⚠️ Please select a member.</span>'; return; }
+  if(!dateVal){ msg.innerHTML='<span style="color:var(--danger)">⚠️ Please select a date.</span>'; return; }
+  if(!timeVal){ msg.innerHTML='<span style="color:var(--danger)">⚠️ Please select a time slot.</span>'; return; }
+  const [tm, classType, classLabel] = timeVal.split('|');
+  // Check already booked same day
+  const alreadyDay = bookings.find(b=>b.member===member&&b.date===dateVal);
+  if(alreadyDay){ msg.innerHTML=`<span style="color:var(--danger)">⚠️ ${member} already has a booking on this day.</span>`; return; }
+  // Check already booked same slot
+  const alreadySlot = bookings.find(b=>b.member===member&&b.date===dateVal&&b.time===tm);
+  if(alreadySlot){ msg.innerHTML=`<span style="color:var(--danger)">⚠️ Already booked this slot.</span>`; return; }
+  // Check slot full
+  const slotCount = bookings.filter(b=>b.date===dateVal&&b.time===tm).length;
+  if(slotCount>=SLOT_LIMIT){ msg.innerHTML=`<span style="color:var(--danger)">⚠️ This slot is full (${SLOT_LIMIT}/${SLOT_LIMIT}).</span>`; return; }
+  try{
+    msg.innerHTML='<span style="color:var(--mid)">Booking...</span>';
+    await dbInsert('bookings',{member,date:dateVal,time:tm,class_type:classType,class_label:classLabel});
+    await loadAll();
+    renderAdminBookings(); renderSchedule(); onAdminBookDateChange();
+    msg.innerHTML=`<span style="color:var(--jade)">✅ Booked ${member} for ${timeLabel(tm)} on ${fmtDate(parseYMD(dateVal))}!</span>`;
+    showToast(`✅ Booked ${member} for ${timeLabel(tm)}`,'success');
+  }catch(e){ msg.innerHTML=`<span style="color:var(--danger)">Error: ${e.message}</span>`; }
 }
 
 // ── BOOKINGS ──
