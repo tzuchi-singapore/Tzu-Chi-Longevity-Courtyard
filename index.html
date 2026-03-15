@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -20,19 +19,20 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--jade3);border-radius:99px}
 .nav{background:var(--ink);padding:0 1.5rem;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:300;box-shadow:0 2px 20px rgba(0,0,0,.35)}
 .nav-left{display:flex;align-items:center;gap:.9rem}
-.nav-logo-img{width:40px;height:40px;border-radius:50%;object-fit:contain;background:white;padding:3px;flex-shrink:0}
 .nav-logo{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--white);letter-spacing:.01em;line-height:1.2}
 .nav-logo span{color:var(--gold-light)}
 .nav-logo small{display:block;font-family:'Nunito',sans-serif;font-size:.65rem;color:rgba(255,255,255,.4);letter-spacing:.04em;text-transform:uppercase}
-.nav-member{font-size:.78rem;color:var(--soft);text-align:right;line-height:1.5}
+.nav-right{display:flex;align-items:center;gap:.7rem}
+.nav-member{font-size:.78rem;color:var(--soft);text-align:right;line-height:1.5;display:none}
 .nav-member strong{color:var(--jade3);display:block}
-.announce-bar{background:linear-gradient(90deg,var(--gold) 0%,var(--gold-light) 100%);padding:.65rem 1.5rem;display:flex;align-items:center;gap:.6rem;font-size:.82rem;font-weight:600;color:var(--ink)}
+.lang-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:white;border-radius:999px;padding:.3rem .8rem;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif}
+.announce-bar{background:linear-gradient(90deg,var(--gold),var(--gold-light));padding:.65rem 1.5rem;display:flex;align-items:center;gap:.6rem;font-size:.82rem;font-weight:600;color:var(--ink)}
 .announce-bar.hidden{display:none}
 .announce-close{background:none;border:none;cursor:pointer;font-size:1.1rem;opacity:.6;margin-left:auto}
 .main{max-width:960px;margin:0 auto;padding:1.5rem 1.2rem 5rem}
 .hero{background:linear-gradient(135deg,var(--jade) 0%,var(--jade2) 60%,#1b4332 100%);border-radius:var(--radius);padding:2rem 2.5rem;margin-bottom:1.8rem;color:white;position:relative;overflow:hidden;display:flex;align-items:center;gap:1.5rem}
 .hero::before{content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;background:rgba(255,255,255,.04);border-radius:50%}
-.hero-logo{width:72px;height:72px;border-radius:50%;background:white;padding:5px;object-fit:contain;flex-shrink:0;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.hero-emblem{width:72px;height:72px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 16px rgba(0,0,0,.2);font-size:2.2rem}
 .hero-text{position:relative}
 .hero h1{font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:.3rem}
 .hero p{font-size:.9rem;opacity:.82}
@@ -41,9 +41,9 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .member-bar label{font-weight:700;font-size:.85rem;white-space:nowrap;color:var(--jade)}
 .member-bar select{flex:1;min-width:180px;border:2px solid var(--line);border-radius:var(--radius-sm);padding:.6rem 1rem;font-size:.9rem;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);outline:none;transition:border-color .2s;cursor:pointer}
 .member-bar select:focus{border-color:var(--jade)}
-.mia-badge{font-size:.75rem;font-weight:700;padding:.25rem .7rem;border-radius:999px;white-space:nowrap}
+.mia-badge{font-size:.75rem;font-weight:700;padding:.25rem .7rem;border-radius:999px;white-space:nowrap;display:none}
 .mia-ok{background:#d8f3dc;color:var(--jade)}.mia-warn{background:#fef3cd;color:#8a6200}.mia-danger{background:#fde8e8;color:var(--danger)}
-.unlock-btn{background:var(--jade);color:white;border:none;border-radius:var(--radius-sm);padding:.5rem 1rem;font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap}
+.unlock-btn{background:var(--jade);color:white;border:none;border-radius:var(--radius-sm);padding:.5rem 1rem;font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;white-space:nowrap;display:none}
 .unlock-btn.unlocked{background:#d8f3dc;color:var(--jade);cursor:default}
 .tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;background:var(--white);padding:.4rem;border-radius:var(--radius);box-shadow:0 2px 8px var(--shadow);overflow-x:auto}
 .tab{flex:1;min-width:80px;padding:.6rem 1rem;text-align:center;border-radius:calc(var(--radius) - 4px);font-size:.82rem;font-weight:700;cursor:pointer;border:none;background:none;font-family:'Nunito',sans-serif;color:var(--mid);transition:all .2s;white-space:nowrap}
@@ -51,7 +51,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .tab:hover:not(.active){background:var(--jade-pale);color:var(--jade)}
 .week-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;gap:.5rem}
 .week-label{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--ink);text-align:center;flex:1}
-.week-label small{display:block;font-family:'Nunito',sans-serif;font-size:.75rem;color:var(--soft);font-style:normal;margin-top:.1rem}
+.week-label small{display:block;font-family:'Nunito',sans-serif;font-size:.75rem;color:var(--soft);margin-top:.1rem}
 .wbtn{background:var(--white);border:2px solid var(--line);border-radius:var(--radius-sm);padding:.4rem .9rem;cursor:pointer;font-size:.85rem;color:var(--mid);transition:all .2s;font-family:'Nunito',sans-serif}
 .wbtn:hover:not(:disabled){border-color:var(--jade);color:var(--jade)}
 .wbtn:disabled{opacity:.35;cursor:not-allowed}
@@ -76,47 +76,54 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .pill{display:inline-block;font-size:.7rem;font-weight:700;padding:.22rem .6rem;border-radius:999px;white-space:nowrap}
 .pill-book{background:var(--jade);color:white;cursor:pointer;border:none;font-family:'Nunito',sans-serif;font-weight:700;padding:.35rem .9rem;border-radius:999px;font-size:.78rem;transition:background .2s}
 .pill-book:hover{background:var(--jade2)}
-.pill-booked{background:var(--jade-pale);color:var(--jade);border:1.5px solid var(--jade3)}
-.pill-full{background:#f3e8e8;color:var(--danger)}
-.pill-past{background:#f0f0f0;color:#aaa}
+.pill-booked{background:var(--jade-pale);color:var(--jade);border:1.5px solid var(--jade3);padding:.22rem .6rem;border-radius:999px;font-size:.7rem;font-weight:700}
+.pill-full{background:#f3e8e8;color:var(--danger);padding:.22rem .6rem;border-radius:999px;font-size:.7rem;font-weight:700}
+.pill-past{background:#f0f0f0;color:#aaa;padding:.22rem .6rem;border-radius:999px;font-size:.7rem;font-weight:700}
 .pill-cancel{background:none;border:1.5px solid #ddd;color:var(--soft);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;padding:.28rem .7rem;border-radius:999px;font-size:.72rem;transition:all .2s}
 .pill-cancel:hover{border-color:var(--danger);color:var(--danger)}
+.pill-joinwl{background:var(--warn);color:white;cursor:pointer;border:none;font-family:'Nunito',sans-serif;font-weight:700;padding:.35rem .9rem;border-radius:999px;font-size:.78rem;transition:opacity .2s}
+.pill-joinwl:hover{opacity:.85}
+.pill-leavewl{background:none;border:1.5px solid var(--warn);color:var(--warn);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;padding:.28rem .7rem;border-radius:999px;font-size:.72rem;transition:all .2s}
+.pill-leavewl:hover{border-color:var(--danger);color:var(--danger)}
 .slot-booked{border-color:var(--jade3);background:#f5fcf8}
+.slot-waitlisted{border-color:#f0a500;background:#fffbf0}
 .slot-past{opacity:.42}
+.wl-badge{display:inline-flex;align-items:center;gap:.3rem;background:#fff3e0;border:1.5px solid #f0a500;border-radius:999px;padding:.18rem .6rem;font-size:.68rem;font-weight:700;color:#e67e22;white-space:nowrap}
 .bookings-empty{text-align:center;padding:3rem 1rem;color:var(--soft)}
 .bookings-empty .empty-icon{font-size:3rem;margin-bottom:.5rem}
 .booking-card{background:var(--white);border-radius:var(--radius);padding:1.1rem 1.4rem;margin-bottom:.8rem;box-shadow:0 2px 10px var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
 .booking-card-left strong{display:block;font-size:.95rem;color:var(--ink)}
 .booking-card-left span{font-size:.78rem;color:var(--mid)}
 .status-tag{font-size:.7rem;font-weight:700;padding:.2rem .6rem;border-radius:999px}
-.status-upcoming{background:var(--jade-pale);color:var(--jade)}
-.status-past{background:#f0f0f0;color:var(--soft)}
-.btn-cancel-booking{background:none;border:1.5px solid #ddd;color:var(--soft);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;padding:.3rem .75rem;border-radius:999px;font-size:.75rem;transition:all .2s}
-.btn-cancel-booking:hover{border-color:var(--danger);color:var(--danger)}
-.btn-cancel-booking:disabled{opacity:.4;cursor:not-allowed}
+.st-upcoming{background:var(--jade-pale);color:var(--jade)}
+.st-past{background:#f0f0f0;color:var(--soft)}
+.st-waitlist{background:#fff3e0;color:#e67e22}
+.btn-cancel-bk{background:none;border:1.5px solid #ddd;color:var(--soft);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;padding:.3rem .75rem;border-radius:999px;font-size:.75rem;transition:all .2s}
+.btn-cancel-bk:hover{border-color:var(--danger);color:var(--danger)}
+.btn-cancel-bk:disabled{opacity:.4;cursor:not-allowed}
 .rules-card{background:var(--white);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:0 2px 10px var(--shadow)}
 .rules-card h3{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--jade);margin-bottom:.8rem}
 .rule-item{display:flex;gap:.7rem;padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.87rem;line-height:1.6;color:var(--ink2)}
 .rule-item:last-child{border-bottom:none}
 .rule-icon{flex-shrink:0;font-size:1rem;margin-top:.1rem}
-.admin-login{background:var(--white);border-radius:var(--radius);padding:2rem;max-width:360px;margin:0 auto;box-shadow:0 4px 20px var(--shadow2)}
-.admin-login h2{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:1.2rem;text-align:center;color:var(--jade)}
+.admin-login-box{background:var(--white);border-radius:var(--radius);padding:2rem;max-width:360px;margin:0 auto;box-shadow:0 4px 20px var(--shadow2)}
+.admin-login-box h2{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:1.2rem;text-align:center;color:var(--jade)}
 .form-group{margin-bottom:1rem}
 .form-group label{display:block;font-size:.8rem;font-weight:700;color:var(--mid);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.04em}
 .form-group input,.form-group select,.form-group textarea{width:100%;border:2px solid var(--line);border-radius:var(--radius-sm);padding:.65rem 1rem;font-size:.9rem;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);outline:none;transition:border-color .2s}
 .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--jade)}
 .form-group textarea{resize:vertical;min-height:80px}
 .btn{display:inline-block;padding:.7rem 1.5rem;border-radius:var(--radius-sm);font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;border:none;transition:all .2s}
-.btn-jade{background:var(--jade);color:white;width:100%}
-.btn-jade:hover{background:var(--jade2)}
-.btn-danger{background:var(--danger);color:white;border:none}
-.btn-danger:hover{opacity:.85}
-.btn-warn{background:var(--warn);color:white;border:none}
-.btn-outline{background:none;border:2px solid var(--jade);color:var(--jade)}
-.btn-outline:hover{background:var(--jade-pale)}
+.btn-jade{background:var(--jade);color:white}.btn-jade:hover{background:var(--jade2)}
+.btn-full{width:100%}
+.btn-danger{background:var(--danger);color:white}.btn-danger:hover{opacity:.85}
+.btn-warn{background:var(--warn);color:white}.btn-warn:hover{opacity:.85}
+.btn-outline{background:none;border:2px solid var(--jade);color:var(--jade)}.btn-outline:hover{background:var(--jade-pale)}
 .btn-sm{padding:.4rem .9rem;font-size:.78rem}
 .admin-section{background:var(--white);border-radius:var(--radius);padding:1.4rem;margin-bottom:1.2rem;box-shadow:0 2px 10px var(--shadow)}
 .admin-section h3{font-family:'Playfair Display',serif;font-size:1rem;color:var(--jade);margin-bottom:1rem;padding-bottom:.6rem;border-bottom:2px solid var(--jade-pale)}
+.bulk-section{border:2px solid var(--gold)}
+.bulk-section h3{color:var(--gold) !important;border-bottom-color:var(--gold-pale) !important}
 .admin-table{width:100%;border-collapse:collapse;font-size:.82rem}
 .admin-table th{text-align:left;padding:.5rem .7rem;background:var(--bg);color:var(--mid);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em}
 .admin-table td{padding:.55rem .7rem;border-bottom:1px solid var(--line);vertical-align:middle}
@@ -124,10 +131,13 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .block-item{display:flex;align-items:center;justify-content:space-between;padding:.6rem .8rem;background:var(--bg);border-radius:var(--radius-sm);font-size:.83rem;margin-bottom:.4rem}
 .announce-item{padding:.7rem 1rem;background:var(--gold-pale);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:.83rem;display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.4rem}
 .member-manage-item{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1rem;background:var(--bg);border-radius:var(--radius-sm);font-size:.87rem;margin-bottom:.4rem;gap:.5rem;flex-wrap:wrap}
+.bulk-result{display:flex;align-items:center;gap:.5rem;padding:.4rem .7rem;border-radius:var(--radius-sm);margin-bottom:.3rem;font-size:.82rem}
+.bulk-ok{background:#d8f3dc;color:var(--jade)}
+.bulk-skip{background:#f0f0f0;color:var(--soft)}
 .modal-overlay{position:fixed;inset:0;background:rgba(26,26,46,.55);z-index:500;display:flex;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(3px)}
 .modal-overlay.hidden{display:none}
 .modal{background:var(--white);border-radius:var(--radius);padding:2rem;max-width:420px;width:100%;box-shadow:0 10px 50px rgba(0,0,0,.25);animation:modalIn .25s ease}
-@keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:scale(1)}}
 .modal h2{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:.5rem;color:var(--jade)}
 .modal p{font-size:.88rem;color:var(--mid);margin-bottom:1.2rem;line-height:1.6}
 .modal-btns{display:flex;gap:.7rem;justify-content:flex-end}
@@ -138,7 +148,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 @keyframes toastIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .loading-screen{position:fixed;inset:0;background:var(--ink);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;gap:1rem}
 .loading-screen.done{display:none}
-.spinner{width:44px;height:44px;border:4px solid rgba(255,255,255,.15);border-top-color:var(--jade3);border-radius:50%;animation:spin 0.8s linear infinite}
+.spinner{width:44px;height:44px;border:4px solid rgba(255,255,255,.15);border-top-color:var(--jade3);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .chat-bubble{position:fixed;bottom:1.5rem;right:1.5rem;z-index:400}
 .chat-toggle{width:58px;height:58px;background:var(--jade);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(45,106,79,.45);font-size:1.5rem;border:none;transition:transform .2s}
@@ -163,12 +173,11 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .chat-input-row input{flex:1;border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:.5rem .8rem;font-size:.82rem;font-family:'Nunito',sans-serif;outline:none;background:var(--bg)}
 .chat-input-row input:focus{border-color:var(--jade)}
 .chat-send{background:var(--jade);color:white;border:none;border-radius:var(--radius-sm);padding:.5rem .9rem;cursor:pointer;font-size:.82rem;font-weight:700;font-family:'Nunito',sans-serif}
+.sel-style{width:100%;border:2px solid var(--line);border-radius:var(--radius-sm);padding:.6rem 1rem;font-size:.88rem;font-family:'Nunito',sans-serif;background:var(--bg);outline:none;color:var(--ink)}
 @media(max-width:600px){
   .hero{flex-direction:column;align-items:flex-start;gap:.8rem;padding:1.5rem}
-  .hero h1{font-size:1.4rem}
-  .nav-logo{font-size:1rem}
-  .chat-window{width:280px}
-  .main{padding:1rem .8rem 5rem}
+  .hero h1{font-size:1.4rem}.nav-logo{font-size:1rem}
+  .chat-window{width:280px}.main{padding:1rem .8rem 5rem}
 }
 </style>
 </head>
@@ -182,15 +191,14 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 
 <nav class="nav">
   <div class="nav-left">
-    <img class="nav-logo-img" src="data:image/png;base64,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" alt="Tzu Chi">Longevity <span>Courtyard</span><small>Tzu Chi · Batch 2</small></div>
+    <div style="width:40px;height:40px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0">🌿</div>
+    <div class="nav-logo">Longevity <span>Courtyard</span><small>Tzu Chi · Batch 2</small></div>
   </div>
-  <div style="display:flex;align-items:center;gap:.6rem">
-    <button id="langBtn" onclick="toggleLang()" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:white;border-radius:999px;padding:.3rem .8rem;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;white-space:nowrap">中文</button>
-  <div style="display:flex;align-items:center;gap:.7rem">
-    <button id="langToggle" onclick="toggleLang()" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:white;border-radius:999px;padding:.3rem .8rem;font-family:'Nunito',sans-serif;font-size:.75rem;font-weight:700;cursor:pointer;white-space:nowrap">中文</button>
-    <div class="nav-member" id="navMemberInfo" style="display:none">
-    <strong id="navMemberName">—</strong><span id="navLockStatus" style="font-size:.7rem;color:var(--jade3)">🔓 Unlocked</span>
-  </div>
+  <div class="nav-right">
+    <button class="lang-btn" id="langToggle" onclick="toggleLang()">中文</button>
+    <div class="nav-member" id="navMemberInfo">
+      <strong id="navMemberName">—</strong>
+      <span id="navLockStatus" style="font-size:.7rem;color:var(--jade3)">🔓 Unlocked</span>
     </div>
   </div>
 </nav>
@@ -202,7 +210,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 
 <div class="main">
   <div class="hero">
-    <img class="hero-logo" src="data:image/png;base64,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" alt="Tzu Chi">
+    <div class="hero-emblem">🌿</div>
     <div class="hero-text">
       <div class="hero-badge" id="heroBadgeEl">Batch 2 · Members Only</div>
       <h1 id="heroTitleEl">Longevity Courtyard</h1>
@@ -211,32 +219,37 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
   </div>
 
   <div class="member-bar">
-    <label>👤 Select Member</label>
+    <label id="memberBarLabel">👤 Select Member</label>
     <select id="memberSelect" onchange="onMemberChange()">
       <option value="">— Choose your name —</option>
     </select>
-    <button class="unlock-btn" id="unlockBtn" onclick="showMemberLogin()" style="display:none">🔒 Enter Password</button>
-    <span class="mia-badge mia-ok" id="miaBadge" style="display:none">0/3 MIA</span>
+    <button class="unlock-btn" id="unlockBtn" onclick="showMemberLogin()">🔒 Enter Password</button>
+    <span class="mia-badge mia-ok" id="miaBadge">0/3 MIA</span>
   </div>
 
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('book',this)">📅 Book Class</button>
-    <button class="tab" onclick="switchTab('mybookings',this)">🗓 My Bookings</button>
-    <button class="tab" onclick="switchTab('rules',this)">📋 Rules</button>
-    <button class="tab" onclick="switchTab('admin',this)">🔑 Admin</button>
+    <button class="tab active" id="tBtn-book"        onclick="switchTab('book',this)">📅 Book Class</button>
+    <button class="tab"        id="tBtn-mybookings"  onclick="switchTab('mybookings',this)">🗓 My Bookings</button>
+    <button class="tab"        id="tBtn-rules"       onclick="switchTab('rules',this)">📋 Rules</button>
+    <button class="tab"        id="tBtn-admin"       onclick="switchTab('admin',this)">🔑 Admin</button>
   </div>
 
+  <!-- BOOK TAB -->
   <div id="tab-book">
     <div class="week-nav">
       <button class="wbtn" id="prevWeekBtn" onclick="changeWeek(-1)" disabled>◀ Prev</button>
-      <div class="week-label" id="weekLabel">This Week<small id="weekRange"></small></div>
+      <div class="week-label" id="weekLabelEl">This Week<small id="weekRangeEl"></small></div>
       <button class="wbtn" id="nextWeekBtn" onclick="changeWeek(1)">Next ▶</button>
     </div>
     <div class="schedule-grid" id="scheduleGrid"></div>
   </div>
 
-  <div id="tab-mybookings" style="display:none"><div id="myBookingsContent"></div></div>
+  <!-- MY BOOKINGS TAB -->
+  <div id="tab-mybookings" style="display:none">
+    <div id="myBookingsContent"></div>
+  </div>
 
+  <!-- RULES TAB -->
   <div id="tab-rules" style="display:none">
     <div class="rules-card">
       <h3>📅 Class Schedule</h3>
@@ -253,6 +266,13 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
       <div class="rule-item"><span class="rule-icon">🔒</span><div>You need your <strong>personal password</strong> to book or cancel.</div></div>
     </div>
     <div class="rules-card">
+      <h3>⏳ Waitlist</h3>
+      <div class="rule-item"><span class="rule-icon">📋</span><div>When a slot is full, tap <strong>Join Waitlist</strong> to queue up.</div></div>
+      <div class="rule-item"><span class="rule-icon">🔔</span><div>If someone cancels, the <strong>first person on the waitlist is auto-booked</strong>.</div></div>
+      <div class="rule-item"><span class="rule-icon">🚪</span><div>You can leave the waitlist anytime before the class starts.</div></div>
+      <div class="rule-item"><span class="rule-icon">📅</span><div>Only one waitlist entry allowed per day.</div></div>
+    </div>
+    <div class="rules-card">
       <h3>❌ Cancellation &amp; MIA Policy</h3>
       <div class="rule-item"><span class="rule-icon">↩️</span><div>Cancellations must be made <strong>at least 1 hour before</strong> class starts.</div></div>
       <div class="rule-item"><span class="rule-icon">⚠️</span><div>Maximum <strong>3 MIA (no-show without reason)</strong> allowed.</div></div>
@@ -260,18 +280,20 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
     </div>
   </div>
 
+  <!-- ADMIN TAB -->
   <div id="tab-admin" style="display:none">
     <div id="adminLoginBox">
-      <div class="admin-login">
+      <div class="admin-login-box">
         <h2>🔑 Management Login</h2>
         <div class="form-group">
           <label>Password</label>
           <input type="password" id="adminPwInput" placeholder="Enter management password" onkeydown="if(event.key==='Enter')adminLogin()">
         </div>
-        <button class="btn btn-jade" onclick="adminLogin()">Login</button>
+        <button class="btn btn-jade btn-full" onclick="adminLogin()">Login</button>
       </div>
     </div>
     <div id="adminPanel" style="display:none">
+
       <div class="admin-section">
         <h3>📢 Announcements</h3>
         <div class="form-group"><label>Post New Announcement</label>
@@ -279,125 +301,145 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
         <button class="btn btn-jade btn-sm" style="width:auto;margin-bottom:1rem" onclick="addAnnounce()">Post</button>
         <div id="announceList"></div>
       </div>
+
       <div class="admin-section">
         <h3>🚫 Block Dates / Time Slots</h3>
         <div style="display:flex;gap:.7rem;flex-wrap:wrap;align-items:flex-end;margin-bottom:.8rem">
           <div class="form-group" style="flex:1;min-width:130px;margin:0"><label>Date</label><input type="date" id="blockDate"></div>
-          <div class="form-group" style="flex:1;min-width:110px;margin:0"><label>Time (blank=all day)</label><input type="time" id="blockTime"></div>
+          <div class="form-group" style="flex:1;min-width:110px;margin:0"><label>Time (blank = all day)</label><input type="time" id="blockTime"></div>
           <div class="form-group" style="flex:1;min-width:140px;margin:0"><label>Reason</label><input type="text" id="blockReason" placeholder="e.g. Public Holiday"></div>
           <button class="btn btn-jade btn-sm" style="width:auto;height:38px;margin-bottom:1rem" onclick="addBlock()">Block</button>
         </div>
         <div id="blockList"></div>
       </div>
+
       <div class="admin-section">
         <h3>👥 Manage Members</h3>
         <div style="display:flex;gap:.7rem;margin-bottom:1rem;align-items:flex-end;flex-wrap:wrap">
-          <div class="form-group" style="flex:1;min-width:140px;margin:0"><label>Name</label>
-            <input type="text" id="newMemberName" placeholder="Full name"></div>
-          <div class="form-group" style="flex:1;min-width:140px;margin:0"><label>Password</label>
-            <input type="text" id="newMemberPw" placeholder="Set a password"></div>
-          <button class="btn btn-jade btn-sm" style="width:auto;height:38px;margin-bottom:0" onclick="addMember()">Add</button>
+          <div class="form-group" style="flex:1;min-width:140px;margin:0"><label>Name</label><input type="text" id="newMemberName" placeholder="Full name"></div>
+          <div class="form-group" style="flex:1;min-width:140px;margin:0"><label>Password</label><input type="text" id="newMemberPw" placeholder="Set a password"></div>
+          <button class="btn btn-jade btn-sm" style="width:auto;height:38px" onclick="addMember()">Add</button>
         </div>
         <div id="memberManageList"></div>
       </div>
+
       <div class="admin-section">
         <h3>➕ Add Booking for Member</h3>
         <p style="font-size:.83rem;color:var(--mid);margin-bottom:1rem">Manually book a slot on behalf of any member.</p>
         <div style="display:flex;gap:.7rem;flex-wrap:wrap;align-items:flex-end;margin-bottom:.5rem">
-          <div class="form-group" style="flex:1;min-width:140px;margin:0">
-            <label>Member</label>
-            <select id="adminBookMember" style="width:100%;border:2px solid var(--line);border-radius:var(--radius-sm);padding:.6rem 1rem;font-size:.88rem;font-family:'Nunito',sans-serif;background:var(--bg);outline:none">
-              <option value="">— Select member —</option>
-            </select>
-          </div>
-          <div class="form-group" style="flex:1;min-width:130px;margin:0">
-            <label>Date</label>
-            <input type="date" id="adminBookDate" style="width:100%" onchange="onAdminBookDateChange()">
-          </div>
-          <div class="form-group" style="flex:1;min-width:120px;margin:0">
-            <label>Time Slot</label>
-            <select id="adminBookTime" style="width:100%;border:2px solid var(--line);border-radius:var(--radius-sm);padding:.6rem 1rem;font-size:.88rem;font-family:'Nunito',sans-serif;background:var(--bg);outline:none">
-              <option value="">— Pick date first —</option>
-            </select>
-          </div>
-          <button class="btn btn-jade btn-sm" style="width:auto;height:40px" onclick="adminAddBooking()">➕ Add Booking</button>
+          <div class="form-group" style="flex:1;min-width:140px;margin:0"><label>Member</label>
+            <select id="adminBookMember" class="sel-style"><option value="">— Select member —</option></select></div>
+          <div class="form-group" style="flex:1;min-width:130px;margin:0"><label>Date</label>
+            <input type="date" id="adminBookDate" style="width:100%" onchange="onAdminBookDateChange()"></div>
+          <div class="form-group" style="flex:1;min-width:120px;margin:0"><label>Time Slot</label>
+            <select id="adminBookTime" class="sel-style"><option value="">— Pick date first —</option></select></div>
+          <button class="btn btn-jade btn-sm" style="width:auto;height:40px" onclick="adminAddBooking()">➕ Add</button>
         </div>
         <div id="adminBookMsg" style="font-size:.82rem;margin-top:.4rem"></div>
       </div>
+
+      <!-- BULK BOOKING -->
+      <div class="admin-section bulk-section">
+        <h3>⚡ Bulk Book — Entire Month</h3>
+        <p style="font-size:.83rem;color:var(--mid);margin-bottom:1rem">
+          Books a member for <strong>every occurrence</strong> of a chosen day &amp; time slot across the <strong>current and next calendar month</strong>.
+          Past dates, blocked slots, and already-booked days are automatically skipped.
+        </p>
+        <div style="display:flex;gap:.7rem;flex-wrap:wrap;align-items:flex-end;margin-bottom:.8rem">
+          <div class="form-group" style="flex:1;min-width:160px;margin:0"><label>Member</label>
+            <select id="bulkMember" class="sel-style"><option value="">— Select member —</option></select></div>
+          <div class="form-group" style="flex:1;min-width:140px;margin:0"><label>Day of Week</label>
+            <select id="bulkDow" class="sel-style" onchange="onBulkDowChange()">
+              <option value="">— Select day —</option>
+              <option value="1">Monday 💪</option><option value="2">Tuesday 🧘</option>
+              <option value="3">Wednesday 💪</option><option value="4">Thursday 🧘</option>
+              <option value="5">Friday 💪</option>
+            </select></div>
+          <div class="form-group" style="flex:1;min-width:130px;margin:0"><label>Time Slot</label>
+            <select id="bulkTime" class="sel-style"><option value="">— Pick day first —</option></select></div>
+          <button class="btn btn-warn btn-sm" style="width:auto;height:40px" onclick="adminBulkBook()">⚡ Bulk Book</button>
+        </div>
+        <div id="bulkMsg" style="font-size:.83rem;font-weight:600;margin-bottom:.5rem"></div>
+        <div id="bulkResults" style="max-height:280px;overflow-y:auto"></div>
+      </div>
+
       <div class="admin-section">
         <h3>📋 All Member Bookings</h3>
         <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.8rem">
-          <select id="adminFilterMember" onchange="renderAdminBookings()" style="border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:.4rem .7rem;font-family:'Nunito',sans-serif;font-size:.82rem;background:var(--bg)"><option value="">All Members</option></select>
-          <select id="adminFilterWeek" onchange="renderAdminBookings()" style="border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:.4rem .7rem;font-family:'Nunito',sans-serif;font-size:.82rem;background:var(--bg)">
-            <option value="">All</option><option value="this">This Week</option><option value="next">Next Week</option>
+          <select id="adminFilterMember" class="sel-style" style="width:auto" onchange="renderAdminBookings()"><option value="">All Members</option></select>
+          <select id="adminFilterWeek" class="sel-style" style="width:auto" onchange="renderAdminBookings()">
+            <option value="">All Weeks</option><option value="this">This Week</option><option value="next">Next Week</option>
           </select>
           <button class="btn btn-outline btn-sm" onclick="renderAdminBookings()" style="width:auto">🔄 Refresh</button>
         </div>
         <div id="adminBookingsTable" style="overflow-x:auto"></div>
       </div>
+
+      <div class="admin-section">
+        <h3>⏳ Waitlist Overview</h3>
+        <div id="adminWaitlistTable" style="overflow-x:auto"></div>
+      </div>
+
       <div class="admin-section">
         <h3>⚠️ MIA Tracker</h3>
         <div id="miaTable" style="overflow-x:auto"></div>
       </div>
+
       <div class="admin-section">
-        <h3 id='exportHeading'>📥 Export Weekly Timetable</h3>
-        <p style="font-size:.85rem;color:var(--mid);margin-bottom:1rem">Download a formatted timetable image to share in your group chat.</p>
+        <h3>📥 Export Weekly Timetable</h3>
+        <p style="font-size:.85rem;color:var(--mid);margin-bottom:1rem">Download a PNG timetable to share in your group chat.</p>
         <div style="display:flex;gap:.7rem;flex-wrap:wrap;align-items:center">
-          <select id="exportWeekSelect" style="border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:.5rem .9rem;font-family:'Nunito',sans-serif;font-size:.88rem;background:var(--bg)">
-            <option value="0">This Week</option>
-            <option value="1">Next Week</option>
+          <select id="exportWeekSelect" class="sel-style" style="width:auto">
+            <option value="0">This Week</option><option value="1">Next Week</option>
           </select>
-          <button class="btn btn-jade btn-sm" style="width:auto" onclick="exportTimetable()" id='exportDlBtn'>📥 Download Timetable (PNG)</button>
+          <button class="btn btn-jade btn-sm" style="width:auto" onclick="exportTimetable()">📥 Download PNG</button>
         </div>
       </div>
-            <button class="btn btn-outline btn-sm" style="width:auto" onclick="adminLogout()">${t('logout')}</button>
+
+      <button class="btn btn-outline btn-sm" style="width:auto;margin-top:.5rem" onclick="adminLogout()">🚪 Logout</button>
     </div>
   </div>
 </div>
 
 <!-- CONFIRM MODAL -->
-
 <div class="modal-overlay hidden" id="confirmModal">
   <div class="modal">
     <h2 id="modalTitle">Confirm</h2>
     <p id="modalBody"></p>
     <div class="modal-btns">
-      <button class="btn btn-outline" style="width:auto" onclick="closeModal()" id="modalBackBtn">Back</button>
-      <button class="btn btn-jade" id="modalConfirmBtn" style="width:auto">Confirm</button>
+      <button class="btn btn-outline btn-sm" style="width:auto" onclick="closeModal()">Back</button>
+      <button class="btn btn-jade btn-sm" id="modalConfirmBtn" style="width:auto" onclick="">Confirm</button>
     </div>
   </div>
 </div>
 
-<!-- MEMBER PASSWORD MODAL -->
-
+<!-- MEMBER LOGIN MODAL -->
 <div class="modal-overlay hidden" id="memberLoginModal">
   <div class="modal">
-    <h2>🔒 <span id='memberLoginTitle'>Member Login</span></h2>
-    <p id="memberLoginName" style="font-weight:700;color:var(--ink);margin-bottom:.8rem"></p>
+    <h2>🔒 <span id="memberLoginTitle">Member Login</span></h2>
+    <p id="memberLoginSubtitle" style="font-weight:700;color:var(--ink);margin-bottom:.8rem"></p>
     <input type="password" id="memberPwInput" placeholder="Enter your password" onkeydown="if(event.key==='Enter')submitMemberLogin()">
     <div class="modal-btns">
-      <button class="btn btn-outline" style="width:auto" onclick="closeMemberLogin()" id="memberLoginCancelBtn">取消 / Cancel</button>
-      <button class="btn btn-jade" style="width:auto" onclick="submitMemberLogin()" id="memberLoginOkBtn">解锁 / Unlock</button>
+      <button class="btn btn-outline btn-sm" style="width:auto" onclick="closeMemberLogin()">Cancel</button>
+      <button class="btn btn-jade btn-sm" style="width:auto" onclick="submitMemberLogin()">Unlock</button>
     </div>
   </div>
 </div>
 
 <!-- EDIT PASSWORD MODAL -->
-
 <div class="modal-overlay hidden" id="editPwModal">
   <div class="modal">
     <h2>✏️ Edit Password</h2>
-    <p id="editPwName" style="font-weight:700;color:var(--ink);margin-bottom:.8rem"></p>
+    <p id="editPwLabel" style="font-weight:700;color:var(--ink);margin-bottom:.8rem"></p>
     <input type="text" id="editPwInput" placeholder="New password">
     <div class="modal-btns">
-      <button class="btn btn-outline" style="width:auto" onclick="closeEditPw()">Cancel</button>
-      <button class="btn btn-jade" style="width:auto" onclick="submitEditPw()">Save</button>
+      <button class="btn btn-outline btn-sm" style="width:auto" onclick="closeEditPw()">Cancel</button>
+      <button class="btn btn-jade btn-sm" style="width:auto" onclick="submitEditPw()">Save</button>
     </div>
   </div>
 </div>
 
 <!-- CHATBOT -->
-
 <div class="chat-bubble">
   <button class="chat-toggle" onclick="toggleChat()">🤖</button>
   <div class="chat-window" id="chatWindow">
@@ -407,12 +449,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
       <button class="chat-close" onclick="toggleChat()">✕</button>
     </div>
     <div class="chat-messages" id="chatMessages">
-      <div class="msg bot">Hi! 👋 I'm CourtBot. Ask me about schedules, rules, or bookings!</div>
+      <div class="msg bot">Hi! 👋 I'm CourtBot. Ask me about schedules, the waitlist, or booking rules!</div>
     </div>
     <div class="chat-chips">
       <span class="chip" onclick="chipAsk('What classes are available?')">Classes?</span>
       <span class="chip" onclick="chipAsk('What are the booking rules?')">Rules</span>
-      <span class="chip" onclick="chipAsk('How do I cancel?')">Cancel?</span>
+      <span class="chip" onclick="chipAsk('How does the waitlist work?')">Waitlist?</span>
       <span class="chip" onclick="chipAsk('What is the MIA policy?')">MIA</span>
     </div>
     <div class="chat-input-row">
@@ -423,1087 +465,1152 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 </div>
 
 <script>
-// ═══════════════════════════════════════════
-// SUPABASE REST API
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// SUPABASE REST API HELPERS
+// ═══════════════════════════════════════════════════════
 const SUPA_URL = 'https://pshbwmxllkghecqelnye.supabase.co';
 const SUPA_KEY = 'sb_publishable_QhxOWANyHIbnVCr_Xu_WwA_TpIZ9vDt';
 
-function hdrs(extra={}){
-  return {'Content-Type':'application/json','apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,...extra};
+function apiHeaders(extra) {
+  return Object.assign({
+    'Content-Type': 'application/json',
+    'apikey': SUPA_KEY,
+    'Authorization': 'Bearer ' + SUPA_KEY
+  }, extra || {});
 }
-async function dbGet(table,select='*',params=''){
-  const r=await fetch(`${SUPA_URL}/rest/v1/${table}?select=${select}${params?'&'+params:''}`,{headers:hdrs({'Prefer':'return=representation'})});
-  if(!r.ok) throw new Error(await r.text());
+async function dbGet(table, select, params) {
+  select = select || '*'; params = params || '';
+  var url = SUPA_URL + '/rest/v1/' + table + '?select=' + select + (params ? '&' + params : '');
+  var r = await fetch(url, { headers: apiHeaders({ 'Prefer': 'return=representation' }) });
+  if (!r.ok) throw new Error(await r.text());
   return r.json();
 }
-async function dbInsert(table,row){
-  const r=await fetch(`${SUPA_URL}/rest/v1/${table}`,{method:'POST',headers:hdrs({'Prefer':'return=representation'}),body:JSON.stringify(row)});
-  const txt=await r.text();
-  if(!r.ok) throw new Error(txt);
+async function dbInsert(table, row) {
+  var r = await fetch(SUPA_URL + '/rest/v1/' + table, {
+    method: 'POST',
+    headers: apiHeaders({ 'Prefer': 'return=representation' }),
+    body: JSON.stringify(row)
+  });
+  var txt = await r.text();
+  if (!r.ok) throw new Error(txt);
   return JSON.parse(txt);
 }
-async function dbUpdate(table,filter,row){
-  const r=await fetch(`${SUPA_URL}/rest/v1/${table}?${filter}`,{method:'PATCH',headers:hdrs({'Prefer':'return=representation'}),body:JSON.stringify(row)});
-  if(!r.ok) throw new Error(await r.text());
+async function dbUpdate(table, filter, row) {
+  var r = await fetch(SUPA_URL + '/rest/v1/' + table + '?' + filter, {
+    method: 'PATCH',
+    headers: apiHeaders({ 'Prefer': 'return=representation' }),
+    body: JSON.stringify(row)
+  });
+  if (!r.ok) throw new Error(await r.text());
   return r.json();
 }
-async function dbDelete(table,filter){
-  const r=await fetch(`${SUPA_URL}/rest/v1/${table}?${filter}`,{method:'DELETE',headers:hdrs()});
-  if(!r.ok) throw new Error(await r.text());
+async function dbDelete(table, filter) {
+  var r = await fetch(SUPA_URL + '/rest/v1/' + table + '?' + filter, {
+    method: 'DELETE',
+    headers: apiHeaders()
+  });
+  if (!r.ok) throw new Error(await r.text());
 }
 
-// ═══════════════════════════════════════════
-// CONSTANTS & STATE
-// ═══════════════════════════════════════════
-const ADMIN_PASSWORD = 'tzuchi.123';
-const SLOT_LIMIT = 10;
+// ═══════════════════════════════════════════════════════
+// APP STATE
+// ═══════════════════════════════════════════════════════
+var ADMIN_PW = 'tzuchi.123';
+var SLOT_LIMIT = 10;
 
-let members = [];          // [{name, password}]
-let bookings = [];
-let miaRecord = {};
-let blockedSlots = [];
-let announcements = [];
-let currentMember = '';
-let memberUnlocked = false;
-let isAdmin = false;
-let currentWeekOffset = 0;
-let pendingAction = null;
-let editingPwMember = '';
+var members = [];
+var bookings = [];
+var waitlist = [];
+var miaRecord = {};
+var blockedSlots = [];
+var announcements = [];
 
-// ═══════════════════════════════════════════
-// DATE HELPERS
-// ═══════════════════════════════════════════
-function now(){ return new Date(); }
-function toYMD(d){ const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),dd=String(d.getDate()).padStart(2,'0'); return y+'-'+m+'-'+dd; }
-function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
-function parseYMD(ymd){ const[y,m,d]=ymd.split('-').map(Number); return new Date(y,m-1,d); }
-function getWeekMonday(off){
-  const t=now(); const dow=t.getDay();
-  const mon=addDays(t,(dow===0?-6:1-dow)+off*7);
-  mon.setHours(0,0,0,0); return mon;
+var currentMember = '';
+var memberUnlocked = false;
+var isAdmin = false;
+var weekOffset = 0;
+var pendingAction = null;
+var editingPwMember = '';
+var lang = 'en';
+
+// ═══════════════════════════════════════════════════════
+// TRANSLATIONS — single system
+// ═══════════════════════════════════════════════════════
+var TR = {
+  en: {
+    thisWeek: 'This Week', nextWeek: 'Next Week',
+    selectMember: '👤 Select Member', chooseName: '— Choose your name —',
+    enterPw: '🔒 Enter Password', unlocked: '🔓 Unlocked',
+    bookClass: '📅 Book Class', myBookings: '🗓 My Bookings',
+    rules: '📋 Rules', admin: '🔑 Admin',
+    book: 'Book', booked: '✓ Booked', cancel: 'Cancel',
+    past: 'Past', closed: 'Closed', blocked: 'Blocked', full: 'Full', dayTaken: 'Day taken',
+    noCancel: 'No cancel (<1hr)', lockLogin: '🔒 Login',
+    upcoming: 'Upcoming',
+    noBookings: 'No bookings yet! Tap Book Class to get started.',
+    selectToSee: 'Select your name to see your bookings.',
+    loginToSee: 'Please enter your password to view your bookings.',
+    confirmBooking: 'Confirm Booking', confirmCancel: 'Cancel Booking',
+    bookNow: 'Book Now', yesCancel: 'Yes, Cancel',
+    welcome: 'Welcome', memberLogin: 'Member Login',
+    wrongPw: 'Wrong password. Try again.',
+    cancelled: 'Booking cancelled.',
+    heroTitle: 'Longevity Courtyard',
+    heroSub: 'Book your weekly fitness classes — Functional Strength Training & Stretch & Flow',
+    heroBadge: 'Batch 2 · Members Only',
+    joinWaitlist: 'Join Waitlist', leaveWaitlist: 'Leave',
+    onWaitlist: 'On waitlist',
+  },
+  zh: {
+    thisWeek: '本周', nextWeek: '下周',
+    selectMember: '👤 选择会员', chooseName: '— 请选择您的姓名 —',
+    enterPw: '🔒 输入密码', unlocked: '🔓 已解锁',
+    bookClass: '📅 预约课程', myBookings: '🗓 我的预约',
+    rules: '📋 规则', admin: '🔑 管理',
+    book: '预约', booked: '✓ 已预约', cancel: '取消',
+    past: '已过期', closed: '已截止', blocked: '已封锁', full: '已满', dayTaken: '当天已约',
+    noCancel: '无法取消', lockLogin: '🔒 登录',
+    upcoming: '即将',
+    noBookings: '暂无预约！点击「预约课程」开始。',
+    selectToSee: '请选择您的姓名以查看预约。',
+    loginToSee: '请输入密码查看您的预约。',
+    confirmBooking: '确认预约', confirmCancel: '取消预约',
+    bookNow: '立即预约', yesCancel: '确认取消',
+    welcome: '欢迎', memberLogin: '会员登录',
+    wrongPw: '密码错误，请重试。',
+    cancelled: '预约已取消。',
+    heroTitle: '长寿健身坊',
+    heroSub: '预约您的每周健身课程 — 功能性力量训练 & 伸展放松',
+    heroBadge: '第二批 · 会员专区',
+    joinWaitlist: '加入候补', leaveWaitlist: '离开候补',
+    onWaitlist: '候补中',
+  }
+};
+
+function tr(key) {
+  return (TR[lang] && TR[lang][key]) || TR['en'][key] || key;
 }
-function fmtDate(d){ return d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}); }
-function timeLabel(t){
-  const[h,m]=t.split(':').map(Number);
-  return `${h%12||12}:${String(m).padStart(2,'0')}${h<12?'am':'pm'}`;
-}
-function slotDateTime(ymd,t){ const[y,mo,d]=ymd.split('-').map(Number);const[h,mi]=t.split(':').map(Number);return new Date(y,mo-1,d,h,mi,0); }
-function isSlotPast(ymd,t){ return slotDateTime(ymd,t)<now(); }
-function isBookingClosed(ymd,t){ const s=slotDateTime(ymd,t); return now()>=new Date(s-5*60*1000); }
-function canCancelSlot(ymd,t){ const s=slotDateTime(ymd,t); return now()<new Date(s-60*60*1000); }
-function isBlocked(ymd,t){ return blockedSlots.some(b=>b.date===ymd&&(!b.time||b.time===t)); }
-function isDayBlocked(ymd){ return blockedSlots.some(b=>b.date===ymd&&!b.time); }
 
-// ═══════════════════════════════════════════
-// SCHEDULE
-// ═══════════════════════════════════════════
-const SCHEDULE=[
-  {dow:1,type:'strength',label:'Functional Strength Training',times:['08:45','09:30','10:15','11:00','13:45','14:30','15:15','16:00']},
-  {dow:2,type:'stretch', label:'Stretch & Flow (Chair Yoga + Gym)',times:['10:00','11:00','13:30']},
-  {dow:3,type:'strength',label:'Functional Strength Training',times:['08:45','09:30','10:15','11:00','13:45','14:30','15:15','16:00']},
-  {dow:4,type:'stretch', label:'Stretch & Flow (Chair Yoga + Gym)',times:['10:00','11:00','13:30']},
-  {dow:5,type:'strength',label:'Functional Strength Training',times:['08:45','09:30','10:15','11:00']},
+function toggleLang() {
+  lang = lang === 'en' ? 'zh' : 'en';
+  document.getElementById('langToggle').textContent = lang === 'en' ? '中文' : 'EN';
+  applyLang();
+  renderSchedule();
+  renderMyBookings();
+  updateMiaBadge();
+  updateUnlockBtn();
+  updateNavMember();
+  populateMemberDropdown();
+}
+
+function applyLang() {
+  var d = document.getElementById.bind(document);
+  if (d('heroTitleEl'))  d('heroTitleEl').textContent  = tr('heroTitle');
+  if (d('heroSubEl'))    d('heroSubEl').textContent    = tr('heroSub');
+  if (d('heroBadgeEl'))  d('heroBadgeEl').textContent  = tr('heroBadge');
+  if (d('memberBarLabel')) d('memberBarLabel').textContent = tr('selectMember');
+  var tabs = [['tBtn-book','bookClass'],['tBtn-mybookings','myBookings'],['tBtn-rules','rules'],['tBtn-admin','admin']];
+  tabs.forEach(function(p) { var el = d(p[0]); if (el) el.textContent = tr(p[1]); });
+}
+
+// ═══════════════════════════════════════════════════════
+// DATE UTILITIES
+// ═══════════════════════════════════════════════════════
+function nowDate() { return new Date(); }
+function toYMD(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function addDays(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
+function parseYMD(s) { var p = s.split('-').map(Number); return new Date(p[0], p[1]-1, p[2]); }
+function getMonday(off) {
+  var t = nowDate(), dow = t.getDay();
+  var m = addDays(t, (dow === 0 ? -6 : 1 - dow) + (off||0) * 7);
+  m.setHours(0,0,0,0); return m;
+}
+function fmtDate(d) { return d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'}); }
+function timeLbl(t) {
+  var p = t.split(':').map(Number), h = p[0], m = p[1];
+  return (h % 12 || 12) + ':' + String(m).padStart(2,'0') + (h < 12 ? 'am' : 'pm');
+}
+function slotDT(ymd, t) {
+  var p = ymd.split('-').map(Number), q = t.split(':').map(Number);
+  return new Date(p[0], p[1]-1, p[2], q[0], q[1], 0);
+}
+function isSlotPast(ymd, t)    { return slotDT(ymd, t) < nowDate(); }
+function isBookingClosed(ymd, t) { return nowDate() >= new Date(slotDT(ymd, t) - 5*60*1000); }
+function canCancel(ymd, t)     { return nowDate() < new Date(slotDT(ymd, t) - 60*60*1000); }
+function isDayBlocked(ymd)     { return blockedSlots.some(function(b) { return b.date === ymd && !b.time; }); }
+function isSlotBlocked(ymd, t) { return blockedSlots.some(function(b) { return b.date === ymd && (!b.time || b.time === t); }); }
+
+// ═══════════════════════════════════════════════════════
+// SCHEDULE CONSTANTS
+// ═══════════════════════════════════════════════════════
+var STR_ALL = ['08:45','09:30','10:15','11:00','13:45','14:30','15:15','16:00'];
+var STR_FRI = ['08:45','09:30','10:15','11:00'];
+var STR_TIMES = ['10:00','11:00','13:30'];
+
+var SCHEDULE = [
+  { dow:1, type:'strength', label:'Functional Strength Training',       times: STR_ALL   },
+  { dow:2, type:'stretch',  label:'Stretch & Flow (Chair Yoga + Gym)',  times: STR_TIMES },
+  { dow:3, type:'strength', label:'Functional Strength Training',       times: STR_ALL   },
+  { dow:4, type:'stretch',  label:'Stretch & Flow (Chair Yoga + Gym)',  times: STR_TIMES },
+  { dow:5, type:'strength', label:'Functional Strength Training',       times: STR_FRI   },
 ];
-const DOWNAMES=['','Monday','Tuesday','Wednesday','Thursday','Friday'];
+var DOW_NAMES = ['','Monday','Tuesday','Wednesday','Thursday','Friday'];
 
-// ═══════════════════════════════════════════
-// LOAD ALL
-// ═══════════════════════════════════════════
-async function loadAll(){
-  const [mRes,bRes,miRes,blRes,anRes]=await Promise.all([
-    dbGet('members','*','order=name'),
-    dbGet('bookings','*'),
-    dbGet('mia_records','*'),
-    dbGet('blocked_slots','*'),
-    dbGet('announcements','*','order=created_at.desc'),
-  ]);
-  members=mRes.map(r=>({name:r.name,password:r.password||''}));
-  bookings=bRes.map(r=>({id:r.id,member:r.member,date:r.date,time:r.time,classType:r.class_type,classLabel:r.class_label}));
-  miaRecord={}; miRes.forEach(r=>miaRecord[r.member]=r.count);
-  blockedSlots=blRes.map(r=>({id:r.id,date:r.date,time:r.time,reason:r.reason}));
-  announcements=anRes.map(r=>({id:r.id,text:r.text}));
+function getDowInfo(dow) {
+  if (dow === 1 || dow === 3) return { times: STR_ALL,   type:'strength', label:'Functional Strength Training' };
+  if (dow === 2 || dow === 4) return { times: STR_TIMES, type:'stretch',  label:'Stretch & Flow (Chair Yoga + Gym)' };
+  if (dow === 5)              return { times: STR_FRI,   type:'strength', label:'Functional Strength Training' };
+  return null;
 }
 
-async function init(){
-  try{
+// ═══════════════════════════════════════════════════════
+// LOAD DATA
+// ═══════════════════════════════════════════════════════
+async function loadAll() {
+  var results = await Promise.all([
+    dbGet('members',       '*', 'order=name'),
+    dbGet('bookings',      '*'),
+    dbGet('mia_records',   '*'),
+    dbGet('blocked_slots', '*'),
+    dbGet('announcements', '*', 'order=created_at.desc'),
+    dbGet('waitlist',      '*', 'order=created_at.asc'),
+  ]);
+
+  members      = results[0].map(function(r) { return { name: r.name, password: r.password || '' }; });
+  bookings     = results[1].map(function(r) { return { id: r.id, member: r.member, date: r.date, time: r.time, classType: r.class_type, classLabel: r.class_label }; });
+  miaRecord    = {};
+  results[2].forEach(function(r) { miaRecord[r.member] = r.count; });
+  blockedSlots = results[3].map(function(r) { return { id: r.id, date: r.date, time: r.time, reason: r.reason }; });
+  announcements= results[4].map(function(r) { return { id: r.id, text: r.text }; });
+
+  // Build waitlist with per-slot position numbers
+  waitlist = [];
+  var posMap = {};
+  results[5].forEach(function(r) {
+    var key = r.date + '|' + r.time;
+    posMap[key] = (posMap[key] || 0) + 1;
+    waitlist.push({ id: r.id, member: r.member, date: r.date, time: r.time, classType: r.class_type, classLabel: r.class_label, position: posMap[key] });
+  });
+}
+
+async function init() {
+  try {
     await loadAll();
     applyLang();
     populateMemberDropdown();
     renderSchedule();
     showAnnounceBanner();
     document.getElementById('loadingScreen').classList.add('done');
-  }catch(e){
-    document.getElementById('loadingScreen').innerHTML=`<div style="text-align:center;padding:2rem;color:#ff8888"><div style="font-size:2rem;margin-bottom:.5rem">⚠️</div><strong>Could not connect to database.</strong><br><span style="font-size:.8rem;opacity:.7">${e.message}</span><br><br><button onclick="init()" style="margin-top:1rem;padding:.6rem 1.5rem;background:var(--jade);color:white;border:none;border-radius:8px;cursor:pointer;font-size:.9rem">Retry</button></div>`;
+  } catch(e) {
+    document.getElementById('loadingScreen').innerHTML =
+      '<div style="text-align:center;padding:2rem;color:#ff8888"><div style="font-size:2rem;margin-bottom:.5rem">⚠️</div>' +
+      '<strong>Could not connect to database.</strong><br><span style="font-size:.8rem;opacity:.7">' + e.message + '</span><br><br>' +
+      '<button onclick="init()" style="margin-top:1rem;padding:.6rem 1.5rem;background:#2d6a4f;color:white;border:none;border-radius:8px;cursor:pointer;font-size:.9rem">Retry</button></div>';
   }
 }
 
-// ═══════════════════════════════════════════
-// MEMBER DROPDOWN & PASSWORD
-// ═══════════════════════════════════════════
-function populateMemberDropdown(){
-  const sel=document.getElementById('memberSelect');
-  const cur=sel.value;
-  sel.innerHTML='<option value="">— Choose your name —</option>';
-  members.slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(m=>{
-    const o=document.createElement('option');
-    o.value=m.name; o.textContent=m.name;
-    if(m.name===cur) o.selected=true;
+// ═══════════════════════════════════════════════════════
+// MEMBER DROPDOWN & AUTH
+// ═══════════════════════════════════════════════════════
+function populateMemberDropdown() {
+  var sel = document.getElementById('memberSelect');
+  var cur = sel.value;
+  sel.innerHTML = '<option value="">' + tr('chooseName') + '</option>';
+  members.slice().sort(function(a,b) { return a.name.localeCompare(b.name); }).forEach(function(m) {
+    var o = document.createElement('option');
+    o.value = m.name; o.textContent = m.name;
+    if (m.name === cur) o.selected = true;
     sel.appendChild(o);
   });
 }
 
-function onMemberChange(){
-  const name=document.getElementById('memberSelect').value;
-  if(name===currentMember) return;
-  currentMember=name;
-  memberUnlocked=false;
-  updateNavMember();
-  updateUnlockBtn();
-  updateMiaBadge();
-  renderSchedule();
-  renderMyBookings();
+function onMemberChange() {
+  var name = document.getElementById('memberSelect').value;
+  if (name === currentMember) return;
+  currentMember = name;
+  memberUnlocked = false;
+  updateNavMember(); updateUnlockBtn(); updateMiaBadge(); renderSchedule(); renderMyBookings();
 }
 
-function updateNavMember(){
-  const el=document.getElementById('navMemberInfo');
-  if(!currentMember){ el.style.display='none'; return; }
-  el.style.display='block';
-  document.getElementById('navMemberName').textContent=currentMember;
-  document.getElementById('navLockStatus').textContent=memberUnlocked?t('unlocked'):'🔒 Locked';
-  document.getElementById('navLockStatus').style.color=memberUnlocked?'var(--jade3)':'var(--warn)';
+function updateNavMember() {
+  var el = document.getElementById('navMemberInfo');
+  if (!currentMember) { el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  document.getElementById('navMemberName').textContent = currentMember;
+  var ls = document.getElementById('navLockStatus');
+  ls.textContent = memberUnlocked ? tr('unlocked') : '🔒 Locked';
+  ls.style.color = memberUnlocked ? 'var(--jade3)' : 'var(--warn)';
 }
 
-function updateUnlockBtn(){
-  const btn=document.getElementById('unlockBtn');
-  if(!currentMember){ btn.style.display='none'; return; }
-  btn.style.display='inline-block';
-  if(memberUnlocked){
-    btn.textContent=t('unlocked');
-    btn.className='unlock-btn unlocked';
-  } else {
-    btn.textContent=t('enterPw');
-    btn.className='unlock-btn';
-  }
+function updateUnlockBtn() {
+  var btn = document.getElementById('unlockBtn');
+  if (!currentMember) { btn.style.display = 'none'; return; }
+  btn.style.display = 'inline-block';
+  if (memberUnlocked) { btn.textContent = tr('unlocked'); btn.className = 'unlock-btn unlocked'; }
+  else { btn.textContent = tr('enterPw'); btn.className = 'unlock-btn'; }
 }
 
-function showMemberLogin(){
-  if(memberUnlocked) return;
-  if(!currentMember){ showToast('Please select your name first.','error'); return; }
-  document.getElementById('memberLoginTitle').textContent=t('memberLogin');
-  document.getElementById('memberLoginName').textContent=t('welcome')+', '+currentMember+'!';
-  document.getElementById('memberPwInput').value='';
+function showMemberLogin() {
+  if (memberUnlocked) return;
+  if (!currentMember) { showToast('Select your name first!', 'error'); return; }
+  document.getElementById('memberLoginTitle').textContent = tr('memberLogin');
+  document.getElementById('memberLoginSubtitle').textContent = tr('welcome') + ', ' + currentMember + '!';
+  document.getElementById('memberPwInput').value = '';
   document.getElementById('memberLoginModal').classList.remove('hidden');
-  setTimeout(()=>document.getElementById('memberPwInput').focus(),100);
+  setTimeout(function() { document.getElementById('memberPwInput').focus(); }, 100);
 }
+function closeMemberLogin() { document.getElementById('memberLoginModal').classList.add('hidden'); }
 
-function closeMemberLogin(){
-  document.getElementById('memberLoginModal').classList.add('hidden');
-}
-
-function submitMemberLogin(){
-  const pw=document.getElementById('memberPwInput').value;
-  const m=members.find(x=>x.name===currentMember);
-  if(!m){ closeMemberLogin(); return; }
-  if(m.password && pw!==m.password){
-    showToast(t('wrongPw'),'error');
-    document.getElementById('memberPwInput').value='';
+function submitMemberLogin() {
+  var pw = document.getElementById('memberPwInput').value;
+  var m = members.find(function(x) { return x.name === currentMember; });
+  if (!m) { closeMemberLogin(); return; }
+  if (m.password && pw !== m.password) {
+    showToast(tr('wrongPw'), 'error');
+    document.getElementById('memberPwInput').value = '';
     return;
   }
-  // password matches (or no password set yet)
-  memberUnlocked=true;
+  memberUnlocked = true;
   closeMemberLogin();
-  updateNavMember();
-  updateUnlockBtn();
-  renderSchedule();
-  showToast(t('welcomeMsg', currentMember),'success');
+  updateNavMember(); updateUnlockBtn(); renderSchedule(); renderMyBookings();
+  showToast('Welcome, ' + currentMember + '! 🎉', 'success');
 }
 
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // RENDER SCHEDULE
-// ═══════════════════════════════════════════
-function renderSchedule(){
-  const grid=document.getElementById('scheduleGrid');
-  grid.innerHTML='';
-  const mon=getWeekMonday(currentWeekOffset);
-  const fri=addDays(mon,4);
-  document.getElementById('weekLabel').innerHTML=(currentWeekOffset===0?t('thisWeek'):t('nextWeek'))+`<small>${fmtDate(mon)} – ${fmtDate(fri)}</small>`;
-  document.getElementById('prevWeekBtn').disabled=currentWeekOffset<=0;
-  document.getElementById('nextWeekBtn').disabled=currentWeekOffset>=1;
+// ═══════════════════════════════════════════════════════
+function renderSchedule() {
+  var grid = document.getElementById('scheduleGrid');
+  grid.innerHTML = '';
+  var mon = getMonday(weekOffset), fri = addDays(mon, 4);
+  document.getElementById('weekLabelEl').innerHTML =
+    (weekOffset === 0 ? tr('thisWeek') : tr('nextWeek')) +
+    '<small>' + fmtDate(mon) + ' – ' + fmtDate(fri) + '</small>';
+  document.getElementById('prevWeekBtn').disabled = weekOffset <= 0;
+  document.getElementById('nextWeekBtn').disabled = weekOffset >= 1;
 
-  SCHEDULE.forEach(sch=>{
-    const date=addDays(mon,sch.dow-1);
-    const ymd=toYMD(date);
-    const dayBlocked=isDayBlocked(ymd);
-    const card=document.createElement('div'); card.className='day-block';
-    const hdr=document.createElement('div');
-    hdr.className='day-header '+sch.type+(dayBlocked?' blocked-hdr':'');
-    hdr.innerHTML=`<div><h3>${DOWNAMES[sch.dow]}</h3><div class="day-date">${fmtDate(date)}</div></div><span class="class-type-tag">${sch.type==='strength'?'💪 Strength':'🧘 Stretch & Flow'}</span>`;
+  SCHEDULE.forEach(function(sch) {
+    var date = addDays(mon, sch.dow - 1);
+    var ymd = toYMD(date);
+    var dayBk = isDayBlocked(ymd);
+
+    var card = document.createElement('div'); card.className = 'day-block';
+    var hdr = document.createElement('div');
+    hdr.className = 'day-header ' + sch.type + (dayBk ? ' blocked-hdr' : '');
+    hdr.innerHTML = '<div><h3>' + DOW_NAMES[sch.dow] + '</h3><div class="day-date">' + fmtDate(date) + '</div></div>' +
+      '<span class="class-type-tag">' + (sch.type === 'strength' ? '💪 Strength' : '🧘 Stretch & Flow') + '</span>';
     card.appendChild(hdr);
-    if(dayBlocked){
-      const bk=blockedSlots.find(b=>b.date===ymd&&!b.time);
-      const msg=document.createElement('div'); msg.className='blocked-msg';
-      msg.innerHTML=`🚫 Day blocked${bk&&bk.reason?' — '+bk.reason:''}`;
+
+    if (dayBk) {
+      var bkInfo = blockedSlots.find(function(b) { return b.date === ymd && !b.time; });
+      var msg = document.createElement('div'); msg.className = 'blocked-msg';
+      msg.innerHTML = '🚫 Day blocked' + (bkInfo && bkInfo.reason ? ' — ' + bkInfo.reason : '');
       card.appendChild(msg); grid.appendChild(card); return;
     }
-    const slotsList=document.createElement('div'); slotsList.className='slots-list';
-    sch.times.forEach(tm=>{
-      const slotBlocked=isBlocked(ymd,tm);
-      const past=isSlotPast(ymd,tm);
-      const closed=isBookingClosed(ymd,tm);
-      const myBooking=currentMember&&bookings.find(b=>b.member===currentMember&&b.date===ymd&&b.time===tm);
-      const bookedToday=currentMember&&!myBooking&&bookings.find(b=>b.member===currentMember&&b.date===ymd);
-      const totalBooked=bookings.filter(b=>b.date===ymd&&b.time===tm).length;
-      const isFull=totalBooked>=SLOT_LIMIT;
-      const slotEl=document.createElement('div');
-      let cls='slot';
-      if(past||slotBlocked) cls+=' slot-past';
-      if(myBooking) cls+=' slot-booked';
-      const canBook=currentMember&&memberUnlocked&&!past&&!closed&&!slotBlocked&&!myBooking&&!bookedToday&&!isFull;
-      if(canBook) cls+=' bookable';
-      slotEl.className=cls;
-      const remaining=SLOT_LIMIT-totalBooked;
-      const countLabel=lang==='zh'?`${totalBooked}/${SLOT_LIMIT} 已约`:`${totalBooked}/${SLOT_LIMIT} booked`;
-      const leftLabel=lang==='zh'?`剩${remaining}`:`${remaining} left`;
-      let infoTxt='';
-      if(!past&&!slotBlocked){
-        infoTxt=isFull
-          ?`<span class="slot-info full">${t('full')} (${SLOT_LIMIT}/${SLOT_LIMIT})</span>`
-          :`<span class="slot-info">${countLabel}${remaining<=3&&remaining>0?' · '+leftLabel:''}</span>`;
+
+    var slotsList = document.createElement('div'); slotsList.className = 'slots-list';
+    sch.times.forEach(function(tm) {
+      var slotBk   = isSlotBlocked(ymd, tm);
+      var past     = isSlotPast(ymd, tm);
+      var closed   = isBookingClosed(ymd, tm);
+
+      var myBk  = currentMember ? bookings.find(function(b) { return b.member === currentMember && b.date === ymd && b.time === tm; }) : null;
+      var myWL  = currentMember ? waitlist.find(function(w) { return w.member === currentMember && w.date === ymd && w.time === tm; }) : null;
+      var bkDay = currentMember && !myBk ? bookings.find(function(b) { return b.member === currentMember && b.date === ymd; }) : null;
+      var wlDay = currentMember && !myWL ? waitlist.find(function(w) { return w.member === currentMember && w.date === ymd; }) : null;
+
+      var countBooked  = bookings.filter(function(b) { return b.date === ymd && b.time === tm; }).length;
+      var countWaiting = waitlist.filter(function(w) { return w.date === ymd && w.time === tm; }).length;
+      var isFull   = countBooked >= SLOT_LIMIT;
+      var remaining = SLOT_LIMIT - countBooked;
+
+      var canBook  = currentMember && memberUnlocked && !past && !closed && !slotBk && !myBk && !myWL && !bkDay && !isFull;
+      var canJoinWL= currentMember && memberUnlocked && !past && !closed && !slotBk && !myBk && !myWL && !wlDay && isFull;
+
+      var slotEl = document.createElement('div');
+      var cls = 'slot';
+      if (past || slotBk) cls += ' slot-past';
+      if (myBk)  cls += ' slot-booked';
+      if (myWL && !myBk) cls += ' slot-waitlisted';
+      if (canBook) cls += ' bookable';
+      slotEl.className = cls;
+
+      // Info text
+      var infoTxt = '';
+      if (!past && !slotBk) {
+        if (isFull) {
+          infoTxt = '<span class="slot-info full">' + tr('full') + ' (' + SLOT_LIMIT + '/' + SLOT_LIMIT + ')' +
+            (countWaiting > 0 ? ' · ' + countWaiting + ' waiting' : '') + '</span>';
+        } else {
+          var leftPart = (remaining <= 3 && remaining > 0) ? ' · ' + remaining + ' left' : '';
+          infoTxt = '<span class="slot-info">' + countBooked + '/' + SLOT_LIMIT + leftPart + '</span>';
+        }
       } else {
-        infoTxt=`<span class="slot-info">${totalBooked}/${SLOT_LIMIT}</span>`;
+        infoTxt = '<span class="slot-info">' + countBooked + '/' + SLOT_LIMIT + '</span>';
       }
-      let act='';
-      if(slotBlocked) act=`<span class="pill pill-past">${t('blocked')}</span>`;
-      else if(past) act=`<span class="pill pill-past">${t('past')}</span>`;
-      else if(myBooking){
-        const cc=canCancelSlot(ymd,tm);
-        act=`<span class="pill pill-booked">${t('booked')}</span>`+(memberUnlocked&&cc
-          ?`<button class="pill-cancel" onclick="promptCancel('${ymd}','${tm}','${sch.label.replace(/'/g,"\'")}')">` + t('cancel') + `</button>`
-          :memberUnlocked
-            ?`<span style="font-size:.68rem;color:var(--soft)">${t('noCancel')}</span>`
-            :`<span style="font-size:.68rem;color:var(--soft)">${t('lockedLabel')}</span>`);
-      } else if(!currentMember) act=`<span class="pill pill-past" style="font-size:.68rem">${t('loginFirst')}</span>`;
-      else if(!memberUnlocked) act=`<button class="pill-book" style="background:var(--warn)" onclick="showMemberLogin()">${t('lockLogin')}</button>`;
-      else if(closed) act=`<span class="pill pill-past">${t('closed')}</span>`;
-      else if(isFull) act=`<span class="pill pill-full">${t('full')}</span>`;
-      else if(bookedToday) act=`<span class="pill pill-full">${t('dayTaken')}</span>`;
-      else act=`<button class="pill-book" onclick="promptBook('${ymd}','${tm}','${sch.label.replace(/'/g,"\'")}','${sch.type}')">${t('book')}</button>`;
-      slotEl.innerHTML=`<span class="slot-time">${timeLabel(tm)}</span>${infoTxt}<span class="slot-action">${act}</span>`;
+
+      // Action buttons — use escaped label for onclick safety
+      var esc = function(s) { return s.replace(/'/g, "\\'"); };
+      var act = '';
+      if (slotBk) {
+        act = '<span class="pill pill-past">' + tr('blocked') + '</span>';
+      } else if (past) {
+        act = '<span class="pill pill-past">' + tr('past') + '</span>';
+      } else if (myBk) {
+        act = '<span class="pill pill-booked">' + tr('booked') + '</span>';
+        if (memberUnlocked) {
+          if (canCancel(ymd, tm)) {
+            act += '<button class="pill-cancel" onclick="promptCancel(\'' + ymd + '\',\'' + tm + '\',\'' + esc(sch.label) + '\',\'booking\')">' + tr('cancel') + '</button>';
+          } else {
+            act += '<span style="font-size:.68rem;color:var(--soft)">' + tr('noCancel') + '</span>';
+          }
+        }
+      } else if (myWL) {
+        act = '<span class="wl-badge">⏳ #' + myWL.position + '</span>';
+        if (!past) {
+          act += '<button class="pill-leavewl" onclick="promptCancel(\'' + ymd + '\',\'' + tm + '\',\'' + esc(sch.label) + '\',\'waitlist\')">' + tr('leaveWaitlist') + '</button>';
+        }
+      } else if (!currentMember) {
+        act = '<span class="pill pill-past" style="font-size:.68rem">Select name</span>';
+      } else if (!memberUnlocked) {
+        act = '<button class="pill-book" style="background:var(--warn)" onclick="showMemberLogin()">' + tr('lockLogin') + '</button>';
+      } else if (closed) {
+        act = '<span class="pill pill-past">' + tr('closed') + '</span>';
+      } else if (isFull) {
+        if (canJoinWL) {
+          act = '<button class="pill-joinwl" onclick="promptWaitlist(\'' + ymd + '\',\'' + tm + '\',\'' + esc(sch.label) + '\',\'' + sch.type + '\')">' + tr('joinWaitlist') + '</button>';
+        } else if (wlDay) {
+          act = '<span class="pill pill-full">' + tr('dayTaken') + '</span>';
+        } else {
+          act = '<span class="pill pill-full">' + tr('full') + '</span>';
+        }
+      } else if (bkDay) {
+        act = '<span class="pill pill-full">' + tr('dayTaken') + '</span>';
+      } else {
+        act = '<button class="pill-book" onclick="promptBook(\'' + ymd + '\',\'' + tm + '\',\'' + esc(sch.label) + '\',\'' + sch.type + '\')">' + tr('book') + '</button>';
+      }
+
+      slotEl.innerHTML = '<span class="slot-time">' + timeLbl(tm) + '</span>' + infoTxt + '<span class="slot-action">' + act + '</span>';
       slotsList.appendChild(slotEl);
     });
     card.appendChild(slotsList); grid.appendChild(card);
   });
 }
 
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // BOOKING ACTIONS
-// ═══════════════════════════════════════════
-function promptBook(ymd,tm,label,type){
-  if(!currentMember){showToast(lang==='zh'?'请先选择您的名字！':'Select your name first!','error');return;}
-  if(!memberUnlocked){showMemberLogin();return;}
-  pendingAction={action:'book',ymd,t:tm,label,classType:type};
-  document.getElementById('modalTitle').textContent=t('confirmBooking');
-  document.getElementById('modalBody').innerHTML=`${lang==='zh'?'预约人':'Booking for'}: <strong>${currentMember}</strong><br>📌 ${label}<br>📅 ${fmtDate(parseYMD(ymd))} ${lang==='zh'?'时间':'at'} <strong>${timeLabel(tm)}</strong>`;
-  document.getElementById('modalConfirmBtn').textContent=t('bookNow');
-  document.getElementById('modalConfirmBtn').onclick=executeAction;
+// ═══════════════════════════════════════════════════════
+function promptBook(ymd, tm, label, type) {
+  if (!currentMember) { showToast('Select your name first!', 'error'); return; }
+  if (!memberUnlocked) { showMemberLogin(); return; }
+  pendingAction = { action: 'book', ymd: ymd, tm: tm, label: label, classType: type };
+  document.getElementById('modalTitle').textContent = tr('confirmBooking');
+  document.getElementById('modalBody').innerHTML =
+    'Booking for: <strong>' + currentMember + '</strong><br>' +
+    '📌 ' + label + '<br>📅 ' + fmtDate(parseYMD(ymd)) + ' at <strong>' + timeLbl(tm) + '</strong>';
+  var btn = document.getElementById('modalConfirmBtn');
+  btn.textContent = tr('bookNow');
+  btn.style.background = '';
+  btn.onclick = executeAction;
   document.getElementById('confirmModal').classList.remove('hidden');
 }
-function promptCancel(ymd,tm,label){
-  if(!memberUnlocked){showMemberLogin();return;}
-  pendingAction={action:'cancel',ymd,t:tm,label};
-  document.getElementById('modalTitle').textContent=t('confirmCancel');
-  document.getElementById('modalBody').innerHTML=`${lang==='zh'?'取消预约':'Cancel booking'}:<br><strong>${label}</strong><br>📅 ${fmtDate(parseYMD(ymd))} ${lang==='zh'?'时间':'at'} <strong>${timeLabel(tm)}</strong>`;
-  document.getElementById('modalConfirmBtn').textContent=t('yesCancel');
-  document.getElementById('modalConfirmBtn').onclick=executeAction;
+
+function promptWaitlist(ymd, tm, label, type) {
+  if (!currentMember) { showToast('Select your name first!', 'error'); return; }
+  if (!memberUnlocked) { showMemberLogin(); return; }
+  var pos = waitlist.filter(function(w) { return w.date === ymd && w.time === tm; }).length + 1;
+  pendingAction = { action: 'waitlist', ymd: ymd, tm: tm, label: label, classType: type };
+  document.getElementById('modalTitle').textContent = tr('joinWaitlist');
+  document.getElementById('modalBody').innerHTML =
+    '<strong>' + currentMember + '</strong><br>📌 ' + label + '<br>' +
+    '📅 ' + fmtDate(parseYMD(ymd)) + ' at <strong>' + timeLbl(tm) + '</strong><br><br>' +
+    'You will be <strong>#' + pos + '</strong> on the waitlist.<br>You\'ll be auto-booked if a spot opens!';
+  var btn = document.getElementById('modalConfirmBtn');
+  btn.textContent = tr('joinWaitlist');
+  btn.style.background = 'var(--warn)';
+  btn.onclick = executeAction;
   document.getElementById('confirmModal').classList.remove('hidden');
 }
-async function executeAction(){
+
+function promptCancel(ymd, tm, label, mode) {
+  if (!memberUnlocked) { showMemberLogin(); return; }
+  pendingAction = { action: mode === 'waitlist' ? 'cancelWaitlist' : 'cancel', ymd: ymd, tm: tm, label: label };
+  document.getElementById('modalTitle').textContent = tr('confirmCancel');
+  document.getElementById('modalBody').innerHTML =
+    (mode === 'waitlist' ? tr('leaveWaitlist') : 'Cancel') + ':<br><strong>' + label + '</strong><br>' +
+    '📅 ' + fmtDate(parseYMD(ymd)) + ' at <strong>' + timeLbl(tm) + '</strong>';
+  var btn = document.getElementById('modalConfirmBtn');
+  btn.textContent = tr('yesCancel');
+  btn.style.background = 'var(--danger)';
+  btn.onclick = executeAction;
+  document.getElementById('confirmModal').classList.remove('hidden');
+}
+
+async function executeAction() {
   closeModal();
-  if(!pendingAction) return;
-  const{action,ymd,t:tm,label,classType}=pendingAction; pendingAction=null;
-  try{
-    if(action==='book'){
-      await dbInsert('bookings',{member:currentMember,date:ymd,time:tm,class_type:classType,class_label:label});
-      showToast(t('booked_toast', timeLabel(tm), fmtDate(parseYMD(ymd))),'success');
-    } else if(action==='cancel'){
-      const b=bookings.find(bk=>bk.member===currentMember&&bk.date===ymd&&bk.time===tm);
-      if(!b) return;
-      await dbDelete('bookings','id=eq.'+b.id);
-      showToast(t('cancelled'),'warn');
+  if (!pendingAction) return;
+  var a = pendingAction; pendingAction = null;
+  try {
+    if (a.action === 'book') {
+      await dbInsert('bookings', { member: currentMember, date: a.ymd, time: a.tm, class_type: a.classType, class_label: a.label });
+      showToast('✅ Booked! ' + timeLbl(a.tm) + ' on ' + fmtDate(parseYMD(a.ymd)), 'success');
+      await loadAll(); renderSchedule(); renderMyBookings();
+
+    } else if (a.action === 'waitlist') {
+      await dbInsert('waitlist', { member: currentMember, date: a.ymd, time: a.tm, class_type: a.classType, class_label: a.label });
+      showToast('⏳ Added to waitlist!', 'warn');
+      await loadAll(); renderSchedule(); renderMyBookings();
+
+    } else if (a.action === 'cancel') {
+      var bk = bookings.find(function(b) { return b.member === currentMember && b.date === a.ymd && b.time === a.tm; });
+      if (!bk) return;
+      await dbDelete('bookings', 'id=eq.' + bk.id);
+      showToast(tr('cancelled'), 'warn');
+      await loadAll();
+      await promoteFromWaitlist(a.ymd, a.tm, a.label, a.classType);
+      renderSchedule(); renderMyBookings();
+      if (isAdmin) { renderAdminBookings(); renderAdminWaitlist(); }
+
+    } else if (a.action === 'cancelWaitlist') {
+      var wl = waitlist.find(function(w) { return w.member === currentMember && w.date === a.ymd && w.time === a.tm; });
+      if (!wl) return;
+      await dbDelete('waitlist', 'id=eq.' + wl.id);
+      showToast(lang === 'zh' ? '已离开候补名单。' : 'Left the waitlist.', 'warn');
+      await loadAll(); renderSchedule(); renderMyBookings();
     }
+  } catch(e) { showToast('Error: ' + e.message, 'error'); console.error(e); }
+}
+
+async function promoteFromWaitlist(ymd, tm, label, classType) {
+  var wlEntry = waitlist.find(function(w) { return w.date === ymd && w.time === tm; });
+  if (!wlEntry) return;
+  var count = bookings.filter(function(b) { return b.date === ymd && b.time === tm; }).length;
+  if (count >= SLOT_LIMIT) return;
+  try {
+    await dbInsert('bookings', { member: wlEntry.member, date: ymd, time: tm, class_type: classType || wlEntry.classType, class_label: label || wlEntry.classLabel });
+    await dbDelete('waitlist', 'id=eq.' + wlEntry.id);
+    showToast('🔔 ' + wlEntry.member + ' auto-promoted from waitlist!', 'success');
     await loadAll(); renderSchedule(); renderMyBookings();
-  }catch(e){console.error(e);showToast('Error: '+e.message,'error');}
+    if (isAdmin) { renderAdminBookings(); renderAdminWaitlist(); }
+  } catch(e) { console.error('Waitlist promote error:', e); }
 }
-function closeModal(){ document.getElementById('confirmModal').classList.add('hidden'); }
 
-// ═══════════════════════════════════════════
-// MY BOOKINGS
-// ═══════════════════════════════════════════
-function renderMyBookings(){
-  const el=document.getElementById('myBookingsContent');
-  if(!currentMember){el.innerHTML=`<div class="bookings-empty"><div class="empty-icon">👤</div><p>${t('selectToSee')}</p></div>`;return;}
-  if(!memberUnlocked){el.innerHTML=`<div class="bookings-empty"><div class="empty-icon">🔒</div><p>${t('loginToSee')}</p></div>`;return;}
-  const mine=bookings.filter(b=>b.member===currentMember).sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
-  if(!mine.length){el.innerHTML=`<div class="bookings-empty"><div class="empty-icon">🗓</div><p>${t('noBookings')}</p></div>`;return;}
-  let html=`<h3 style="font-family:'Playfair Display',serif;font-size:1.05rem;margin-bottom:1rem;color:var(--jade)">Bookings for ${currentMember}</h3>`;
-  mine.forEach(b=>{
-    const past=isSlotPast(b.date,b.time);
-    const cc=!past&&canCancelSlot(b.date,b.time);
-    html+=`<div class="booking-card">
-      <div class="booking-card-left"><strong>${b.classLabel}</strong><span>📅 ${fmtDate(parseYMD(b.date))} at ${timeLabel(b.time)}</span></div>
-      <div style="display:flex;align-items:center;gap:.5rem">
-        <span class="status-tag ${past?'status-past':'status-upcoming'}">${past?t('past'):t('upcoming')}</span>
-        ${!past?`<button class="btn-cancel-booking" ${cc?'':'disabled title="Cannot cancel within 1hr"'} onclick="promptCancel('${b.date}','${b.time}','${b.classLabel.replace(/'/g,"\\'")}')">" + t('cancel') + "</button>`:''}
-      </div></div>`;
+function closeModal() {
+  document.getElementById('confirmModal').classList.add('hidden');
+  var btn = document.getElementById('modalConfirmBtn');
+  btn.style.background = '';
+  btn.onclick = null;
+}
+
+// ═══════════════════════════════════════════════════════
+// MY BOOKINGS TAB
+// ═══════════════════════════════════════════════════════
+function renderMyBookings() {
+  var el = document.getElementById('myBookingsContent');
+  if (!currentMember) {
+    el.innerHTML = '<div class="bookings-empty"><div class="empty-icon">👤</div><p>' + tr('selectToSee') + '</p></div>'; return;
+  }
+  if (!memberUnlocked) {
+    el.innerHTML = '<div class="bookings-empty"><div class="empty-icon">🔒</div><p>' + tr('loginToSee') + '</p></div>'; return;
+  }
+  var mine = bookings.filter(function(b) { return b.member === currentMember; })
+    .sort(function(a,b) { return a.date.localeCompare(b.date) || a.time.localeCompare(b.time); });
+  var myWL = waitlist.filter(function(w) { return w.member === currentMember; })
+    .sort(function(a,b) { return a.date.localeCompare(b.date) || a.time.localeCompare(b.time); });
+
+  if (!mine.length && !myWL.length) {
+    el.innerHTML = '<div class="bookings-empty"><div class="empty-icon">🗓</div><p>' + tr('noBookings') + '</p></div>'; return;
+  }
+  var esc = function(s) { return s.replace(/'/g, "\\'"); };
+  var html = '<h3 style="font-family:\'Playfair Display\',serif;font-size:1.05rem;margin-bottom:1rem;color:var(--jade)">Bookings for ' + currentMember + '</h3>';
+
+  if (mine.length) {
+    html += '<p style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--jade);margin-bottom:.5rem">✅ Confirmed (' + mine.length + ')</p>';
+    mine.forEach(function(b) {
+      var past = isSlotPast(b.date, b.time);
+      var cc   = !past && canCancel(b.date, b.time);
+      html += '<div class="booking-card">' +
+        '<div class="booking-card-left"><strong>' + b.classLabel + '</strong><span>📅 ' + fmtDate(parseYMD(b.date)) + ' at ' + timeLbl(b.time) + '</span></div>' +
+        '<div style="display:flex;align-items:center;gap:.5rem">' +
+        '<span class="status-tag ' + (past ? 'st-past' : 'st-upcoming') + '">' + (past ? tr('past') : tr('upcoming')) + '</span>' +
+        (!past ? '<button class="btn-cancel-bk" ' + (cc ? '' : 'disabled title="Cannot cancel within 1hr"') + ' onclick="promptCancel(\'' + b.date + '\',\'' + b.time + '\',\'' + esc(b.classLabel) + '\',\'booking\')">' + tr('cancel') + '</button>' : '') +
+        '</div></div>';
+    });
+  }
+
+  if (myWL.length) {
+    html += '<p style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--warn);margin:.8rem 0 .5rem">⏳ Waitlist (' + myWL.length + ')</p>';
+    myWL.forEach(function(w) {
+      var past = isSlotPast(w.date, w.time);
+      html += '<div class="booking-card" style="border-left:3px solid var(--warn)">' +
+        '<div class="booking-card-left"><strong>' + w.classLabel + '</strong><span>📅 ' + fmtDate(parseYMD(w.date)) + ' at ' + timeLbl(w.time) + '</span></div>' +
+        '<div style="display:flex;align-items:center;gap:.5rem">' +
+        '<span class="status-tag st-waitlist">⏳ #' + w.position + '</span>' +
+        (!past ? '<button class="btn-cancel-bk" onclick="promptCancel(\'' + w.date + '\',\'' + w.time + '\',\'' + esc(w.classLabel) + '\',\'waitlist\')">' + tr('leaveWaitlist') + '</button>' : '') +
+        '</div></div>';
+    });
+  }
+  el.innerHTML = html;
+}
+
+function updateMiaBadge() {
+  var el = document.getElementById('miaBadge');
+  if (!currentMember) { el.style.display = 'none'; return; }
+  var c = miaRecord[currentMember] || 0;
+  el.style.display = 'inline-block';
+  el.textContent = c + '/3 ' + (lang === 'zh' ? '缺席' : 'MIA');
+  el.className = 'mia-badge ' + (c >= 3 ? 'mia-danger' : c >= 2 ? 'mia-warn' : 'mia-ok');
+}
+
+function changeWeek(dir) {
+  weekOffset = Math.max(0, Math.min(1, weekOffset + dir));
+  renderSchedule();
+}
+
+function switchTab(name, btn) {
+  ['book','mybookings','rules','admin'].forEach(function(n) {
+    document.getElementById('tab-' + n).style.display = n === name ? 'block' : 'none';
   });
-  el.innerHTML=html;
+  document.querySelectorAll('.tab').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  if (name === 'mybookings') renderMyBookings();
+  if (name === 'admin' && isAdmin) { renderAdminBookings(); renderAdminMIA(); renderBlockList(); renderAnnounceList(); renderMemberManageList(); renderAdminWaitlist(); }
 }
 
-function updateMiaBadge(){
-  const b=document.getElementById('miaBadge');
-  if(!currentMember){b.style.display='none';return;}
-  const c=miaRecord[currentMember]||0;
-  b.style.display='inline-block';
-  b.textContent=`${c}/3 ${t('miaOf')}`;
-  b.className='mia-badge '+(c>=3?'mia-danger':c>=2?'mia-warn':'mia-ok');
+// ═══════════════════════════════════════════════════════
+// ADMIN — login/logout
+// ═══════════════════════════════════════════════════════
+function adminLogin() {
+  if (document.getElementById('adminPwInput').value === ADMIN_PW) {
+    isAdmin = true;
+    document.getElementById('adminLoginBox').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    populateAdminDropdowns();
+    renderAdminBookings(); renderAdminMIA(); renderBlockList(); renderAnnounceList(); renderMemberManageList(); renderAdminWaitlist();
+  } else {
+    showToast('Incorrect password.', 'error');
+    document.getElementById('adminPwInput').value = '';
+  }
 }
-function changeWeek(dir){ currentWeekOffset=Math.max(0,Math.min(1,currentWeekOffset+dir)); renderSchedule(); }
-function switchTab(name,btn){
-  ['book','mybookings','rules','admin'].forEach(t=>document.getElementById('tab-'+t).style.display=t===name?'block':'none');
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
-  if(name==='mybookings') renderMyBookings();
-  if(name==='admin'&&isAdmin){renderAdminBookings();renderAdminMIA();renderBlockList();renderAnnounceList();renderMemberManageList();}
+function adminLogout() {
+  isAdmin = false;
+  document.getElementById('adminLoginBox').style.display = 'block';
+  document.getElementById('adminPanel').style.display = 'none';
+  document.getElementById('adminPwInput').value = '';
 }
-
-// ═══════════════════════════════════════════
-// ADMIN
-// ═══════════════════════════════════════════
-function adminLogin(){
-  if(document.getElementById('adminPwInput').value===ADMIN_PASSWORD){
-    isAdmin=true;
-    document.getElementById('adminLoginBox').style.display='none';
-    document.getElementById('adminPanel').style.display='block';
-    populateAdminMemberFilter();populateAdminBookMember();renderAdminBookings();renderAdminMIA();renderBlockList();renderAnnounceList();renderMemberManageList();
-  }else{showToast('Incorrect password.','error');document.getElementById('adminPwInput').value='';}
-}
-function adminLogout(){
-  isAdmin=false;
-  document.getElementById('adminLoginBox').style.display='block';
-  document.getElementById('adminPanel').style.display='none';
-  document.getElementById('adminPwInput').value='';
-}
-function populateAdminMemberFilter(){
-  const s=document.getElementById('adminFilterMember');
-  s.innerHTML='<option value="">All Members</option>';
-  members.slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(m=>s.innerHTML+=`<option>${m.name}</option>`);
+function populateAdminDropdowns() {
+  var sorted = members.slice().sort(function(a,b) { return a.name.localeCompare(b.name); });
+  var ids = ['adminFilterMember', 'adminBookMember', 'bulkMember'];
+  ids.forEach(function(id) {
+    var sel = document.getElementById(id); if (!sel) return;
+    var cur = sel.value;
+    sel.innerHTML = id === 'adminFilterMember' ? '<option value="">All Members</option>' : '<option value="">— Select member —</option>';
+    sorted.forEach(function(m) {
+      var o = document.createElement('option'); o.value = m.name; o.textContent = m.name;
+      if (m.name === cur) o.selected = true;
+      sel.appendChild(o);
+    });
+  });
 }
 
-// ── MEMBERS ──
-async function addMember(){
-  const name=document.getElementById('newMemberName').value.trim();
-  const pw=document.getElementById('newMemberPw').value.trim();
-  if(!name){showToast('Enter a name.','error');return;}
-  if(!pw){showToast('Enter a password for this member.','error');return;}
-  if(members.find(m=>m.name===name)){showToast('Member already exists.','warn');return;}
-  try{
-    await dbInsert('members',{name,password:pw});
-    document.getElementById('newMemberName').value='';
-    document.getElementById('newMemberPw').value='';
-    await loadAll();
-    populateMemberDropdown();populateAdminMemberFilter();populateAdminBookMember();renderMemberManageList();renderAdminMIA();
-    showToast(`${name} added! ✅`,'success');
-  }catch(e){console.error(e);showToast('Error: '+e.message,'error');}
+// ── Members CRUD ──
+async function addMember() {
+  var name = document.getElementById('newMemberName').value.trim();
+  var pw   = document.getElementById('newMemberPw').value.trim();
+  if (!name || !pw) { showToast('Enter name and password.', 'error'); return; }
+  if (members.find(function(m) { return m.name === name; })) { showToast('Member already exists.', 'warn'); return; }
+  try {
+    await dbInsert('members', { name: name, password: pw });
+    document.getElementById('newMemberName').value = '';
+    document.getElementById('newMemberPw').value = '';
+    await loadAll(); populateMemberDropdown(); populateAdminDropdowns(); renderMemberManageList(); renderAdminMIA();
+    showToast(name + ' added! ✅', 'success');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
 }
-async function deleteMember(name){
-  if(!confirm(`Remove "${name}"? Their bookings will also be deleted.`)) return;
-  try{
-    await dbDelete('bookings','member=eq.'+encodeURIComponent(name));
-    await dbDelete('mia_records','member=eq.'+encodeURIComponent(name));
-    await dbDelete('members','name=eq.'+encodeURIComponent(name));
-    if(currentMember===name){
-      currentMember=''; memberUnlocked=false;
-      document.getElementById('memberSelect').value='';
-      document.getElementById('navMemberInfo').style.display='none';
-      document.getElementById('miaBadge').style.display='none';
-      document.getElementById('unlockBtn').style.display='none';
+
+async function deleteMember(name) {
+  if (!confirm('Remove "' + name + '"? All bookings & waitlist entries will also be deleted.')) return;
+  try {
+    await dbDelete('bookings',     'member=eq.' + encodeURIComponent(name));
+    await dbDelete('waitlist',     'member=eq.' + encodeURIComponent(name));
+    await dbDelete('mia_records',  'member=eq.' + encodeURIComponent(name));
+    await dbDelete('members',      'name=eq.'   + encodeURIComponent(name));
+    if (currentMember === name) {
+      currentMember = ''; memberUnlocked = false;
+      document.getElementById('memberSelect').value = '';
+      document.getElementById('navMemberInfo').style.display = 'none';
+      document.getElementById('miaBadge').style.display = 'none';
+      document.getElementById('unlockBtn').style.display = 'none';
     }
-    await loadAll();
-    populateMemberDropdown();populateAdminMemberFilter();populateAdminBookMember();renderMemberManageList();renderAdminBookings();renderAdminMIA();renderSchedule();
-    showToast(`${name} removed.`,'warn');
-  }catch(e){console.error(e);showToast('Error: '+e.message,'error');}
+    await loadAll(); populateMemberDropdown(); populateAdminDropdowns(); renderMemberManageList(); renderAdminBookings(); renderAdminMIA(); renderAdminWaitlist(); renderSchedule();
+    showToast(name + ' removed.', 'warn');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
 }
-function showEditPw(name){
-  editingPwMember=name;
-  document.getElementById('editPwName').textContent='Change password for: '+name;
-  document.getElementById('editPwInput').value='';
+
+function showEditPw(name) {
+  editingPwMember = name;
+  document.getElementById('editPwLabel').textContent = 'Change password for: ' + name;
+  document.getElementById('editPwInput').value = '';
   document.getElementById('editPwModal').classList.remove('hidden');
-  setTimeout(()=>document.getElementById('editPwInput').focus(),100);
+  setTimeout(function() { document.getElementById('editPwInput').focus(); }, 100);
 }
-function closeEditPw(){ document.getElementById('editPwModal').classList.add('hidden'); editingPwMember=''; }
-async function submitEditPw(){
-  const pw=document.getElementById('editPwInput').value.trim();
-  if(!pw){showToast('Enter a new password.','error');return;}
-  try{
-    await dbUpdate('members','name=eq.'+encodeURIComponent(editingPwMember),{password:pw});
-    await loadAll();
-    renderMemberManageList();
-    closeEditPw();
-    showToast(`Password updated for ${editingPwMember}.`,'success');
-  }catch(e){console.error(e);showToast('Error: '+e.message,'error');}
-}
-function renderMemberManageList(){
-  const el=document.getElementById('memberManageList');
-  if(!members.length){el.innerHTML='<p style="font-size:.83rem;color:var(--soft)">No members yet.</p>';return;}
-  el.innerHTML=members.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(m=>`
-    <div class="member-manage-item">
-      <span>👤 <strong>${m.name}</strong> <span style="font-size:.75rem;color:var(--soft)">${m.password?'🔒 Password set':'⚠️ No password'}</span></span>
-      <div style="display:flex;gap:.4rem">
-        <button class="btn btn-warn btn-sm" onclick="showEditPw('${m.name.replace(/'/g,"\\'")}')">✏️ Password</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteMember('${m.name.replace(/'/g,"\\'")}')">Remove</button>
-      </div>
-    </div>`).join('');
+function closeEditPw() { document.getElementById('editPwModal').classList.add('hidden'); editingPwMember = ''; }
+async function submitEditPw() {
+  var pw = document.getElementById('editPwInput').value.trim();
+  if (!pw) { showToast('Enter a password.', 'error'); return; }
+  try {
+    await dbUpdate('members', 'name=eq.' + encodeURIComponent(editingPwMember), { password: pw });
+    await loadAll(); renderMemberManageList(); closeEditPw();
+    showToast('Password updated for ' + editingPwMember + '.', 'success');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
 }
 
+function renderMemberManageList() {
+  var el = document.getElementById('memberManageList');
+  if (!members.length) { el.innerHTML = '<p style="font-size:.83rem;color:var(--soft)">No members yet.</p>'; return; }
+  var esc = function(s) { return s.replace(/'/g, "\\'"); };
+  el.innerHTML = members.slice().sort(function(a,b) { return a.name.localeCompare(b.name); }).map(function(m) {
+    return '<div class="member-manage-item">' +
+      '<span>👤 <strong>' + m.name + '</strong> <span style="font-size:.75rem;color:var(--soft)">' + (m.password ? '🔒 Password set' : '⚠️ No password') + '</span></span>' +
+      '<div style="display:flex;gap:.4rem">' +
+      '<button class="btn btn-warn btn-sm" onclick="showEditPw(\'' + esc(m.name) + '\')">✏️ Password</button>' +
+      '<button class="btn btn-danger btn-sm" onclick="deleteMember(\'' + esc(m.name) + '\')">Remove</button>' +
+      '</div></div>';
+  }).join('');
+}
 
-// ── ADMIN MANUAL BOOKING ──
-function populateAdminBookMember(){
-  const sel = document.getElementById('adminBookMember');
-  if(!sel) return;
-  const cur = sel.value;
-  sel.innerHTML = '<option value="">— Select member —</option>';
-  members.slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(m=>{
-    const o = document.createElement('option');
-    o.value = m.name; o.textContent = m.name;
-    if(m.name===cur) o.selected=true;
+// ── Admin single booking ──
+function onAdminBookDateChange() {
+  var dateVal = document.getElementById('adminBookDate').value;
+  var sel = document.getElementById('adminBookTime');
+  sel.innerHTML = '<option value="">— Select time —</option>';
+  if (!dateVal) return;
+  var d = new Date(dateVal + 'T12:00:00'), dow = d.getDay();
+  var info = getDowInfo(dow);
+  if (!info) { sel.innerHTML = '<option value="">No class on this day</option>'; return; }
+  info.times.forEach(function(t) {
+    var booked = bookings.filter(function(b) { return b.date === dateVal && b.time === t; }).length;
+    var o = document.createElement('option');
+    o.value = t + '|' + info.type + '|' + info.label;
+    o.textContent = timeLbl(t) + ' · ' + booked + '/' + SLOT_LIMIT + (booked >= SLOT_LIMIT ? ' (FULL)' : '');
     sel.appendChild(o);
   });
 }
 
-function onAdminBookDateChange(){
-  const dateVal = document.getElementById('adminBookDate').value;
-  const timeSel = document.getElementById('adminBookTime');
-  timeSel.innerHTML = '<option value="">— Select time —</option>';
-  if(!dateVal) return;
-  const d = new Date(dateVal+'T12:00:00');
-  const dow = d.getDay(); // 0=Sun,1=Mon...
-  const STRENGTH = ['08:45','09:30','10:15','11:00','13:45','14:30','15:15','16:00'];
-  const STRENGTH_FRI = ['08:45','09:30','10:15','11:00'];
-  const STRETCH = ['10:00','11:00','13:30'];
-  let times = [], classType = '', classLabel = '';
-  if(dow===1||dow===3){ times=STRENGTH; classType='strength'; classLabel='Functional Strength Training'; }
-  else if(dow===5){ times=STRENGTH_FRI; classType='strength'; classLabel='Functional Strength Training'; }
-  else if(dow===2||dow===4){ times=STRETCH; classType='stretch'; classLabel='Stretch & Flow (Chair Yoga + Gym)'; }
-  else {
-    timeSel.innerHTML = '<option value="">No class on this day</option>';
-    return;
+async function adminAddBooking() {
+  var member  = document.getElementById('adminBookMember').value;
+  var dateVal = document.getElementById('adminBookDate').value;
+  var timeVal = document.getElementById('adminBookTime').value;
+  var msgEl   = document.getElementById('adminBookMsg');
+  msgEl.textContent = '';
+  if (!member || !dateVal || !timeVal) { msgEl.innerHTML = '<span style="color:var(--danger)">⚠️ Fill all fields.</span>'; return; }
+  var parts = timeVal.split('|'), tm = parts[0], classType = parts[1], classLabel = parts[2];
+  if (bookings.find(function(b) { return b.member === member && b.date === dateVal; })) {
+    msgEl.innerHTML = '<span style="color:var(--danger)">⚠️ ' + member + ' already has a booking on this day.</span>'; return;
   }
-  times.forEach(t=>{
-    const booked = bookings.filter(b=>b.date===dateVal&&b.time===t).length;
-    const o = document.createElement('option');
-    o.value = t+'|'+classType+'|'+classLabel;
-    o.textContent = timeLabel(t) + ' · ' + booked + '/' + SLOT_LIMIT + (booked>=SLOT_LIMIT?' (FULL)':'');
-    if(booked>=SLOT_LIMIT) o.disabled = true;
-    timeSel.appendChild(o);
+  if (bookings.filter(function(b) { return b.date === dateVal && b.time === tm; }).length >= SLOT_LIMIT) {
+    msgEl.innerHTML = '<span style="color:var(--danger)">⚠️ Slot is full.</span>'; return;
+  }
+  try {
+    msgEl.innerHTML = '<span style="color:var(--mid)">Booking...</span>';
+    await dbInsert('bookings', { member: member, date: dateVal, time: tm, class_type: classType, class_label: classLabel });
+    await loadAll(); renderAdminBookings(); renderSchedule(); onAdminBookDateChange();
+    msgEl.innerHTML = '<span style="color:var(--jade)">✅ Booked ' + member + ' for ' + timeLbl(tm) + ' on ' + fmtDate(parseYMD(dateVal)) + '!</span>';
+    showToast('✅ Booked ' + member, 'success');
+  } catch(e) { msgEl.innerHTML = '<span style="color:var(--danger)">Error: ' + e.message + '</span>'; }
+}
+
+// ── BULK BOOKING — every occurrence of a dow/time in current + next month ──
+function onBulkDowChange() {
+  var dow = parseInt(document.getElementById('bulkDow').value);
+  var sel = document.getElementById('bulkTime');
+  sel.innerHTML = '<option value="">— Select time —</option>';
+  if (!dow) return;
+  var info = getDowInfo(dow); if (!info) return;
+  info.times.forEach(function(t) {
+    var o = document.createElement('option');
+    o.value = t + '|' + info.type + '|' + info.label;
+    o.textContent = timeLbl(t);
+    sel.appendChild(o);
   });
 }
 
-async function adminAddBooking(){
-  const member = document.getElementById('adminBookMember').value;
-  const dateVal = document.getElementById('adminBookDate').value;
-  const timeVal = document.getElementById('adminBookTime').value;
-  const msg = document.getElementById('adminBookMsg');
-  msg.textContent = '';
-  if(!member){ msg.innerHTML='<span style="color:var(--danger)">⚠️ Please select a member.</span>'; return; }
-  if(!dateVal){ msg.innerHTML='<span style="color:var(--danger)">⚠️ Please select a date.</span>'; return; }
-  if(!timeVal){ msg.innerHTML='<span style="color:var(--danger)">⚠️ Please select a time slot.</span>'; return; }
-  const [tm, classType, classLabel] = timeVal.split('|');
-  // Check already booked same day
-  const alreadyDay = bookings.find(b=>b.member===member&&b.date===dateVal);
-  if(alreadyDay){ msg.innerHTML=`<span style="color:var(--danger)">⚠️ ${member} already has a booking on this day.</span>`; return; }
-  // Check already booked same slot
-  const alreadySlot = bookings.find(b=>b.member===member&&b.date===dateVal&&b.time===tm);
-  if(alreadySlot){ msg.innerHTML=`<span style="color:var(--danger)">⚠️ Already booked this slot.</span>`; return; }
-  // Check slot full
-  const slotCount = bookings.filter(b=>b.date===dateVal&&b.time===tm).length;
-  if(slotCount>=SLOT_LIMIT){ msg.innerHTML=`<span style="color:var(--danger)">⚠️ This slot is full (${SLOT_LIMIT}/${SLOT_LIMIT}).</span>`; return; }
-  try{
-    msg.innerHTML='<span style="color:var(--mid)">Booking...</span>';
-    await dbInsert('bookings',{member,date:dateVal,time:tm,class_type:classType,class_label:classLabel});
+async function adminBulkBook() {
+  var member  = document.getElementById('bulkMember').value;
+  var dow     = parseInt(document.getElementById('bulkDow').value);
+  var timeVal = document.getElementById('bulkTime').value;
+  var msgEl   = document.getElementById('bulkMsg');
+  var resEl   = document.getElementById('bulkResults');
+  msgEl.textContent = ''; resEl.innerHTML = '';
+
+  if (!member || !dow || !timeVal) { msgEl.innerHTML = '<span style="color:var(--danger)">⚠️ Please fill in all fields.</span>'; return; }
+  var parts = timeVal.split('|'), tm = parts[0], classType = parts[1], classLabel = parts[2];
+
+  // Collect all dates from today to end of NEXT calendar month matching dow
+  var today = nowDate(); today.setHours(0,0,0,0);
+  var nextMonthEnd = new Date(today.getFullYear(), today.getMonth() + 2, 0); // last day of next month
+
+  var dates = [];
+  var cursor = new Date(today);
+  while (cursor <= nextMonthEnd) {
+    if (cursor.getDay() === dow) dates.push(toYMD(new Date(cursor)));
+    cursor = addDays(cursor, 1);
+  }
+
+  if (!dates.length) { msgEl.innerHTML = '<span style="color:var(--danger)">No matching dates found.</span>'; return; }
+  msgEl.innerHTML = '<span style="color:var(--mid)">⏳ Processing ' + dates.length + ' dates...</span>';
+
+  var booked = 0, skipped = 0, results = [];
+
+  for (var i = 0; i < dates.length; i++) {
+    var ymd = dates[i];
+    // Skip past slots
+    if (slotDT(ymd, tm) < nowDate()) { results.push({ ymd: ymd, ok: false, reason: 'Past' }); skipped++; continue; }
+    // Skip blocked
+    if (isSlotBlocked(ymd, tm) || isDayBlocked(ymd)) { results.push({ ymd: ymd, ok: false, reason: 'Blocked' }); skipped++; continue; }
+    // Skip if member already has a booking that day
+    if (bookings.find(function(b) { return b.member === member && b.date === ymd; })) { results.push({ ymd: ymd, ok: false, reason: 'Already booked this day' }); skipped++; continue; }
+    // Skip if slot full
+    if (bookings.filter(function(b) { return b.date === ymd && b.time === tm; }).length >= SLOT_LIMIT) { results.push({ ymd: ymd, ok: false, reason: 'Slot full' }); skipped++; continue; }
+    try {
+      await dbInsert('bookings', { member: member, date: ymd, time: tm, class_type: classType, class_label: classLabel });
+      // Refresh bookings in memory so subsequent iterations see the new booking
+      bookings.push({ id: null, member: member, date: ymd, time: tm, classType: classType, classLabel: classLabel });
+      results.push({ ymd: ymd, ok: true, reason: 'Booked ✅' }); booked++;
+    } catch(e) { results.push({ ymd: ymd, ok: false, reason: 'Error: ' + e.message }); skipped++; }
+  }
+
+  await loadAll(); renderAdminBookings(); renderSchedule();
+  msgEl.innerHTML = '<strong style="color:var(--jade)">✅ ' + booked + ' booked</strong>  &nbsp;|&nbsp;  <span style="color:var(--soft)">' + skipped + ' skipped</span>';
+  resEl.innerHTML = results.map(function(r) {
+    return '<div class="bulk-result ' + (r.ok ? 'bulk-ok' : 'bulk-skip') + '">' +
+      '<span>' + (r.ok ? '✅' : '⊘') + '</span>' +
+      '<span>' + fmtDate(parseYMD(r.ymd)) + ' (' + DOW_NAMES[dow] + ')</span>' +
+      '<span style="margin-left:auto;font-size:.75rem">' + r.reason + '</span>' +
+      '</div>';
+  }).join('');
+  showToast('Bulk booking: ' + booked + ' booked, ' + skipped + ' skipped.', 'success');
+}
+
+// ── Admin bookings table ──
+function renderAdminBookings() {
+  var fm = document.getElementById('adminFilterMember').value;
+  var fw = document.getElementById('adminFilterWeek').value;
+  var data = bookings.slice();
+  if (fm) data = data.filter(function(b) { return b.member === fm; });
+  if (fw === 'this') {
+    var mon = getMonday(0), sun = addDays(mon, 6);
+    data = data.filter(function(b) { var d = parseYMD(b.date); return d >= mon && d <= sun; });
+  } else if (fw === 'next') {
+    var mon2 = getMonday(1), sun2 = addDays(mon2, 6);
+    data = data.filter(function(b) { var d = parseYMD(b.date); return d >= mon2 && d <= sun2; });
+  }
+  data.sort(function(a,b) { return a.date.localeCompare(b.date) || a.time.localeCompare(b.time); });
+  var el = document.getElementById('adminBookingsTable');
+  if (!data.length) { el.innerHTML = '<p style="font-size:.83rem;color:var(--soft);text-align:center;padding:1rem">No bookings found.</p>'; return; }
+  var esc = function(s) { return s.replace(/'/g, "\\'"); };
+  var h = '<table class="admin-table"><thead><tr><th>Member</th><th>Class</th><th>Date</th><th>Time</th><th>Actions</th></tr></thead><tbody>';
+  data.forEach(function(b) {
+    var past = isSlotPast(b.date, b.time);
+    h += '<tr><td>' + b.member + '</td><td>' + (b.classType === 'strength' ? '💪 Strength' : '🧘 Stretch') + '</td>' +
+      '<td>' + fmtDate(parseYMD(b.date)) + '</td><td>' + timeLbl(b.time) + '</td>' +
+      '<td style="white-space:nowrap">' +
+      '<button class="btn btn-danger btn-sm" onclick="adminRemoveBooking(' + b.id + ')">Remove</button>' +
+      (!past && b.id ? ' <button class="btn btn-warn btn-sm" onclick="adminMarkMIA(\'' + esc(b.member) + '\',' + b.id + ')">MIA</button>' : '') +
+      '</td></tr>';
+  });
+  h += '</tbody></table>';
+  el.innerHTML = h;
+}
+
+async function adminRemoveBooking(id) {
+  try {
+    var bk = bookings.find(function(b) { return b.id === id; });
+    await dbDelete('bookings', 'id=eq.' + id);
     await loadAll();
-    renderAdminBookings(); renderSchedule(); onAdminBookDateChange();
-    msg.innerHTML=`<span style="color:var(--jade)">✅ Booked ${member} for ${timeLabel(tm)} on ${fmtDate(parseYMD(dateVal))}!</span>`;
-    showToast(`✅ Booked ${member} for ${timeLabel(tm)}`,'success');
-  }catch(e){ msg.innerHTML=`<span style="color:var(--danger)">Error: ${e.message}</span>`; }
+    if (bk) await promoteFromWaitlist(bk.date, bk.time, bk.classLabel, bk.classType);
+    renderAdminBookings(); renderSchedule(); renderAdminWaitlist();
+    showToast('Booking removed.', 'warn');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
 }
 
-// ── BOOKINGS ──
-function renderAdminBookings(){
-  const fm=document.getElementById('adminFilterMember').value;
-  const fw=document.getElementById('adminFilterWeek').value;
-  let data=[...bookings];
-  if(fm) data=data.filter(b=>b.member===fm);
-  if(fw==='this'){const mon=getWeekMonday(0),sun=addDays(mon,6);data=data.filter(b=>{const d=parseYMD(b.date);return d>=mon&&d<=sun;});}
-  if(fw==='next'){const mon=getWeekMonday(1),sun=addDays(mon,6);data=data.filter(b=>{const d=parseYMD(b.date);return d>=mon&&d<=sun;});}
-  data.sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));
-  if(!data.length){document.getElementById('adminBookingsTable').innerHTML='<p style="font-size:.83rem;color:var(--soft);text-align:center;padding:1rem">No bookings.</p>';return;}
-  let h=`<table class="admin-table"><thead><tr><th>Member</th><th>Class</th><th>Date</th><th>Time</th><th>Actions</th></tr></thead><tbody>`;
-  data.forEach(b=>{
-    const past=isSlotPast(b.date,b.time);
-    h+=`<tr><td>${b.member}</td><td>${b.classType==='strength'?'💪':'🧘'} ${b.classType==='strength'?'Strength':'Stretch'}</td>
-    <td>${fmtDate(parseYMD(b.date))}</td><td>${timeLabel(b.time)}</td>
-    <td style="white-space:nowrap">
-      <button class="btn btn-danger btn-sm" onclick="adminRemoveBooking(${b.id})">Remove</button>
-      ${!past?`<button class="btn btn-sm btn-warn" style="margin-left:.3rem" onclick="adminMarkMIA('${b.member}',${b.id})">MIA</button>`:''}
-    </td></tr>`;
+async function adminMarkMIA(member, id) {
+  try {
+    var cur = miaRecord[member] || 0;
+    if (cur === 0) await dbInsert('mia_records', { member: member, count: 1 });
+    else await dbUpdate('mia_records', 'member=eq.' + encodeURIComponent(member), { count: cur + 1 });
+    await dbDelete('bookings', 'id=eq.' + id);
+    await loadAll(); renderAdminBookings(); renderAdminMIA(); renderSchedule();
+    if (currentMember === member) updateMiaBadge();
+    showToast('MIA recorded for ' + member + ': ' + (miaRecord[member] || 0) + '/3', 'warn');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+}
+
+// ── Waitlist admin ──
+function renderAdminWaitlist() {
+  var el = document.getElementById('adminWaitlistTable');
+  var upcoming = waitlist.filter(function(w) { return !isSlotPast(w.date, w.time); })
+    .sort(function(a,b) { return a.date.localeCompare(b.date) || a.time.localeCompare(b.time) || a.position - b.position; });
+  if (!upcoming.length) { el.innerHTML = '<p style="font-size:.83rem;color:var(--soft);text-align:center;padding:1rem">No active waitlist entries.</p>'; return; }
+  var h = '<table class="admin-table"><thead><tr><th>Member</th><th>Class</th><th>Date</th><th>Time</th><th>Position</th><th>Actions</th></tr></thead><tbody>';
+  upcoming.forEach(function(w) {
+    h += '<tr><td>' + w.member + '</td><td>' + (w.classType === 'strength' ? '💪 Strength' : '🧘 Stretch') + '</td>' +
+      '<td>' + fmtDate(parseYMD(w.date)) + '</td><td>' + timeLbl(w.time) + '</td>' +
+      '<td><span class="wl-badge">#' + w.position + '</span></td>' +
+      '<td><button class="btn btn-danger btn-sm" onclick="adminRemoveWaitlist(' + w.id + ')">Remove</button></td></tr>';
   });
-  h+='</tbody></table>';
-  document.getElementById('adminBookingsTable').innerHTML=h;
+  h += '</tbody></table>';
+  el.innerHTML = h;
 }
-async function adminRemoveBooking(id){
-  try{await dbDelete('bookings','id=eq.'+id);await loadAll();renderAdminBookings();renderSchedule();showToast('Removed.','warn');}
-  catch(e){showToast('Error: '+e.message,'error');}
-}
-async function adminMarkMIA(member,id){
-  try{
-    const cur=miaRecord[member]||0;
-    if(cur===0) await dbInsert('mia_records',{member,count:1});
-    else await dbUpdate('mia_records','member=eq.'+encodeURIComponent(member),{count:cur+1});
-    await dbDelete('bookings','id=eq.'+id);
-    await loadAll();renderAdminBookings();renderAdminMIA();renderSchedule();
-    if(currentMember===member) updateMiaBadge();
-    showToast(`MIA for ${member}: ${miaRecord[member]||0}/3`,'warn');
-  }catch(e){showToast('Error: '+e.message,'error');}
+
+async function adminRemoveWaitlist(id) {
+  try {
+    await dbDelete('waitlist', 'id=eq.' + id);
+    await loadAll(); renderAdminWaitlist(); renderSchedule();
+    showToast('Removed from waitlist.', 'warn');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
 }
 
 // ── MIA ──
-function renderAdminMIA(){
-  let h=`<table class="admin-table"><thead><tr><th>Member</th><th>MIA</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
-  members.slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(m=>{
-    const c=miaRecord[m.name]||0;
-    const s=c>=3?'🔴 At Limit':c>=2?'🟡 Warning':'🟢 OK';
-    h+=`<tr><td>${m.name}</td>
-    <td style="font-weight:700;color:${c>=3?'var(--danger)':c>=2?'var(--warn)':'var(--jade)'}">${c}/3</td>
-    <td>${s}</td>
-    <td style="white-space:nowrap">
-      <button class="btn btn-sm btn-outline" onclick="adminAddMIA('${m.name.replace(/'/g,"\\'")}')">+1 MIA</button>
-      ${c>0?`<button class="btn btn-sm" style="margin-left:.3rem;background:#eee;color:var(--mid);border:none;border-radius:var(--radius-sm);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;padding:.35rem .7rem;font-size:.78rem" onclick="adminClearMIA('${m.name.replace(/'/g,"\\'")}')">Reset</button>`:''}
-    </td></tr>`;
+function renderAdminMIA() {
+  var esc = function(s) { return s.replace(/'/g, "\\'"); };
+  var h = '<table class="admin-table"><thead><tr><th>Member</th><th>MIA</th><th>Status</th><th>Actions</th></tr></thead><tbody>';
+  members.slice().sort(function(a,b) { return a.name.localeCompare(b.name); }).forEach(function(m) {
+    var c = miaRecord[m.name] || 0;
+    var s = c >= 3 ? '🔴 At Limit' : c >= 2 ? '🟡 Warning' : '🟢 OK';
+    h += '<tr><td>' + m.name + '</td>' +
+      '<td style="font-weight:700;color:' + (c >= 3 ? 'var(--danger)' : c >= 2 ? 'var(--warn)' : 'var(--jade)') + '">' + c + '/3</td>' +
+      '<td>' + s + '</td>' +
+      '<td style="white-space:nowrap">' +
+      '<button class="btn btn-outline btn-sm" onclick="adminAddMIA(\'' + esc(m.name) + '\')">+1 MIA</button>' +
+      (c > 0 ? ' <button class="btn btn-sm" style="background:#eee;color:var(--mid);border:none;cursor:pointer;font-family:\'Nunito\',sans-serif;font-weight:700;padding:.35rem .7rem;font-size:.78rem;border-radius:var(--radius-sm)" onclick="adminClearMIA(\'' + esc(m.name) + '\')">Reset</button>' : '') +
+      '</td></tr>';
   });
-  h+='</tbody></table>';
-  document.getElementById('miaTable').innerHTML=h;
-}
-async function adminAddMIA(m){
-  try{
-    const c=miaRecord[m]||0;
-    if(c===0) await dbInsert('mia_records',{member:m,count:1});
-    else await dbUpdate('mia_records','member=eq.'+encodeURIComponent(m),{count:c+1});
-    await loadAll();renderAdminMIA();
-    if(currentMember===m) updateMiaBadge();
-    showToast(`MIA +1 for ${m}: ${miaRecord[m]}/3`,'warn');
-  }catch(e){showToast('Error: '+e.message,'error');}
-}
-async function adminClearMIA(m){
-  try{
-    await dbUpdate('mia_records','member=eq.'+encodeURIComponent(m),{count:0});
-    await loadAll();renderAdminMIA();
-    if(currentMember===m) updateMiaBadge();
-    showToast(`MIA cleared for ${m}.`,'success');
-  }catch(e){showToast('Error: '+e.message,'error');}
+  h += '</tbody></table>';
+  document.getElementById('miaTable').innerHTML = h;
 }
 
-// ── BLOCKS ──
-async function addBlock(){
-  const d=document.getElementById('blockDate').value;
-  const t=document.getElementById('blockTime').value||null;
-  const r=document.getElementById('blockReason').value||'';
-  if(!d){showToast('Pick a date.','error');return;}
-  try{
-    await dbInsert('blocked_slots',{date:d,time:t,reason:r});
-    document.getElementById('blockDate').value='';document.getElementById('blockTime').value='';document.getElementById('blockReason').value='';
-    await loadAll();renderBlockList();renderSchedule();showToast('Blocked.','success');
-  }catch(e){showToast('Error: '+e.message,'error');}
-}
-async function removeBlock(id){
-  try{await dbDelete('blocked_slots','id=eq.'+id);await loadAll();renderBlockList();renderSchedule();showToast('Block removed.','warn');}
-  catch(e){showToast('Error: '+e.message,'error');}
-}
-function renderBlockList(){
-  const el=document.getElementById('blockList');
-  if(!blockedSlots.length){el.innerHTML='<p style="font-size:.8rem;color:var(--soft)">No blocked dates.</p>';return;}
-  el.innerHTML=blockedSlots.map(b=>`<div class="block-item"><span>🚫 ${b.date}${b.time?' at '+timeLabel(b.time):' (All day)'}${b.reason?' — '+b.reason:''}</span><button class="btn btn-danger btn-sm" onclick="removeBlock(${b.id})">Remove</button></div>`).join('');
+async function adminAddMIA(name) {
+  try {
+    var c = miaRecord[name] || 0;
+    if (c === 0) await dbInsert('mia_records', { member: name, count: 1 });
+    else await dbUpdate('mia_records', 'member=eq.' + encodeURIComponent(name), { count: c + 1 });
+    await loadAll(); renderAdminMIA();
+    if (currentMember === name) updateMiaBadge();
+    showToast('MIA +1 for ' + name + ': ' + (miaRecord[name] || 0) + '/3', 'warn');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
 }
 
-// ── ANNOUNCEMENTS ──
-async function addAnnounce(){
-  const text=document.getElementById('announceInput').value.trim();
-  if(!text){showToast('Enter text.','error');return;}
-  try{
-    await dbInsert('announcements',{text});
-    document.getElementById('announceInput').value='';
-    await loadAll();renderAnnounceList();showAnnounceBanner();showToast('Posted!','success');
-  }catch(e){showToast('Error: '+e.message,'error');}
+async function adminClearMIA(name) {
+  try {
+    await dbUpdate('mia_records', 'member=eq.' + encodeURIComponent(name), { count: 0 });
+    await loadAll(); renderAdminMIA();
+    if (currentMember === name) updateMiaBadge();
+    showToast('MIA cleared for ' + name + '.', 'success');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
 }
-async function removeAnnounce(id){
-  try{
-    await dbDelete('announcements','id=eq.'+id);
-    await loadAll();renderAnnounceList();
-    if(!announcements.length) document.getElementById('announceBanner').classList.add('hidden');
-  }catch(e){showToast('Error: '+e.message,'error');}
+
+// ── Blocks ──
+async function addBlock() {
+  var d = document.getElementById('blockDate').value;
+  var t = document.getElementById('blockTime').value || null;
+  var r = document.getElementById('blockReason').value || '';
+  if (!d) { showToast('Pick a date.', 'error'); return; }
+  try {
+    await dbInsert('blocked_slots', { date: d, time: t, reason: r });
+    document.getElementById('blockDate').value = '';
+    document.getElementById('blockTime').value = '';
+    document.getElementById('blockReason').value = '';
+    await loadAll(); renderBlockList(); renderSchedule();
+    showToast('Date blocked.', 'success');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
 }
-function renderAnnounceList(){
-  const el=document.getElementById('announceList');
-  if(!announcements.length){el.innerHTML='<p style="font-size:.8rem;color:var(--soft)">No announcements.</p>';return;}
-  el.innerHTML=announcements.map(a=>`<div class="announce-item"><span>${a.text}</span><button style="background:none;border:none;cursor:pointer;color:var(--gold);font-size:.9rem;flex-shrink:0" onclick="removeAnnounce(${a.id})">✕</button></div>`).join('');
+
+async function removeBlock(id) {
+  try {
+    await dbDelete('blocked_slots', 'id=eq.' + id);
+    await loadAll(); renderBlockList(); renderSchedule();
+    showToast('Block removed.', 'warn');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
 }
-function showAnnounceBanner(){
-  if(!announcements.length) return;
-  document.getElementById('announceText').textContent=announcements[0].text;
+
+function renderBlockList() {
+  var el = document.getElementById('blockList');
+  if (!blockedSlots.length) { el.innerHTML = '<p style="font-size:.8rem;color:var(--soft)">No blocked dates.</p>'; return; }
+  el.innerHTML = blockedSlots.map(function(b) {
+    return '<div class="block-item"><span>🚫 ' + b.date + (b.time ? ' at ' + timeLbl(b.time) : ' (All day)') + (b.reason ? ' — ' + b.reason : '') + '</span>' +
+      '<button class="btn btn-danger btn-sm" onclick="removeBlock(' + b.id + ')">Remove</button></div>';
+  }).join('');
+}
+
+// ── Announcements ──
+async function addAnnounce() {
+  var text = document.getElementById('announceInput').value.trim();
+  if (!text) { showToast('Enter text.', 'error'); return; }
+  try {
+    await dbInsert('announcements', { text: text });
+    document.getElementById('announceInput').value = '';
+    await loadAll(); renderAnnounceList(); showAnnounceBanner();
+    showToast('Posted!', 'success');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+}
+
+async function removeAnnounce(id) {
+  try {
+    await dbDelete('announcements', 'id=eq.' + id);
+    await loadAll(); renderAnnounceList();
+    if (!announcements.length) document.getElementById('announceBanner').classList.add('hidden');
+  } catch(e) { showToast('Error: ' + e.message, 'error'); }
+}
+
+function renderAnnounceList() {
+  var el = document.getElementById('announceList');
+  if (!announcements.length) { el.innerHTML = '<p style="font-size:.8rem;color:var(--soft)">No announcements.</p>'; return; }
+  el.innerHTML = announcements.map(function(a) {
+    return '<div class="announce-item"><span>' + a.text + '</span>' +
+      '<button style="background:none;border:none;cursor:pointer;color:var(--gold);font-size:.9rem;flex-shrink:0" onclick="removeAnnounce(' + a.id + ')">✕</button></div>';
+  }).join('');
+}
+
+function showAnnounceBanner() {
+  if (!announcements.length) return;
+  document.getElementById('announceText').textContent = announcements[0].text;
   document.getElementById('announceBanner').classList.remove('hidden');
 }
-function dismissAnnounce(){ document.getElementById('announceBanner').classList.add('hidden'); }
+function dismissAnnounce() { document.getElementById('announceBanner').classList.add('hidden'); }
 
-// ═══════════════════════════════════════════
-// TOAST & CHAT
-// ═══════════════════════════════════════════
-function showToast(msg,type='success'){
-  const o=document.querySelector('.toast'); if(o) o.remove();
-  const t=document.createElement('div'); t.className=`toast toast-${type}`; t.textContent=msg;
-  document.body.appendChild(t); setTimeout(()=>t.remove(),3800);
-}
-function toggleChat(){ document.getElementById('chatWindow').classList.toggle('open'); }
-function chipAsk(q){ document.getElementById('chatInput').value=q; sendChat(); }
-function sendChat(){
-  const i=document.getElementById('chatInput'); const t=i.value.trim(); if(!t) return;
-  i.value=''; addMsg(t,'user'); const ty=addMsg('Thinking…','bot');
-  setTimeout(()=>{ ty.remove(); addMsg(getReply(t),'bot'); },600);
-}
-function addMsg(text,type){
-  const m=document.getElementById('chatMessages');
-  const d=document.createElement('div'); d.className=`msg ${type}`; d.innerHTML=text;
-  m.appendChild(d); m.scrollTop=m.scrollHeight; return d;
-}
-function getReply(q){
-  const t=q.toLowerCase();
-  if(t.match(/class|schedule|available/)) return `We have 2 classes:<br><br><strong>💪 Functional Strength Training</strong><br>Mon & Wed: 8:45am–4:00pm (8 slots)<br>Fri: 8:45am–11:00am (4 slots)<br><br><strong>🧘 Stretch & Flow</strong><br>Tue & Thu: 10:00am, 11:00am, 1:30pm`;
-  if(t.match(/monday|mon\b/)) return `Monday – 💪 Strength Training<br>8:45am, 9:30am, 10:15am, 11:00am, 1:45pm, 2:30pm, 3:15pm, 4:00pm`;
-  if(t.match(/tuesday|tue\b/)) return `Tuesday – 🧘 Stretch & Flow<br>10:00am, 11:00am, 1:30pm`;
-  if(t.match(/wednesday|wed\b/)) return `Wednesday – 💪 Strength Training<br>8:45am, 9:30am, 10:15am, 11:00am, 1:45pm, 2:30pm, 3:15pm, 4:00pm`;
-  if(t.match(/thursday|thu\b/)) return `Thursday – 🧘 Stretch & Flow<br>10:00am, 11:00am, 1:30pm`;
-  if(t.match(/friday|fri\b/)) return `Friday – 💪 Strength Training (morning only)<br>8:45am, 9:30am, 10:15am, 11:00am`;
-  if(t.match(/rule|how.*book/)) return `📌 Rules:<br>✅ Book as many days as you want<br>👥 Max 10 people per slot<br>🚫 Only 1 class per day<br>📆 This week & next week only<br>⏰ Closes 5 mins before class<br>🔒 Need your password to book`;
-  if(t.match(/cancel/)) return `Go to <strong>My Bookings</strong> and tap Cancel. Must cancel at least <strong>1 hour before</strong> class.`;
-  if(t.match(/mia|no.show|miss/)) return `⚠️ Max <strong>3 MIA</strong> allowed. After 3, management may revoke membership — no refund.`;
-  if(t.match(/password|login|unlock/)) return `Select your name, then tap <strong>🔒 Enter Password</strong> to unlock booking. Contact admin if you forgot your password.`;
-  if(t.match(/limit|full|how many|spots/)) return `Each class slot has a maximum of <strong>10 members</strong>. You can see how many spots are left on the booking page.`;
-  if(t.match(/hi|hello|hey/)) return `Hello! 👋 Ask me about schedules, rules, or the MIA policy!`;
-  if(t.match(/thank/)) return `You're welcome! See you in class 💪🧘`;
-  return `I can help with:<br>• Class schedules<br>• Booking rules & limits<br>• Cancellation & MIA<br>• Password help<br><br>Try: "What's on Monday?"`;
+// ═══════════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════════
+function showToast(msg, type) {
+  var old = document.querySelector('.toast'); if (old) old.remove();
+  var el = document.createElement('div');
+  el.className = 'toast toast-' + (type || 'success');
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(function() { el.remove(); }, 3800);
 }
 
+// ═══════════════════════════════════════════════════════
+// CHATBOT
+// ═══════════════════════════════════════════════════════
+function toggleChat() { document.getElementById('chatWindow').classList.toggle('open'); }
+function chipAsk(q)   { document.getElementById('chatInput').value = q; sendChat(); }
+function sendChat() {
+  var inp = document.getElementById('chatInput');
+  var txt = inp.value.trim(); if (!txt) return;
+  inp.value = ''; addMsg(txt, 'user');
+  var ty = addMsg('Thinking…', 'bot');
+  setTimeout(function() { ty.remove(); addMsg(getReply(txt), 'bot'); }, 600);
+}
+function addMsg(text, type) {
+  var m = document.getElementById('chatMessages');
+  var d = document.createElement('div'); d.className = 'msg ' + type; d.innerHTML = text;
+  m.appendChild(d); m.scrollTop = m.scrollHeight; return d;
+}
+function getReply(q) {
+  var t = q.toLowerCase();
+  if (t.match(/waitlist|wait.?list|queue/))   return '⏳ <strong>Waitlist</strong>: When a slot is full, tap <strong>Join Waitlist</strong>. You\'ll be auto-booked the moment someone cancels! See your position in My Bookings and leave anytime before class.';
+  if (t.match(/class|schedule|available/))     return '💪 <strong>Strength</strong> — Mon &amp; Wed (8:45am–4pm), Fri (8:45am–11am)<br>🧘 <strong>Stretch &amp; Flow</strong> — Tue &amp; Thu (10am, 11am, 1:30pm)';
+  if (t.match(/monday|mon\b/))                 return 'Monday 💪 Strength: 8:45, 9:30, 10:15, 11:00am, 1:45, 2:30, 3:15, 4:00pm';
+  if (t.match(/tuesday|tue\b/))                return 'Tuesday 🧘 Stretch &amp; Flow: 10:00am, 11:00am, 1:30pm';
+  if (t.match(/wednesday|wed\b/))              return 'Wednesday 💪 Strength: 8:45, 9:30, 10:15, 11:00am, 1:45, 2:30, 3:15, 4:00pm';
+  if (t.match(/thursday|thu\b/))               return 'Thursday 🧘 Stretch &amp; Flow: 10:00am, 11:00am, 1:30pm';
+  if (t.match(/friday|fri\b/))                 return 'Friday 💪 Strength (morning only): 8:45, 9:30, 10:15, 11:00am';
+  if (t.match(/rule|how.*book/))               return '📌 Rules: Max 10/slot · 1 class/day · Book this + next week only · Closes 5 mins before · Need password';
+  if (t.match(/cancel/))                       return 'Go to <strong>My Bookings</strong> → Cancel. Must be at least <strong>1 hour before</strong> class.';
+  if (t.match(/mia|no.show|miss/))             return '⚠️ Max <strong>3 MIA</strong>. After 3, membership may be revoked — no refund.';
+  if (t.match(/password|login|unlock/))        return 'Select your name then tap <strong>🔒 Enter Password</strong>. Contact admin if forgotten.';
+  if (t.match(/hi|hello|hey/))                 return 'Hi! 👋 Ask me about schedules, waitlist, or booking rules!';
+  if (t.match(/thank/))                        return 'You\'re welcome! See you in class 💪🧘';
+  return 'I can help with: Class schedules · Booking &amp; cancellation rules · Waitlist · MIA policy · Password help';
+}
 
-// ═══════════════════════════════════════════
-// EXPORT TIMETABLE
-// ═══════════════════════════════════════════
-function exportTimetable(){
-  const weekOffset = parseInt(document.getElementById('exportWeekSelect').value);
-  const mon = getWeekMonday(weekOffset);
-  const weekLabel = weekOffset===0 ? 'This Week' : 'Next Week';
-
-  // Build timetable data
-  const STRENGTH_TIMES = ['08:45','09:30','10:15','11:00','13:45','14:30','15:15','16:00'];
-  const STRETCH_TIMES  = ['10:00','11:00','13:30'];
-  const days = [
-    {dow:1, label:'Monday',   date:addDays(mon,0), type:'strength', times:STRENGTH_TIMES},
-    {dow:2, label:'Tuesday',  date:addDays(mon,1), type:'stretch',  times:STRETCH_TIMES},
-    {dow:3, label:'Wednesday',date:addDays(mon,2), type:'strength', times:STRENGTH_TIMES},
-    {dow:4, label:'Thursday', date:addDays(mon,3), type:'stretch',  times:STRETCH_TIMES},
-    {dow:5, label:'Friday',   date:addDays(mon,4), type:'strength', times:STRENGTH_TIMES.slice(0,4)},
+// ═══════════════════════════════════════════════════════
+// EXPORT TIMETABLE (PNG)
+// ═══════════════════════════════════════════════════════
+function exportTimetable() {
+  var weekOff = parseInt(document.getElementById('exportWeekSelect').value);
+  var mon = getMonday(weekOff);
+  var wkLabel = weekOff === 0 ? 'This Week' : 'Next Week';
+  var days = [
+    { dow:1, label:'Monday',    date:addDays(mon,0), type:'strength', times:STR_ALL   },
+    { dow:2, label:'Tuesday',   date:addDays(mon,1), type:'stretch',  times:STR_TIMES },
+    { dow:3, label:'Wednesday', date:addDays(mon,2), type:'strength', times:STR_ALL   },
+    { dow:4, label:'Thursday',  date:addDays(mon,3), type:'stretch',  times:STR_TIMES },
+    { dow:5, label:'Friday',    date:addDays(mon,4), type:'strength', times:STR_FRI   },
   ];
-
-  // Canvas setup
-  const COL_W = 220;
-  const TIME_W = 110;
-  const ROW_H = 34;
-  const SLOT_ROWS = 10;
-  const SLOT_BLOCK_H = (SLOT_ROWS+1)*ROW_H; // 10 members + header
-  const HEADER_H = 100;
-  const LEGEND_H = 50;
-  const GAP = 18;
-  const PADDING = 28;
-
-  // Count total height: sum of all time slots per day
-  // We'll lay out days in columns side by side, grouped by activity
-  // Layout: 2 columns — Strength days | Stretch days
-  // Strength: Mon, Wed, Fri (8 or 4 slots each)
-  // Stretch: Tue, Thu (3 slots each)
-
-  // We'll do a vertical layout: each day stacked, time slots as rows, members as columns
-  // Actually do a horizontal per-day card layout on canvas
-
-  // Simple approach: one big canvas, days left to right
-  // For each day: header row + for each time slot: time label + 10 member slots stacked
-  const numDays = 5;
-  const canvasW = PADDING*2 + TIME_W + COL_W*numDays + GAP*(numDays-1);
-
-  // Calculate max rows needed
-  const maxSlots = 8; // strength has 8 times
-  const totalRows = maxSlots * (SLOT_ROWS + 1) + 2; // +2 for time header
-  const canvasH = HEADER_H + LEGEND_H + totalRows * ROW_H + PADDING*2;
-
-  const canvas = document.createElement('canvas');
-  canvas.width = canvasW;
-  canvas.height = canvasH + 20;
-  const ctx = canvas.getContext('2d');
-
-  // Background
-  ctx.fillStyle = '#f7f6f2';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // Header
-  const hGrad = ctx.createLinearGradient(0,0,canvas.width,HEADER_H);
-  hGrad.addColorStop(0,'#1a1a2e');
-  hGrad.addColorStop(1,'#2d6a4f');
-  ctx.fillStyle = hGrad;
-  ctx.fillRect(0,0,canvas.width,HEADER_H);
-
-  // Title
-  ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 26px serif';
-  ctx.fillText('Longevity Courtyard – Batch 2', PADDING, 40);
-  ctx.font = '16px sans-serif';
-  ctx.fillStyle = 'rgba(255,255,255,0.7)';
-  const wkMon = fmtDate(mon);
-  const wkFri = fmtDate(addDays(mon,4));
-  ctx.fillText(weekLabel + '   ' + wkMon + ' – ' + wkFri, PADDING, 65);
-  ctx.font = '13px sans-serif';
-  ctx.fillStyle = 'rgba(255,255,255,0.45)';
-  ctx.fillText('Generated ' + fmtDate(now()) + '   ·   Max 10 per slot', PADDING, 88);
-
-  // Legend
-  const legY = HEADER_H + 12;
-  ctx.fillStyle = '#2d6a4f';
-  ctx.beginPath(); ctx.roundRect(PADDING, legY, 200, 28, 6); ctx.fill();
-  ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 13px sans-serif';
-  ctx.fillText('💪  Mon / Wed / Fri — Functional Strength', PADDING+10, legY+19);
-
-  ctx.fillStyle = '#40916c';
-  ctx.beginPath(); ctx.roundRect(PADDING+210, legY, 170, 28, 6); ctx.fill();
-  ctx.fillStyle = '#ffffff';
-  ctx.fillText('🧘  Tue / Thu — Stretch & Flow', PADDING+220, legY+19);
-
-  // Draw days
-  const startY = HEADER_H + LEGEND_H + PADDING;
-  const colX = (i) => PADDING + i*(COL_W+GAP);
-
-  days.forEach((day, di) => {
-    const x = colX(di);
-    const isStrength = day.type === 'strength';
-    const headerColor = isStrength ? '#1a1a2e' : '#2d6a4f';
-    const accentColor = isStrength ? '#e9c46a' : '#74c69d';
-    const lightColor  = isStrength ? '#fef9ec' : '#d8f3dc';
-
-    // Day header
-    ctx.fillStyle = headerColor;
-    ctx.beginPath(); ctx.roundRect(x, startY, COL_W, 48, [8,8,0,0]); ctx.fill();
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 15px serif';
-    ctx.fillText(day.label, x+10, startY+20);
-    ctx.font = '12px sans-serif';
-    ctx.fillStyle = 'rgba(255,255,255,0.6)';
-    ctx.fillText(fmtDate(day.date), x+10, startY+38);
-
-    // Activity tag
-    ctx.fillStyle = accentColor;
-    ctx.font = 'bold 11px sans-serif';
-    ctx.fillStyle = accentColor;
-    const tagTxt = isStrength ? '💪 Strength' : '🧘 Stretch & Flow';
-    ctx.fillText(tagTxt, x + COL_W - ctx.measureText(tagTxt).width - 10, startY+20);
-
-    let curY = startY + 48;
-
-    day.times.forEach((t, ti) => {
-      const slotBookings = bookings
-        .filter(b => b.date === toYMD(day.date) && b.time === t)
-        .map(b => b.member);
-      const count = slotBookings.length;
-      const isFull = count >= SLOT_LIMIT;
-
-      // Time slot header row
-      const timeHeaderH = 26;
-      ctx.fillStyle = isFull ? '#c0392b' : (ti%2===0 ? '#e8e8f0' : '#f0f0f8');
-      ctx.fillRect(x, curY, COL_W, timeHeaderH);
-      ctx.fillStyle = isFull ? '#ffffff' : '#1a1a2e';
-      ctx.font = 'bold 13px sans-serif';
-      ctx.fillText(timeLabel(t), x+8, curY+18);
-      ctx.fillStyle = isFull ? 'rgba(255,255,255,0.85)' : '#9898aa';
-      ctx.font = '11px sans-serif';
-      const countTxt = count + '/' + SLOT_LIMIT + (isFull?' FULL':'');
-      ctx.fillText(countTxt, x + COL_W - ctx.measureText(countTxt).width - 8, curY+18);
-      curY += timeHeaderH;
-
-      // Member rows
-      for(let slot=0; slot<SLOT_ROWS; slot++){
-        const member = slotBookings[slot] || '';
-        const rowColor = slot%2===0 ? '#ffffff' : '#fafaf8';
-        ctx.fillStyle = rowColor;
-        ctx.fillRect(x, curY, COL_W, ROW_H);
-
-        // slot number
-        ctx.fillStyle = '#cccccc';
-        ctx.font = '11px sans-serif';
-        ctx.fillText(String(slot+1), x+6, curY+ROW_H-10);
-
-        // member name
-        if(member){
-          ctx.fillStyle = '#1a1a2e';
-          ctx.font = '12px sans-serif';
-          // truncate if too long
-          let name = member;
-          while(ctx.measureText(name).width > COL_W-28 && name.length>4) name = name.slice(0,-1);
-          if(name !== member) name += '…';
-          ctx.fillText(name, x+22, curY+ROW_H-10);
+  var COL = 210, ROW = 32, SL = 10, HDR = 95, LEG = 45, PAD = 24, GAP = 14;
+  var canvas = document.createElement('canvas');
+  canvas.width  = PAD*2 + COL*5 + GAP*4;
+  canvas.height = HDR + LEG + (8*(SL+1)*ROW) + PAD*2 + 20;
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#f7f6f2'; ctx.fillRect(0,0,canvas.width,canvas.height);
+  var g = ctx.createLinearGradient(0,0,canvas.width,HDR);
+  g.addColorStop(0,'#1a1a2e'); g.addColorStop(1,'#2d6a4f');
+  ctx.fillStyle = g; ctx.fillRect(0,0,canvas.width,HDR);
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 24px serif';
+  ctx.fillText('Longevity Courtyard – Batch 2', PAD, 38);
+  ctx.font = '14px sans-serif'; ctx.fillStyle = 'rgba(255,255,255,.7)';
+  ctx.fillText(wkLabel + '   ' + fmtDate(mon) + ' – ' + fmtDate(addDays(mon,4)), PAD, 60);
+  ctx.font = '12px sans-serif'; ctx.fillStyle = 'rgba(255,255,255,.45)';
+  ctx.fillText('Generated ' + fmtDate(nowDate()) + '   ·   Max ' + SLOT_LIMIT + ' per slot', PAD, 82);
+  var lY = HDR + 10;
+  ctx.fillStyle = '#2d6a4f'; ctx.beginPath(); ctx.roundRect(PAD, lY, 225, 26, 5); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 12px sans-serif'; ctx.fillText('💪  Mon / Wed / Fri — Strength', PAD+8, lY+18);
+  ctx.fillStyle = '#40916c'; ctx.beginPath(); ctx.roundRect(PAD+235, lY, 185, 26, 5); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.fillText('🧘  Tue / Thu — Stretch & Flow', PAD+243, lY+18);
+  var sY = HDR + LEG + PAD;
+  days.forEach(function(day, di) {
+    var x = PAD + di*(COL+GAP), isS = day.type === 'strength';
+    ctx.fillStyle = isS ? '#1a1a2e' : '#2d6a4f';
+    ctx.beginPath(); ctx.roundRect(x, sY, COL, 44, [7,7,0,0]); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.font = 'bold 14px serif'; ctx.fillText(day.label, x+8, sY+18);
+    ctx.font = '11px sans-serif'; ctx.fillStyle = 'rgba(255,255,255,.6)'; ctx.fillText(fmtDate(day.date), x+8, sY+34);
+    var tag = isS ? '💪 Strength' : '🧘 Stretch'; ctx.fillStyle = isS ? '#e9c46a' : '#74c69d';
+    ctx.font = 'bold 10px sans-serif'; ctx.fillText(tag, x+COL-ctx.measureText(tag).width-8, sY+18);
+    var cY = sY + 44;
+    day.times.forEach(function(t, ti) {
+      var bks = bookings.filter(function(b) { return b.date === toYMD(day.date) && b.time === t; }).map(function(b) { return b.member; });
+      var cnt = bks.length, full = cnt >= SLOT_LIMIT, tHdr = 24;
+      ctx.fillStyle = full ? '#c0392b' : (ti%2===0 ? '#e8e8f0' : '#f0f0f8');
+      ctx.fillRect(x, cY, COL, tHdr);
+      ctx.fillStyle = full ? '#fff' : '#1a1a2e'; ctx.font = 'bold 12px sans-serif'; ctx.fillText(timeLbl(t), x+6, cY+17);
+      ctx.fillStyle = full ? 'rgba(255,255,255,.8)' : '#9898aa'; ctx.font = '10px sans-serif';
+      var ct = cnt+'/'+SLOT_LIMIT+(full?' FULL':''); ctx.fillText(ct, x+COL-ctx.measureText(ct).width-6, cY+17);
+      cY += tHdr;
+      for (var s = 0; s < SL; s++) {
+        ctx.fillStyle = s%2===0 ? '#fff' : '#fafaf8'; ctx.fillRect(x, cY, COL, ROW);
+        ctx.fillStyle = '#ccc'; ctx.font = '10px sans-serif'; ctx.fillText(String(s+1), x+5, cY+ROW-9);
+        if (bks[s]) {
+          ctx.fillStyle = '#1a1a2e'; ctx.font = '11px sans-serif';
+          var nm = bks[s]; while (ctx.measureText(nm).width > COL-26 && nm.length > 3) nm = nm.slice(0,-1);
+          if (nm !== bks[s]) nm += '…'; ctx.fillText(nm, x+20, cY+ROW-9);
         }
-
-        // bottom border
-        ctx.strokeStyle = '#e8e8f0';
-        ctx.lineWidth = 0.5;
-        ctx.beginPath();
-        ctx.moveTo(x, curY+ROW_H); ctx.lineTo(x+COL_W, curY+ROW_H);
-        ctx.stroke();
-
-        curY += ROW_H;
+        ctx.strokeStyle = '#e8e8f0'; ctx.lineWidth = 0.5;
+        ctx.beginPath(); ctx.moveTo(x, cY+ROW); ctx.lineTo(x+COL, cY+ROW); ctx.stroke();
+        cY += ROW;
       }
-
-      // Gap between time slots
-      ctx.fillStyle = lightColor;
-      ctx.fillRect(x, curY, COL_W, 5);
-      curY += 5;
+      ctx.fillStyle = isS ? '#fef9ec' : '#d8f3dc'; ctx.fillRect(x, cY, COL, 4); cY += 4;
     });
-
-    // Bottom rounded cap
-    ctx.strokeStyle = '#e0e0e8';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(x, startY, COL_W, curY-startY);
+    ctx.strokeStyle = '#e0e0e8'; ctx.lineWidth = 1; ctx.strokeRect(x, sY, COL, cY-sY);
   });
-
-  // Footer
-  const footY = canvas.height - 22;
-  ctx.fillStyle = '#9898aa';
-  ctx.font = '11px sans-serif';
-  ctx.fillText('Tzu Chi Longevity Courtyard Batch 2   ·   Booking App: danielphua85.github.io/longevity-courtyard', PADDING, footY);
-
-  // Download
-  canvas.toBlob(blob => {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    const weekStr = weekOffset===0 ? 'this-week' : 'next-week';
-    a.href = url;
-    a.download = 'longevity-timetable-' + weekStr + '-' + toYMD(mon) + '.png';
-    a.click();
-    URL.revokeObjectURL(url);
-    showToast('Timetable downloaded! 📥','success');
+  ctx.fillStyle = '#9898aa'; ctx.font = '10px sans-serif';
+  ctx.fillText('Tzu Chi Longevity Courtyard Batch 2  ·  Booking App', PAD, canvas.height-8);
+  canvas.toBlob(function(blob) {
+    var url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url; a.download = 'timetable-' + (weekOff===0?'this':'next') + '-week-' + toYMD(mon) + '.png';
+    a.click(); URL.revokeObjectURL(url);
+    showToast('Timetable downloaded! 📥', 'success');
   }, 'image/png');
 }
 
-
-// ═══════════════════════════════════════════
-// BILINGUAL SUPPORT
-// ═══════════════════════════════════════════
-let currentLang = 'en';
-const T = {
-  en: {
-    selectMember:'Select Member', chooseYour:'— Choose your name —',
-    enterPw:'🔒 Enter Password', unlocked:'🔓 Unlocked',
-    bookClass:'📅 Book Class', myBookings:'🗓 My Bookings',
-    rules:'📋 Rules', admin:'🔑 Admin',
-    thisWeek:'This Week', nextWeek:'Next Week',
-    book:'Book', booked:'✓ Booked', cancel:'Cancel',
-    past:'Past', closed:'Closed', full:'Full', dayTaken:'Day taken', blocked:'Blocked',
-    selectFirst:'Select name', loginFirst:'🔒 Login',
-    noCancel:'No cancel', locked:'🔒 Locked',
-    confirmBooking:'Confirm Booking', confirmCancel:'Cancel Booking',
-    confirmBtn:'Book Now', cancelBtn:'Yes, Cancel', back:'Back',
-    bookingFor:'Booking for', bookingCancelled:'Booking cancelled.',
-    welcome:'Welcome', memberLogin:'Member Login',
-    enterYourPw:'Enter your password', unlock:'Unlock',
-    wrongPw:'Wrong password. Try again.',
-    noBookings:'No bookings yet! Tap Book Class to get started.',
-    selectToSee:'Select your name to see your bookings.',
-    loginToSee:'Please enter your password to view your bookings.',
-    upcoming:'Upcoming', bokedSlot:'booked', left:'left',
-    heroSub:'Book your weekly fitness classes — Functional Strength Training & Stretch & Flow',
-    strength:'Strength', stretch:'Stretch & Flow',
-    miaOf:'MIA', logout:'Logout',
-    exportTitle:'📥 Export Weekly Timetable',
-    exportBtn:'📥 Download Timetable (PNG)',
-    rulesTitle:'📅 Class Schedule',
-    batch:'BATCH 2 · MEMBERS ONLY',
-  },
-  zh: {
-    selectMember:'选择会员', chooseYour:'— 请选择您的姓名 —',
-    enterPw:'🔒 输入密码', unlocked:'🔓 已解锁',
-    bookClass:'📅 预约课程', myBookings:'🗓 我的预约',
-    rules:'📋 规则', admin:'🔑 管理员',
-    thisWeek:'本周', nextWeek:'下周',
-    book:'预约', booked:'✓ 已预约', cancel:'取消',
-    past:'已过期', closed:'已截止', full:'已满', dayTaken:'当天已预约', blocked:'已封锁',
-    selectFirst:'请先选择姓名', loginFirst:'🔒 请登录',
-    noCancel:'无法取消', locked:'🔒 已锁定',
-    confirmBooking:'确认预约', confirmCancel:'取消预约',
-    confirmBtn:'立即预约', cancelBtn:'确认取消', back:'返回',
-    bookingFor:'预约人', bookingCancelled:'预约已取消。',
-    welcome:'欢迎', memberLogin:'会员登录',
-    enterYourPw:'请输入您的密码', unlock:'解锁',
-    wrongPw:'密码错误，请重试。',
-    noBookings:'尚无预约！点击「预约课程」开始预约。',
-    selectToSee:'请选择您的姓名以查看预约。',
-    loginToSee:'请输入密码以查看您的预约。',
-    upcoming:'即将到来', bokedSlot:'已预约', left:'剩余',
-    heroSub:'预约您的每周健身课程 — 功能性力量训练 & 舒展流动',
-    strength:'力量训练', stretch:'舒展流动',
-    miaOf:'缺席', logout:'退出',
-    exportTitle:'📥 导出每周课程表',
-    exportBtn:'📥 下载课程表 (PNG)',
-    rulesTitle:'📅 课程时间表',
-    batch:'第二批 · 仅限会员',
-  }
-};
-function t(key){ return T[currentLang][key] || T.en[key] || key; }
-function toggleLang(){
-  currentLang = currentLang==='en' ? 'zh' : 'en';
-  document.getElementById('langBtn').textContent = currentLang==='en' ? '中文' : 'ENG';
-  applyLang();
-  renderSchedule();
-  renderMyBookings();
-  updateNavMember();
-  updateUnlockBtn();
-  updateMiaBadge();
-}
-function applyLang(){
-  // Nav / hero
-  const heroSub = document.querySelector('.hero p');
-  if(heroSub) heroSub.textContent = t('heroSub');
-  const heroBadge = document.querySelector('.hero-badge');
-  if(heroBadge) heroBadge.textContent = t('batch');
-  // Member bar label
-  const memLabel = document.querySelector('.member-bar label');
-  if(memLabel) memLabel.textContent = '👤 '+t('selectMember');
-  // Member select placeholder
-  const sel = document.getElementById('memberSelect');
-  if(sel && sel.options[0]) sel.options[0].textContent = t('chooseYour');
-  // Tabs
-  const tabs = document.querySelectorAll('.tab');
-  const tabKeys = ['bookClass','myBookings','rules','admin'];
-  tabs.forEach((tab,i)=>{ if(tabKeys[i]) tab.textContent = t(tabKeys[i]); });
-  // Export section
-  const expTitle = document.querySelector('#adminPanel .admin-section:last-of-type h3');
-  const expBtn = document.querySelector('#adminPanel .admin-section:last-of-type button');
-}
-
-// ═══════════════════════════════════════════
-// BILINGUAL (EN / ZH)
-// ═══════════════════════════════════════════
-let lang = 'en';
-
-const TRANSLATIONS = {
-  en: {
-    thisWeek:'This Week', nextWeek:'Next Week',
-    selectMember:'👤 Select Member', chooseName:'— Choose your name —',
-    enterPw:'🔒 Enter Password', unlocked:'🔓 Unlocked',
-    bookClass:'📅 Book Class', myBookings:'🗓 My Bookings',
-    rules:'📋 Rules', admin:'🔑 Admin',
-    book:'Book', booked:'✓ Booked', cancel:'Cancel', past:'Past',
-    closed:'Closed', blocked:'Blocked', full:'Full', dayTaken:'Day taken',
-    loginFirst:'Select name', lockLogin:'🔒 Login',
-    upcoming:'Upcoming',
-    noBookings:'No bookings yet! Tap Book Class to get started.',
-    selectFirst:'Select your name to see your bookings.',
-    loginToView:'Please enter your password to view your bookings.',
-    confirmBooking:'Confirm Booking', confirmCancel:'Cancel Booking',
-    bookNow:'Book Now', yesCancel:'Yes, Cancel',
-    welcomeMsg: (name) => `Welcome, ${name}! 🎉`,
-    wrongPw:'Wrong password. Try again.',
-    booked_toast: (tm,d) => `✅ Booked! ${tm} on ${d}`,
-    cancelled:'Booking cancelled.',
-    miaLabel: (c) => `${c}/3 MIA`,
-    noCancel:'No cancel', lockedLabel:'🔒 Locked',
-    heroTitle:'Longevity Courtyard',
-    heroSub:'Book your weekly fitness classes — Functional Strength Training & Stretch & Flow',
-    heroBadge:'Batch 2 · Members Only',
-  },
-  zh: {
-    thisWeek:'本周', nextWeek:'下周',
-    selectMember:'👤 选择会员', chooseName:'— 请选择您的姓名 —',
-    enterPw:'🔒 输入密码', unlocked:'🔓 已解锁',
-    bookClass:'📅 预约课程', myBookings:'🗓 我的预约',
-    rules:'📋 规则', admin:'🔑 管理',
-    book:'预约', booked:'✓ 已预约', cancel:'取消', past:'已过',
-    closed:'已截止', blocked:'已封锁', full:'已满', dayTaken:'当天已约',
-    loginFirst:'请选名字', lockLogin:'🔒 登录',
-    upcoming:'即将',
-    noBookings:'暂无预约！点击「预约课程」开始。',
-    selectFirst:'请选择您的姓名以查看预约。',
-    loginToView:'请输入密码查看您的预约。',
-    confirmBooking:'确认预约', confirmCancel:'取消预约',
-    bookNow:'立即预约', yesCancel:'确认取消',
-    welcomeMsg: (name) => `欢迎，${name}！🎉`,
-    wrongPw:'密码错误，请重试。',
-    booked_toast: (tm,d) => `✅ 预约成功！${d} ${tm}`,
-    cancelled:'预约已取消。',
-    miaLabel: (c) => `${c}/3 缺席`,
-    noCancel:'无法取消', lockedLabel:'🔒 未解锁',
-    heroTitle:'长寿健身坊',
-    heroSub:'预约您的每周健身课程 — 功能性力量训练 & 伸展放松',
-    heroBadge:'第二批 · 会员专区',
-  }
-};
-
-
-function t(key, ...args){
-  const val = TRANSLATIONS[lang][key];
-  if(typeof val === 'function') return val(...args);
-  return val || key;
-}
-
-function toggleLang(){
-  lang = lang === 'en' ? 'zh' : 'en';
-  document.getElementById('langToggle').textContent = lang === 'en' ? '中文' : 'EN';
-  applyLangToUI();
-  renderSchedule();
-  renderMyBookings();
-  updateMiaBadge();
-  updateUnlockBtn();
-  updateNavMember();
-}
-
-function applyLangToUI(){
-  // Hero
-  const heroTitle = document.getElementById('heroTitleEl');
-  const heroSub = document.getElementById('heroSubEl');
-  const heroBadge = document.getElementById('heroBadgeEl');
-  if(heroTitle) heroTitle.textContent = t('heroTitle');
-  if(heroSub) heroSub.textContent = t('heroSub');
-  if(heroBadge) heroBadge.textContent = t('heroBadge');
-  // Member bar
-  document.querySelector('.member-bar label').textContent = t('selectMember');
-  const sel = document.getElementById('memberSelect');
-  if(sel.options[0]) sel.options[0].text = t('chooseName');
-  // Tabs
-  const tabs = document.querySelectorAll('.tab');
-  const tabKeys = ['bookClass','myBookings','rules','admin'];
-  tabs.forEach((tab,i) => { if(tabKeys[i]) tab.textContent = t(tabKeys[i]); });
-  // MIA badge
-  updateMiaBadge();
-  // Nav lock status
-  if(currentMember) updateNavMember();
-}
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // START
-// ═══════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 init();
 </script>
-
 </body>
 </html>
