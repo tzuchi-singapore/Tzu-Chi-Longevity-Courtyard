@@ -258,7 +258,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
     <div class="rules-card">
       <h3>📅 Class Schedule</h3>
       <div class="rule-item"><span class="rule-icon">💪</span><div><strong>Functional Strength, Cardio &amp; Cognitive Training</strong><br>Mon &amp; Wed: 8:45am, 9:30am, 10:15am, 11:00am, 1:45pm, 2:30pm, 3:15pm, 4:00pm<br>Tue &amp; Thu: 11:00am, 2:30pm <span style="font-size:.78rem;color:var(--soft)">(Batch 1 &amp; 2)</span>, 3:30pm <span style="font-size:.78rem;color:var(--soft)">(Batch 1)</span><br>Fri: 8:45am, 9:30am, 10:15am, 11:00am (morning only)</div></div>
-      <div class="rule-item"><span class="rule-icon">🧘</span><div><strong>Stretch &amp; Strength</strong><br>Tue &amp; Wed: 10:00am, 1:30pm</div></div>
+      <div class="rule-item"><span class="rule-icon">🧘</span><div><strong>Stretch &amp; Strength</strong><br>Tue &amp; Thu: 10:00am, 1:30pm</div></div>
     </div>
     <div class="rules-card">
       <h3>📌 Booking Rules</h3>
@@ -725,8 +725,8 @@ var SCHEDULE = [
   { dow:2, type:'strength', label:'Functional Strength, Cardio & Cognitive Training', times: FSCCT_TUETHU },
   { dow:2, type:'stretch',  label:'Stretch & Strength',                               times: SS_TIMES    },
   { dow:3, type:'strength', label:'Functional Strength, Cardio & Cognitive Training', times: FSCCT_ALL   },
-  { dow:3, type:'stretch',  label:'Stretch & Strength',                               times: SS_TIMES    },
   { dow:4, type:'strength', label:'Functional Strength, Cardio & Cognitive Training', times: FSCCT_TUETHU },
+  { dow:4, type:'stretch',  label:'Stretch & Strength',                               times: SS_TIMES    },
   { dow:5, type:'strength', label:'Functional Strength, Cardio & Cognitive Training', times: FSCCT_FRI   },
 ];
 var DOW_NAMES = ['','Monday','Tuesday','Wednesday','Thursday','Friday'];
@@ -1610,7 +1610,7 @@ function addMsg(text, type) {
 function getReply(q) {
   var t = q.toLowerCase();
   if (t.match(/waitlist|wait.?list|queue/))   return '⏳ <strong>Waitlist</strong>: When a slot is full, tap <strong>Join Waitlist</strong>. You\'ll be auto-booked the moment someone cancels! See your position in My Bookings and leave anytime before class.';
-  if (t.match(/class|schedule|available/))     return '💪 <strong>Functional Strength, Cardio &amp; Cognitive</strong><br>Mon &amp; Wed: 8:45am–4pm · Tue &amp; Thu: 11am, 2:30pm · Fri: 8:45am–11am<br><br>🧘 <strong>Stretch &amp; Strength</strong><br>Tue &amp; Wed: 10:00am, 1:30pm';
+  if (t.match(/class|schedule|available/))     return '💪 <strong>Functional Strength, Cardio &amp; Cognitive</strong><br>Mon &amp; Wed: 8:45am–4pm · Tue &amp; Thu: 11am, 2:30pm · Fri: 8:45am–11am<br><br>🧘 <strong>Stretch &amp; Strength</strong><br>Tue &amp; Thu: 10:00am, 1:30pm';
   if (t.match(/monday|mon\b/))                 return 'Monday 💪 Strength: 8:45, 9:30, 10:15, 11:00am, 1:45, 2:30, 3:15, 4:00pm';
   if (t.match(/tuesday|tue\b/))                return 'Tuesday 🧘 Stretch &amp; Flow: 10:00am, 11:00am, 1:30pm';
   if (t.match(/wednesday|wed\b/))              return 'Wednesday 💪 Strength: 8:45, 9:30, 10:15, 11:00am, 1:45, 2:30, 3:15, 4:00pm';
