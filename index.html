@@ -61,11 +61,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .schedule-grid{display:grid;gap:1rem}
 .day-block{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 12px var(--shadow)}
 .day-header{padding:.8rem 1.2rem;display:flex;align-items:center;justify-content:space-between;background:var(--ink2);color:white;border-bottom:2px solid rgba(255,255,255,0.08)}
+.day-header.stretch{background:linear-gradient(90deg,#1a3254 0%,#1a3f4f 100%)}
 .day-header h3{font-family:'Playfair Display',serif;font-size:1rem}
 .day-header .day-date{font-size:.75rem;opacity:.65}
 .class-type-tag{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.2rem .6rem;border-radius:999px}
-.day-header.strength .class-type-tag{background:rgba(229,196,106,.25);color:var(--gold-light)}
-.day-header.stretch .class-type-tag{background:rgba(116,198,157,.25);color:var(--jade3)}
+.day-header.strength .class-type-tag{background:rgba(181,132,58,0.85);color:#ffffff;box-shadow:0 1px 6px rgba(181,132,58,0.4)}
+.day-header.stretch .class-type-tag{background:rgba(91,154,160,0.9);color:#ffffff;box-shadow:0 1px 6px rgba(91,154,160,0.5)}
 .day-header.blocked-hdr{background:#4a3030}
 .blocked-msg{padding:1rem 1.2rem;font-size:.85rem;color:var(--danger);display:flex;align-items:center;gap:.5rem}
 .slots-list{padding:.8rem}
@@ -912,7 +913,7 @@ function renderSchedule() {
     var hdr = document.createElement('div');
     hdr.className = 'day-header ' + sch.type + (dayBk ? ' blocked-hdr' : '');
     hdr.innerHTML = '<div><h3>' + DOW_NAMES[sch.dow] + '</h3><div class="day-date">' + fmtDate(date) + '</div></div>' +
-      '<span class="class-type-tag">' + (sch.type === 'strength' ? '💪 Strength' : '🧘 Stretch & Flow') + '</span>';
+      '<span class="class-type-tag">' + (sch.type === 'strength' ? '💪 Strength' : '🧘 Stretch & Strength') + '</span>';
     card.appendChild(hdr);
 
     if (dayBk) {
@@ -1453,7 +1454,7 @@ function renderAdminBookings() {
   var h = '<table class="admin-table"><thead><tr><th>Member</th><th>Class</th><th>Date</th><th>Time</th><th>Actions</th></tr></thead><tbody>';
   data.forEach(function(b) {
     var past = isSlotPast(b.date, b.time);
-    h += '<tr><td>' + b.member + '</td><td>' + (b.classType === 'strength' ? '💪 Strength' : '🧘 Stretch') + '</td>' +
+    h += '<tr><td>' + b.member + '</td><td>' + (b.classType === 'strength' ? '💪 Strength' : '🧘 Str&Strength') + '</td>' +
       '<td>' + fmtDate(parseYMD(b.date)) + '</td><td>' + timeLbl(b.time) + '</td>' +
       '<td style="white-space:nowrap">' +
       '<button class="btn btn-danger btn-sm" onclick="adminRemoveBooking(' + b.id + ')">Remove</button>' +
@@ -1495,7 +1496,7 @@ function renderAdminWaitlist() {
   if (!upcoming.length) { el.innerHTML = '<p style="font-size:.83rem;color:var(--soft);text-align:center;padding:1rem">No active waitlist entries.</p>'; return; }
   var h = '<table class="admin-table"><thead><tr><th>Member</th><th>Class</th><th>Date</th><th>Time</th><th>Position</th><th>Actions</th></tr></thead><tbody>';
   upcoming.forEach(function(w) {
-    h += '<tr><td>' + w.member + '</td><td>' + (w.classType === 'strength' ? '💪 Strength' : '🧘 Stretch') + '</td>' +
+    h += '<tr><td>' + w.member + '</td><td>' + (w.classType === 'strength' ? '💪 Strength' : '🧘 Str&Strength') + '</td>' +
       '<td>' + fmtDate(parseYMD(w.date)) + '</td><td>' + timeLbl(w.time) + '</td>' +
       '<td><span class="wl-badge">#' + w.position + '</span></td>' +
       '<td><button class="btn btn-danger btn-sm" onclick="adminRemoveWaitlist(' + w.id + ')">Remove</button></td></tr>';
@@ -1708,7 +1709,7 @@ function exportTimetable() {
     ctx.beginPath(); ctx.roundRect(x, sY, COL, 44, [7,7,0,0]); ctx.fill();
     ctx.fillStyle = '#fff'; ctx.font = 'bold 14px serif'; ctx.fillText(day.label, x+8, sY+18);
     ctx.font = '11px sans-serif'; ctx.fillStyle = 'rgba(255,255,255,.6)'; ctx.fillText(fmtDate(day.date), x+8, sY+34);
-    var tag = isS ? '💪 Strength' : '🧘 Stretch'; ctx.fillStyle = isS ? '#e9c46a' : '#74c69d';
+    var tag = isS ? '💪 Strength' : '🧘 Str&Strength'; ctx.fillStyle = isS ? '#e9c46a' : '#74c69d';
     ctx.font = 'bold 10px sans-serif'; ctx.fillText(tag, x+COL-ctx.measureText(tag).width-8, sY+18);
     var cY = sY + 44;
     day.times.forEach(function(t, ti) {
