@@ -144,7 +144,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .modal{background:var(–white);border-radius:var(–radius);padding:2rem;max-width:420px;width:100%;box-shadow:0 10px 50px rgba(0,0,0,.25);animation:modalIn .25s ease}
 @keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:scale(1)}}
 .modal h2{font-family:‘Playfair Display’,serif;font-size:1.15rem;margin-bottom:.5rem;color:#0d1f3c;font-weight:700}
-.modal p{font-size:.9rem;color:#1a2c50;margin-bottom:1.2rem;line-height:1.7;font-weight:500}
+.modal p{font-size:.9rem;color:#0d1f3c;margin-bottom:1.2rem;line-height:1.7;font-weight:600}
 .modal-btns{display:flex;gap:.7rem;justify-content:flex-end}
 .modal input{width:100%;border:2px solid var(–line);border-radius:var(–radius-sm);padding:.65rem 1rem;font-size:.95rem;font-family:‘Nunito’,sans-serif;background:var(–bg);color:var(–ink);outline:none;margin-bottom:1rem;transition:border-color .2s}
 .modal input:focus{border-color:var(–jade)}
@@ -1714,11 +1714,11 @@ function exportTimetable() {
   var mon = getMonday(weekOff);
   var wkLabel = weekOff === 0 ? 'This Week' : 'Next Week';
   var days = [
-    { dow:1, label:'Monday',    date:addDays(mon,0), type:'strength', times:STR_ALL   },
-    { dow:2, label:'Tuesday',   date:addDays(mon,1), type:'stretch',  times:STR_TIMES },
-    { dow:3, label:'Wednesday', date:addDays(mon,2), type:'strength', times:STR_ALL   },
-    { dow:4, label:'Thursday',  date:addDays(mon,3), type:'stretch',  times:STR_TIMES },
-    { dow:5, label:'Friday',    date:addDays(mon,4), type:'strength', times:STR_FRI   },
+    { dow:1, label:'Monday',    date:addDays(mon,0), type:'strength', times:STR_ALL,   sessions:[{type:'strength',times:STR_ALL}] },
+    { dow:2, label:'Tuesday',   date:addDays(mon,1), type:'mixed',    times:['10:00','11:00','13:30','14:30','15:30'], sessions:[{type:'stretch',times:SS_TIMES},{type:'strength',times:FSCCT_TUETHU}] },
+    { dow:3, label:'Wednesday', date:addDays(mon,2), type:'strength', times:STR_ALL,   sessions:[{type:'strength',times:STR_ALL}] },
+    { dow:4, label:'Thursday',  date:addDays(mon,3), type:'mixed',    times:['10:00','11:00','13:30','14:30','15:30'], sessions:[{type:'stretch',times:SS_TIMES},{type:'strength',times:FSCCT_TUETHU}] },
+    { dow:5, label:'Friday',    date:addDays(mon,4), type:'strength', times:STR_FRI,   sessions:[{type:'strength',times:STR_FRI}] },
   ];
   var COL = 210, ROW = 32, SL = 10, HDR = 95, LEG = 45, PAD = 24, GAP = 14;
   var canvas = document.createElement('canvas');
@@ -1753,9 +1753,14 @@ function exportTimetable() {
     day.times.forEach(function(t, ti) {
       var bks = bookings.filter(function(b) { return b.date === toYMD(day.date) && b.time === t; }).map(function(b) { return b.member; });
       var cnt = bks.length, full = cnt >= SLOT_LIMIT, tHdr = 24;
-      ctx.fillStyle = full ? '#c0392b' : (ti%2===0 ? '#e8e8f0' : '#f0f0f8');
+      var slotIsStr = FSCCT_TUETHU.indexOf(t) >= 0 || FSCCT_ALL.indexOf(t) >= 0;
+      var slotIsStretch = SS_TIMES.indexOf(t) >= 0;
+      var mixedBg = (day.type==='mixed') ? (slotIsStr && !slotIsStretch ? '#e8eef8' : slotIsStretch && !slotIsStr ? '#e8f4ee' : '#eef2ff') : (ti%2===0 ? '#e8e8f0' : '#f0f0f8');
+      ctx.fillStyle = full ? '#c0392b' : mixedBg;
       ctx.fillRect(x, cY, COL, tHdr);
-      ctx.fillStyle = full ? '#fff' : '#1a1a2e'; ctx.font = 'bold 12px sans-serif'; ctx.fillText(timeLbl(t), x+6, cY+17);
+      var slotLabel = timeLbl(t);
+      if (day.type==='mixed') { slotLabel += slotIsStr && !slotIsStretch ? ' 💪' : slotIsStretch && !slotIsStr ? ' 🧘' : ''; }
+      ctx.fillStyle = full ? '#fff' : '#1a1a2e'; ctx.font = 'bold 12px sans-serif'; ctx.fillText(slotLabel, x+6, cY+17);
       ctx.fillStyle = full ? 'rgba(255,255,255,.8)' : '#9898aa'; ctx.font = '10px sans-serif';
       var ct = cnt+'/'+SLOT_LIMIT+(full?' FULL':''); ctx.fillText(ct, x+COL-ctx.measureText(ct).width-6, cY+17);
       cY += tHdr;
