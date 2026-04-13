@@ -801,14 +801,22 @@ function getDowInfoAll(dow) {
 // LOAD DATA
 // ═══════════════════════════════════════════════════════
 async function loadAll() {
-  var results = await Promise.all([
+  // Fetch core tables — waitlist is optional (may not exist yet)
+  var coreResults = await Promise.all([
     dbGet('members',       '*', 'order=name'),
     dbGet('bookings',      '*'),
     dbGet('mia_records',   '*'),
     dbGet('blocked_slots', '*'),
     dbGet('announcements', '*', 'order=created_at.desc'),
-    dbGet('waitlist',      '*', 'order=created_at.asc'),
   ]);
+  // Waitlist fetched separately so a missing table doesn't crash the app
+  var waitlistData = [];
+  try {
+    waitlistData = await dbGet('waitlist', '*', 'order=created_at.asc');
+  } catch(e) {
+    console.warn('Waitlist table not found — waitlist features disabled:', e.message);
+  }
+  var results = coreResults.concat([waitlistData]);
 
   members      = results[0].map(function(r) { return { name: r.name, password: r.password || '' }; });
   bookings     = results[1].map(function(r) { return { id: r.id, member: r.member, date: r.date, time: r.time, classType: r.class_type, classLabel: r.class_label }; });
@@ -838,7 +846,8 @@ async function init() {
   } catch(e) {
     document.getElementById('loadingScreen').innerHTML =
       '<div style="text-align:center;padding:2rem;color:#ff8888"><div style="font-size:2rem;margin-bottom:.5rem">⚠️</div>' +
-      '<strong>Could not connect to database.</strong><br><span style="font-size:.8rem;opacity:.7">' + e.message + '</span><br><br>' +
+      '<strong>Could not connect to database.</strong><br><span style="font-size:.8rem;opacity:.7">' + e.message + '</span><br>' +
+      '<span style="font-size:.7rem;opacity:.5">DB: pshbwmxllkghecqelnye.supabase.co</span><br><br>' +
       '<button onclick="init()" style="margin-top:1rem;padding:.6rem 1.5rem;background:#2d6a4f;color:white;border:none;border-radius:8px;cursor:pointer;font-size:.9rem">Retry</button></div>';
   }
 }
