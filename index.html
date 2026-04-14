@@ -1701,10 +1701,12 @@ function exportTimetable() {
     { dow:4, label:'Thursday',  date:addDays(mon,3), type:'strength', times:FSCCT_TUETHU },
     { dow:5, label:'Friday',    date:addDays(mon,4), type:'strength', times:STR_FRI   },
   ];
-  var COL = 210, ROW = 32, SL = 10, HDR = 95, LEG = 45, PAD = 24, GAP = 14;
+  var COL = 210, ROW = 34, SL = 10, HDR = 95, LEG = 45, PAD = 24, GAP = 14;
+  var DAY_HDR = 44, T_HDR = 24, DIVIDER = 4;
+  var maxSlots = Math.max.apply(null, days.map(function(d){ return d.times.length; }));
   var canvas = document.createElement('canvas');
   canvas.width  = PAD*2 + COL*5 + GAP*4;
-  canvas.height = HDR + LEG + (8*(SL+1)*ROW) + PAD*2 + 20;
+  canvas.height = HDR + LEG + PAD + DAY_HDR + maxSlots*(T_HDR + SL*ROW + DIVIDER) + PAD + 30;
   var ctx = canvas.getContext('2d');
   ctx.fillStyle = '#f7f6f2'; ctx.fillRect(0,0,canvas.width,canvas.height);
   var g = ctx.createLinearGradient(0,0,canvas.width,HDR);
