@@ -139,12 +139,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .bulk-result{display:flex;align-items:center;gap:.5rem;padding:.4rem .7rem;border-radius:var(–radius-sm);margin-bottom:.3rem;font-size:.82rem}
 .bulk-ok{background:#d8f3dc;color:var(–jade)}
 .bulk-skip{background:#f0f0f0;color:var(–soft)}
-.modal-overlay{position:fixed;inset:0;background:rgba(26,26,46,.55);z-index:500;display:flex;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(3px)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.80);z-index:500;display:flex;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(6px)}
 .modal-overlay.hidden{display:none}
-.modal{background:var(–white);border-radius:var(–radius);padding:2rem;max-width:420px;width:100%;box-shadow:0 10px 60px rgba(0,0,0,.5);border:2px solid #dde4ef;animation:modalIn .25s ease}
+.modal{background:var(–white);border-radius:var(–radius);padding:2rem;max-width:420px;width:100%;box-shadow:0 16px 70px rgba(0,0,0,.7);border:3px solid #1a3a6b;border-top:6px solid #1a3a6b;animation:modalIn .25s ease}
 @keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:scale(1)}}
-.modal h2{font-family:‘Playfair Display’,serif;font-size:1.2rem;margin-bottom:.6rem;color:var(–jade)}
-.modal p{font-size:.95rem;color:#0d1f3c;margin-bottom:1.2rem;line-height:1.8;font-weight:500}
+.modal h2{font-family:‘Playfair Display’,serif;font-size:1.35rem;margin-bottom:.8rem;color:#1a3a6b;font-weight:700}
+.modal p{font-size:1.05rem;color:#0d1f3c;margin-bottom:1.4rem;line-height:2;font-weight:600;background:#fffbe6;border-left:4px solid #b5843a;padding:.9rem 1rem;border-radius:8px}
 .modal-btns{display:flex;gap:.7rem;justify-content:flex-end}
 .modal input{width:100%;border:2px solid var(–line);border-radius:var(–radius-sm);padding:.65rem 1rem;font-size:.95rem;font-family:‘Nunito’,sans-serif;background:var(–bg);color:var(–ink);outline:none;margin-bottom:1rem;transition:border-color .2s}
 .modal input:focus{border-color:var(–jade)}
@@ -515,8 +515,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
     <h2 id="modalTitle">Confirm</h2>
     <p id="modalBody"></p>
     <div class="modal-btns">
-      <button class="btn btn-outline btn-sm" style="width:auto" onclick="closeModal()">Back</button>
-      <button class="btn btn-jade btn-sm" id="modalConfirmBtn" style="width:auto" onclick="">Confirm</button>
+      <button class="btn btn-outline btn-sm" style="width:auto;font-size:1rem;padding:.6rem 1.4rem;border:2px solid #1a3a6b;color:#1a3a6b;font-weight:700;background:#e8eef8" onclick="closeModal()">Back</button>
+      <button class="btn btn-jade btn-sm" id="modalConfirmBtn" style="width:auto;font-size:1rem;padding:.6rem 1.6rem;font-weight:700" onclick="">Confirm</button>
     </div>
   </div>
 </div>
