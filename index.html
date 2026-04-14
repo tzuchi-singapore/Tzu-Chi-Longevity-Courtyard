@@ -143,7 +143,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .modal-overlay.hidden{display:none}
 .modal{background:var(–white);border-radius:var(–radius);padding:2rem;max-width:420px;width:100%;box-shadow:0 16px 70px rgba(0,0,0,.7);border:3px solid #1a3a6b;border-top:6px solid #1a3a6b;animation:modalIn .25s ease}
 @keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:scale(1)}}
-.modal h2{font-family:‘Playfair Display’,serif;font-size:1.35rem;margin-bottom:.8rem;color:#1a3a6b;font-weight:700}
+.modal h2{font-family:‘Playfair Display’,serif;font-size:1.2rem;margin-bottom:.6rem;color:#1a3a6b;font-weight:700}
 .modal p{font-size:1.05rem;color:#0d1f3c;margin-bottom:1.4rem;line-height:2;font-weight:600;background:#fffbe6;border-left:4px solid #b5843a;padding:.9rem 1rem;border-radius:8px}
 .modal-btns{display:flex;gap:.7rem;justify-content:flex-end}
 .modal input{width:100%;border:2px solid var(–line);border-radius:var(–radius-sm);padding:.65rem 1rem;font-size:.95rem;font-family:‘Nunito’,sans-serif;background:var(–bg);color:var(–ink);outline:none;margin-bottom:1rem;transition:border-color .2s}
@@ -497,7 +497,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
       <select id="exportWeekSelect" class="sel-style" style="width:auto">
         <option value="0">This Week</option><option value="1">Next Week</option>
       </select>
-      <button class="btn btn-jade btn-sm" style="width:auto" onclick="exportTimetable()">📥 Download Timetable</button>
+      <button class="btn btn-jade btn-sm" style="width:auto" onclick="exportTimetable()">📥 Download PNG</button>
     </div>
   </div>
 
@@ -1695,114 +1695,77 @@ function exportTimetable() {
   var mon = getMonday(weekOff);
   var wkLabel = weekOff === 0 ? 'This Week' : 'Next Week';
   var days = [
-    { label:'Monday',    date:addDays(mon,0), times:STR_ALL      },
-    { label:'Tuesday',   date:addDays(mon,1), times:FSCCT_TUETHU },
-    { label:'Wednesday', date:addDays(mon,2), times:STR_ALL      },
-    { label:'Thursday',  date:addDays(mon,3), times:FSCCT_TUETHU },
-    { label:'Friday',    date:addDays(mon,4), times:STR_FRI      },
+    { dow:1, label:'Monday',    date:addDays(mon,0), type:'strength', times:STR_ALL   },
+    { dow:2, label:'Tuesday',   date:addDays(mon,1), type:'strength', times:FSCCT_TUETHU },
+    { dow:3, label:'Wednesday', date:addDays(mon,2), type:'strength', times:STR_ALL   },
+    { dow:4, label:'Thursday',  date:addDays(mon,3), type:'strength', times:FSCCT_TUETHU },
+    { dow:5, label:'Friday',    date:addDays(mon,4), type:'strength', times:STR_FRI   },
   ];
-
-  var maxT = Math.max.apply(null, days.map(function(d){ return d.times.length; }));
-
-  function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-  var colStyle = 'width:19%;min-width:0';
-
-  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Timetable</title><style>'
-    + 'body{margin:0;padding:14px;font-family:Arial,Helvetica,sans-serif;background:#f4f6fb;font-size:12px;color:#1a1a2e}'
-    + '.hdr{background:linear-gradient(90deg,#1a1a2e,#1a3a6b);color:#fff;padding:14px 18px;border-radius:8px;margin-bottom:10px}'
-    + '.hdr h1{margin:0 0 3px;font-size:17px}'
-    + '.hdr p{margin:2px 0;opacity:.7;font-size:10px}'
-    + '.leg{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}'
-    + '.leg span{padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;color:#fff}'
-    + '.ls{background:#1a3a6b}.lt{background:#2d6a4f}'
-    + 'table{width:100%;border-collapse:collapse;table-layout:fixed}'
-    + 'th{background:#1a3254;color:#fff;padding:7px 6px;text-align:left;font-size:11px;font-weight:700}'
-    + 'th small{display:block;font-weight:400;opacity:.6;font-size:9px;margin-top:1px}'
-    + 'tr.th{}'
-    + 'td.sh{font-weight:700;font-size:11px;padding:5px 6px;background:#e0e4f0;border-top:2px solid #b8bcd8;color:#1a1a2e}'
-    + 'td.sha{background:#eaeef8}'
-    + 'td.shf{background:#c0392b;color:#fff;border-top:2px solid #962d22}'
-    + 'td.shf .cnt{color:rgba(255,255,255,.8)}'
-    + '.cnt{float:right;font-weight:400;font-size:10px;color:#8888aa}'
-    + 'td.nr{padding:3px 6px;font-size:11px;border-bottom:1px solid #eee}'
-    + 'td.nra{background:#f8f8f5}'
-    + 'td.empty{color:#ddd}'
-    + 'span.n{color:#bbb;font-size:10px;margin-right:3px}'
-    + 'tr.dv td{height:3px;background:#f0f0e0;padding:0}'
-    + 'td.blank{background:#f4f6fb}'
-    + '.foot{margin-top:10px;font-size:10px;color:#aaa;text-align:center}'
-    + '</style></head><body>'
-
-```
-+ '<div class="hdr"><h1>Longevity Courtyard &#8211; Batch 2</h1>'
-+ '<p>' + esc(wkLabel) + '&nbsp;&nbsp;' + esc(fmtDate(mon)) + ' &#8211; ' + esc(fmtDate(addDays(mon,4))) + '</p>'
-+ '<p>Generated ' + esc(fmtDate(nowDate())) + ' &nbsp;&#183;&nbsp; Max ' + SLOT_LIMIT + ' per slot</p></div>'
-+ '<div class="leg">'
-+ '<span class="ls">&#x1F4AA; Mon / Wed / Fri &#8212; Strength, Cardio &amp; Cognitive</span>'
-+ '<span class="lt">&#x1F9D8; Tue / Thu &#8212; Strength, Cardio &amp; Cognitive</span>'
-+ '</div>'
-+ '<table><thead><tr>';
-```
-
-days.forEach(function(day) {
-html += ‘<th style="' + colStyle + '">’ + esc(day.label)
-+ ‘<small>’ + esc(fmtDate(day.date)) + ‘</small></th>’;
-});
-html += ‘</tr></thead><tbody>’;
-
-for (var ti = 0; ti < maxT; ti++) {
-// Slot header row
-html += ‘<tr>’;
-days.forEach(function(day, di) {
-var t = day.times[ti];
-if (!t) { html += ‘<td class="sh blank"></td>’; return; }
-var cnt = bookings.filter(function(b){ return b.date===toYMD(day.date) && b.time===t; }).length;
-var full = cnt >= SLOT_LIMIT;
-var cls = full ? ‘shf’ : (ti%2===0 ? ‘sh’ : ‘sha’);
-html += ‘<td class="' + cls + '">’ + esc(timeLbl(t))
-+ ‘<span class="cnt">’ + cnt + ‘/’ + SLOT_LIMIT + (full?’ FULL’:’’) + ‘</span></td>’;
-});
-html += ‘</tr>’;
-
-```
-// Name rows
-for (var s = 0; s < SLOT_LIMIT; s++) {
-  html += '<tr>';
-  days.forEach(function(day) {
-    var t = day.times[ti];
-    if (!t) { html += '<td class="nr blank"></td>'; return; }
-    var bks = bookings.filter(function(b){ return b.date===toYMD(day.date) && b.time===t; }).map(function(b){ return b.member; });
-    var nm = bks[s];
-    var cls = s%2===0 ? 'nr' : 'nr nra';
-    html += '<td class="' + cls + '"><span class="n">' + (s+1) + '</span>'
-      + (nm ? esc(nm) : '<span class="empty">&#160;</span>') + '</td>';
+  var COL = 210, ROW = 34, SL = 10, HDR = 95, LEG = 45, PAD = 24, GAP = 14;
+  var DAY_HDR = 44, T_HDR = 24, DIVIDER = 4;
+  var maxSlots = Math.max.apply(null, days.map(function(d){ return d.times.length; }));
+  var canvas = document.createElement('canvas');
+  canvas.width  = PAD*2 + COL*5 + GAP*4;
+  canvas.height = HDR + LEG + PAD + DAY_HDR + maxSlots*(T_HDR + SL*ROW + DIVIDER) + PAD + 60;
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#f7f6f2'; ctx.fillRect(0,0,canvas.width,canvas.height);
+  var g = ctx.createLinearGradient(0,0,canvas.width,HDR);
+  g.addColorStop(0,'#1a1a2e'); g.addColorStop(1,'#2d6a4f');
+  ctx.fillStyle = g; ctx.fillRect(0,0,canvas.width,HDR);
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 24px serif';
+  ctx.fillText('Longevity Courtyard – Batch 2', PAD, 38);
+  ctx.font = '14px sans-serif'; ctx.fillStyle = 'rgba(255,255,255,.7)';
+  ctx.fillText(wkLabel + '   ' + fmtDate(mon) + ' – ' + fmtDate(addDays(mon,4)), PAD, 60);
+  ctx.font = '12px sans-serif'; ctx.fillStyle = 'rgba(255,255,255,.45)';
+  ctx.fillText('Generated ' + fmtDate(nowDate()) + '   ·   Max ' + SLOT_LIMIT + ' per slot', PAD, 82);
+  var lY = HDR + 10;
+  ctx.fillStyle = '#2d6a4f'; ctx.beginPath(); ctx.roundRect(PAD, lY, 225, 26, 5); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 12px sans-serif'; ctx.fillText('💪  Mon / Wed / Fri — Strength', PAD+8, lY+18);
+  ctx.fillStyle = '#40916c'; ctx.beginPath(); ctx.roundRect(PAD+235, lY, 185, 26, 5); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.fillText('🧘  Tue / Thu — Stretch & Flow', PAD+243, lY+18);
+  var sY = HDR + LEG + PAD;
+  days.forEach(function(day, di) {
+    var x = PAD + di*(COL+GAP), isS = day.type === 'strength';
+    ctx.fillStyle = isS ? '#1a1a2e' : '#2d6a4f';
+    ctx.beginPath(); ctx.roundRect(x, sY, COL, 44, [7,7,0,0]); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.font = 'bold 14px serif'; ctx.fillText(day.label, x+8, sY+18);
+    ctx.font = '11px sans-serif'; ctx.fillStyle = 'rgba(255,255,255,.6)'; ctx.fillText(fmtDate(day.date), x+8, sY+34);
+    var tag = isS ? '💪 S,C&C' : '🧘 Stretch & Strength'; ctx.fillStyle = isS ? '#e9c46a' : '#74c69d';
+    ctx.font = 'bold 10px sans-serif'; ctx.fillText(tag, x+COL-ctx.measureText(tag).width-8, sY+18);
+    var cY = sY + 44;
+    day.times.forEach(function(t, ti) {
+      var bks = bookings.filter(function(b) { return b.date === toYMD(day.date) && b.time === t; }).map(function(b) { return b.member; });
+      var cnt = bks.length, full = cnt >= SLOT_LIMIT, tHdr = 24;
+      ctx.fillStyle = full ? '#c0392b' : (ti%2===0 ? '#e8e8f0' : '#f0f0f8');
+      ctx.fillRect(x, cY, COL, tHdr);
+      ctx.fillStyle = full ? '#fff' : '#1a1a2e'; ctx.font = 'bold 12px sans-serif'; ctx.fillText(timeLbl(t), x+6, cY+17);
+      ctx.fillStyle = full ? 'rgba(255,255,255,.8)' : '#9898aa'; ctx.font = '10px sans-serif';
+      var ct = cnt+'/'+SLOT_LIMIT+(full?' FULL':''); ctx.fillText(ct, x+COL-ctx.measureText(ct).width-6, cY+17);
+      cY += tHdr;
+      for (var s = 0; s < SL; s++) {
+        ctx.fillStyle = s%2===0 ? '#fff' : '#fafaf8'; ctx.fillRect(x, cY, COL, ROW);
+        ctx.fillStyle = '#ccc'; ctx.font = '10px sans-serif'; ctx.fillText(String(s+1), x+5, cY+ROW-9);
+        if (bks[s]) {
+          ctx.fillStyle = '#1a1a2e'; ctx.font = '11px sans-serif';
+          var nm = bks[s]; while (ctx.measureText(nm).width > COL-26 && nm.length > 3) nm = nm.slice(0,-1);
+          if (nm !== bks[s]) nm += '…'; ctx.fillText(nm, x+20, cY+ROW-9);
+        }
+        ctx.strokeStyle = '#e8e8f0'; ctx.lineWidth = 0.5;
+        ctx.beginPath(); ctx.moveTo(x, cY+ROW); ctx.lineTo(x+COL, cY+ROW); ctx.stroke();
+        cY += ROW;
+      }
+      ctx.fillStyle = isS ? '#fef9ec' : '#d8f3dc'; ctx.fillRect(x, cY, COL, 4); cY += 4;
+    });
+    ctx.strokeStyle = '#e0e0e8'; ctx.lineWidth = 1; ctx.strokeRect(x, sY, COL, cY-sY);
   });
-  html += '</tr>';
-}
-
-// Divider
-html += '<tr class="dv">';
-days.forEach(function(){ html += '<td></td>'; });
-html += '</tr>';
-```
-
-}
-
-html += ‘</tbody></table>’
-+ ‘<div class="foot">Tzu Chi Longevity Courtyard Batch 2  ·  Booking App</div>’
-+ ‘</body></html>’;
-
-var blob = new Blob([html], {type: ‘text/html;charset=utf-8’});
-var url = URL.createObjectURL(blob);
-var a = document.createElement(‘a’);
-a.href = url;
-a.download = ‘timetable-’ + (weekOff===0?‘this’:‘next’) + ‘-week-’ + toYMD(mon) + ‘.html’;
-document.body.appendChild(a);
-a.click();
-document.body.removeChild(a);
-URL.revokeObjectURL(url);
-showToast(‘Timetable downloaded!’, ‘success’);
+  ctx.fillStyle = '#9898aa'; ctx.font = '10px sans-serif';
+  ctx.fillText('Tzu Chi Longevity Courtyard Batch 2  ·  Booking App', PAD, canvas.height-8);
+  canvas.toBlob(function(blob) {
+    var url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url; a.download = 'timetable-' + (weekOff===0?'this':'next') + '-week-' + toYMD(mon) + '.png';
+    a.click(); URL.revokeObjectURL(url);
+    showToast('Timetable downloaded! 📥', 'success');
+  }, 'image/png');
 }
 
 // ═══════════════════════════════════════════════════════
@@ -1811,26 +1774,26 @@ showToast(‘Timetable downloaded!’, ‘success’);
 var secretTapCount = 0;
 var secretTapTimer = null;
 function handleSecretTap() {
-secretTapCount++;
-if (secretTapTimer) clearTimeout(secretTapTimer);
-secretTapTimer = setTimeout(function() { secretTapCount = 0; }, 1500);
-if (secretTapCount >= 3) {
-secretTapCount = 0;
-clearTimeout(secretTapTimer);
-// Show admin tab and switch to it
-var adminBtn = document.getElementById(‘tBtn-admin’);
-adminBtn.style.opacity = ‘1’;
-adminBtn.style.pointerEvents = ‘auto’;
-adminBtn.style.width = ‘’;
-adminBtn.style.padding = ‘’;
-adminBtn.style.minWidth = ‘’;
-adminBtn.style.flex = ‘1’;
-adminBtn.style.overflow = ‘’;
-adminBtn.textContent = ‘🔑 Admin’;
-adminBtn.className = ‘tab’;
-switchTab(‘admin’, adminBtn);
-showToast(‘🔑 Admin access unlocked’, ‘success’);
-}
+  secretTapCount++;
+  if (secretTapTimer) clearTimeout(secretTapTimer);
+  secretTapTimer = setTimeout(function() { secretTapCount = 0; }, 1500);
+  if (secretTapCount >= 3) {
+    secretTapCount = 0;
+    clearTimeout(secretTapTimer);
+    // Show admin tab and switch to it
+    var adminBtn = document.getElementById('tBtn-admin');
+    adminBtn.style.opacity = '1';
+    adminBtn.style.pointerEvents = 'auto';
+    adminBtn.style.width = '';
+    adminBtn.style.padding = '';
+    adminBtn.style.minWidth = '';
+    adminBtn.style.flex = '1';
+    adminBtn.style.overflow = '';
+    adminBtn.textContent = '🔑 Admin';
+    adminBtn.className = 'tab';
+    switchTab('admin', adminBtn);
+    showToast('🔑 Admin access unlocked', 'success');
+  }
 }
 
 // ═══════════════════════════════════════════════════════
