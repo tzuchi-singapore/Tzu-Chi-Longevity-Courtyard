@@ -1696,9 +1696,9 @@ function exportTimetable() {
   var wkLabel = weekOff === 0 ? 'This Week' : 'Next Week';
   var days = [
     { dow:1, label:'Monday',    date:addDays(mon,0), type:'strength', times:STR_ALL   },
-    { dow:2, label:'Tuesday',   date:addDays(mon,1), type:'stretch',  times:STR_TIMES },
+    { dow:2, label:'Tuesday',   date:addDays(mon,1), type:'strength', times:FSCCT_TUETHU },
     { dow:3, label:'Wednesday', date:addDays(mon,2), type:'strength', times:STR_ALL   },
-    { dow:4, label:'Thursday',  date:addDays(mon,3), type:'stretch',  times:STR_TIMES },
+    { dow:4, label:'Thursday',  date:addDays(mon,3), type:'strength', times:FSCCT_TUETHU },
     { dow:5, label:'Friday',    date:addDays(mon,4), type:'strength', times:STR_FRI   },
   ];
   var COL = 210, ROW = 32, SL = 10, HDR = 95, LEG = 45, PAD = 24, GAP = 14;
