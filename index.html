@@ -1690,7 +1690,9 @@ function getReply(q) {
 // ═══════════════════════════════════════════════════════
 // EXPORT TIMETABLE (PNG)
 // ═══════════════════════════════════════════════════════
-function exportTimetable() {
+async function exportTimetable() {
+  showToast('Refreshing data…', 'success');
+  await loadAll();
   var weekOff = parseInt(document.getElementById('exportWeekSelect').value);
   var mon = getMonday(weekOff);
   var wkLabel = weekOff === 0 ? 'This Week' : 'Next Week';
