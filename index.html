@@ -143,8 +143,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .modal-overlay.hidden{display:none}
 .modal{background:var(–white);border-radius:var(–radius);padding:2rem;max-width:420px;width:100%;box-shadow:0 10px 50px rgba(0,0,0,.25);animation:modalIn .25s ease}
 @keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:scale(1)}}
-.modal h2{font-family:‘Playfair Display’,serif;font-size:1.15rem;margin-bottom:.5rem;color:#0d1f3c;font-weight:700}
-.modal p{font-size:.9rem;color:#0d1f3c;margin-bottom:1.2rem;line-height:1.7;font-weight:600}
+.modal h2{font-family:‘Playfair Display’,serif;font-size:1.15rem;margin-bottom:.5rem;color:var(–jade)}
+.modal p{font-size:.88rem;color:var(–mid);margin-bottom:1.2rem;line-height:1.6}
 .modal-btns{display:flex;gap:.7rem;justify-content:flex-end}
 .modal input{width:100%;border:2px solid var(–line);border-radius:var(–radius-sm);padding:.65rem 1rem;font-size:.95rem;font-family:‘Nunito’,sans-serif;background:var(–bg);color:var(–ink);outline:none;margin-bottom:1rem;transition:border-color .2s}
 .modal input:focus{border-color:var(–jade)}
@@ -540,7 +540,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 <div class="modal-overlay hidden" id="editPwModal">
   <div class="modal">
     <h2>✏️ Edit Password</h2>
-    <p id="editPwLabel" style="font-weight:600;color:#1a2c50;font-size:.9rem;margin-bottom:.8rem;background:#eef2ff;border-left:4px solid #1a3a6b;padding:.5rem .75rem;border-radius:5px"></p>
+    <p id="editPwLabel" style="font-weight:700;color:var(--ink);margin-bottom:.8rem"></p>
     <input type="text" id="editPwInput" placeholder="New password">
     <div class="modal-btns">
       <button class="btn btn-outline btn-sm" style="width:auto" onclick="closeEditPw()">Cancel</button>
@@ -592,18 +592,9 @@ function apiHeaders(extra) {
 async function dbGet(table, select, params) {
   select = select || '*'; params = params || '';
   var url = SUPA_URL + '/rest/v1/' + table + '?select=' + select + (params ? '&' + params : '');
-  var controller = new AbortController();
-  var timer = setTimeout(function() { controller.abort(); }, 10000);
-  try {
-    var r = await fetch(url, { headers: apiHeaders({ 'Prefer': 'return=representation' }), signal: controller.signal });
-    clearTimeout(timer);
-    if (!r.ok) throw new Error('Table "' + table + '": ' + await r.text());
-    return r.json();
-  } catch(e) {
-    clearTimeout(timer);
-    if (e.name === 'AbortError') throw new Error('Timeout fetching "' + table + '" — check network/CORS');
-    throw e;
-  }
+  var r = await fetch(url, { headers: apiHeaders({ 'Prefer': 'return=representation' }) });
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
 }
 async function dbInsert(table, row) {
   var r = await fetch(SUPA_URL + '/rest/v1/' + table, {
@@ -810,22 +801,14 @@ function getDowInfoAll(dow) {
 // LOAD DATA
 // ═══════════════════════════════════════════════════════
 async function loadAll() {
-  // Fetch core tables — waitlist is optional (may not exist yet)
-  var coreResults = await Promise.all([
+  var results = await Promise.all([
     dbGet('members',       '*', 'order=name'),
     dbGet('bookings',      '*'),
     dbGet('mia_records',   '*'),
     dbGet('blocked_slots', '*'),
     dbGet('announcements', '*', 'order=created_at.desc'),
+    dbGet('waitlist',      '*', 'order=created_at.asc'),
   ]);
-  // Waitlist fetched separately so a missing table doesn't crash the app
-  var waitlistData = [];
-  try {
-    waitlistData = await dbGet('waitlist', '*', 'order=created_at.asc');
-  } catch(e) {
-    console.warn('Waitlist table not found — waitlist features disabled:', e.message);
-  }
-  var results = coreResults.concat([waitlistData]);
 
   members      = results[0].map(function(r) { return { name: r.name, password: r.password || '' }; });
   bookings     = results[1].map(function(r) { return { id: r.id, member: r.member, date: r.date, time: r.time, classType: r.class_type, classLabel: r.class_label }; });
@@ -854,15 +837,8 @@ async function init() {
     document.getElementById('loadingScreen').classList.add('done');
   } catch(e) {
     document.getElementById('loadingScreen').innerHTML =
-      '<div style="text-align:center;padding:2rem;color:#ff8888">' +
-      '<div style="font-size:2rem;margin-bottom:.5rem">⚠️</div>' +
-      '<strong style="font-size:1rem">Cannot connect to database</strong><br><br>' +
-      '<div style="font-size:.78rem;background:rgba(255,255,255,.1);padding:.8rem;border-radius:8px;margin:.5rem 0;word-break:break-all;text-align:left">' + e.message + '</div>' +
-      '<button onclick="location.reload()" style="margin-top:1rem;padding:.6rem 1.5rem;background:#1a3a6b;color:white;border:2px solid rgba(255,255,255,.3);border-radius:8px;cursor:pointer;font-size:.9rem">🔄 Retry</button>' +
-      '<br><span style="font-size:.65rem;opacity:.4;margin-top:.5rem;display:block">tzuchi-singapore.github.io → pshbwmxllkghecqelnye.supabase.co</span>' +
-      '</div>' +
-      '<strong>Could not connect to database.</strong><br><span style="font-size:.8rem;opacity:.7">' + e.message + '</span><br>' +
-      '<span style="font-size:.7rem;opacity:.5">DB: pshbwmxllkghecqelnye.supabase.co</span><br><br>' +
+      '<div style="text-align:center;padding:2rem;color:#ff8888"><div style="font-size:2rem;margin-bottom:.5rem">⚠️</div>' +
+      '<strong>Could not connect to database.</strong><br><span style="font-size:.8rem;opacity:.7">' + e.message + '</span><br><br>' +
       '<button onclick="init()" style="margin-top:1rem;padding:.6rem 1.5rem;background:#2d6a4f;color:white;border:none;border-radius:8px;cursor:pointer;font-size:.9rem">Retry</button></div>';
   }
 }
@@ -1064,12 +1040,8 @@ function promptBook(ymd, tm, label, type) {
   pendingAction = { action: 'book', ymd: ymd, tm: tm, label: label, classType: type };
   document.getElementById('modalTitle').textContent = tr('confirmBooking');
   document.getElementById('modalBody').innerHTML =
-    '<div style="background:#eef2ff;border-left:4px solid #1a3a6b;border-radius:6px;padding:.75rem 1rem;line-height:1.7">' +
-    '<div style="font-size:.8rem;color:#4a5a75;margin-bottom:.25rem">Booking for</div>' +
-    '<div style="font-size:1rem;color:#0d1f3c;font-weight:700;margin-bottom:.35rem">' + currentMember + '</div>' +
-    '<div style="color:#1a3a6b;font-size:.88rem;font-weight:600">📌 ' + label + '</div>' +
-    '<div style="color:#0d1f3c;font-size:.9rem;font-weight:700;margin-top:.2rem">📅 ' + fmtDate(parseYMD(ymd)) + ' at ' + timeLbl(tm) + '</div>' +
-    '</div>';
+    'Booking for: <strong>' + currentMember + '</strong><br>' +
+    '📌 ' + label + '<br>📅 ' + fmtDate(parseYMD(ymd)) + ' at <strong>' + timeLbl(tm) + '</strong>';
   var btn = document.getElementById('modalConfirmBtn');
   btn.textContent = tr('bookNow');
   btn.style.background = '';
@@ -1084,12 +1056,8 @@ function promptWaitlist(ymd, tm, label, type) {
   pendingAction = { action: 'waitlist', ymd: ymd, tm: tm, label: label, classType: type };
   document.getElementById('modalTitle').textContent = tr('joinWaitlist');
   document.getElementById('modalBody').innerHTML =
-    '<div style="background:#eef2ff;border-left:4px solid #1a3a6b;border-radius:6px;padding:.75rem 1rem;line-height:1.7;margin-bottom:.5rem">' +
-    '<div style="font-size:1rem;color:#0d1f3c;font-weight:700;margin-bottom:.35rem">' + currentMember + '</div>' +
-    '<div style="color:#1a3a6b;font-size:.88rem;font-weight:600">📌 ' + label + '</div>' +
-    '<div style="color:#0d1f3c;font-size:.9rem;font-weight:700">📅 ' + fmtDate(parseYMD(ymd)) + ' at ' + timeLbl(tm) + '</div>' +
-    '</div>' +
-    '<div style="font-size:.85rem;color:#2d5a3d;background:#f0fff4;border-radius:5px;padding:.5rem .75rem">' +
+    '<strong>' + currentMember + '</strong><br>📌 ' + label + '<br>' +
+    '📅 ' + fmtDate(parseYMD(ymd)) + ' at <strong>' + timeLbl(tm) + '</strong><br><br>' +
     'You will be <strong>#' + pos + '</strong> on the waitlist.<br>You\'ll be auto-booked if a spot opens!';
   var btn = document.getElementById('modalConfirmBtn');
   btn.textContent = tr('joinWaitlist');
@@ -1103,11 +1071,8 @@ function promptCancel(ymd, tm, label, mode) {
   pendingAction = { action: mode === 'waitlist' ? 'cancelWaitlist' : 'cancel', ymd: ymd, tm: tm, label: label };
   document.getElementById('modalTitle').textContent = tr('confirmCancel');
   document.getElementById('modalBody').innerHTML =
-    '<div style="background:#fff4f0;border-left:4px solid #c0392b;border-radius:6px;padding:.75rem 1rem;line-height:1.7">' +
-    '<div style="font-size:.82rem;color:#c0392b;font-weight:700;margin-bottom:.25rem">' + (mode === 'waitlist' ? tr('leaveWaitlist') : 'Cancel booking') + '</div>' +
-    '<div style="color:#1a3a6b;font-size:.88rem;font-weight:600">📌 ' + label + '</div>' +
-    '<div style="color:#0d1f3c;font-size:.9rem;font-weight:700">📅 ' + fmtDate(parseYMD(ymd)) + ' at ' + timeLbl(tm) + '</div>' +
-    '</div>'';
+    (mode === 'waitlist' ? tr('leaveWaitlist') : 'Cancel') + ':<br><strong>' + label + '</strong><br>' +
+    '📅 ' + fmtDate(parseYMD(ymd)) + ' at <strong>' + timeLbl(tm) + '</strong>';
   var btn = document.getElementById('modalConfirmBtn');
   btn.textContent = tr('yesCancel');
   btn.style.background = 'var(--danger)';
@@ -1330,7 +1295,7 @@ async function deleteMember(name) {
 
 function showEditPw(name) {
   editingPwMember = name;
-  document.getElementById('editPwLabel').innerHTML = 'Change password for: <strong style="color:#0d1f3c;font-size:1rem">' + name + '</strong>';
+  document.getElementById('editPwLabel').textContent = 'Change password for: ' + name;
   document.getElementById('editPwInput').value = '';
   document.getElementById('editPwModal').classList.remove('hidden');
   setTimeout(function() { document.getElementById('editPwInput').focus(); }, 100);
@@ -1501,14 +1466,6 @@ function renderAdminBookings() {
     var mon2 = getMonday(1), sun2 = addDays(mon2, 6);
     data = data.filter(function(b) { var d = parseYMD(b.date); return d >= mon2 && d <= sun2; });
   }
-  // Deduplicate: keep only the first booking per (member+date+time)
-  var seen = {};
-  data = data.filter(function(b) {
-    var key = b.member + '|' + b.date + '|' + b.time;
-    if (seen[key]) return false;
-    seen[key] = true;
-    return true;
-  });
   data.sort(function(a,b) { return a.date.localeCompare(b.date) || a.time.localeCompare(b.time); });
   var el = document.getElementById('adminBookingsTable');
   if (!data.length) { el.innerHTML = '<p style="font-size:.83rem;color:var(--soft);text-align:center;padding:1rem">No bookings found.</p>'; return; }
@@ -1738,11 +1695,11 @@ function exportTimetable() {
   var mon = getMonday(weekOff);
   var wkLabel = weekOff === 0 ? 'This Week' : 'Next Week';
   var days = [
-    { dow:1, label:'Monday',    date:addDays(mon,0), type:'strength', times:STR_ALL,   sessions:[{type:'strength',times:STR_ALL}] },
-    { dow:2, label:'Tuesday',   date:addDays(mon,1), type:'mixed',    times:['10:00','11:00','13:30','14:30','15:30'], sessions:[{type:'stretch',times:SS_TIMES},{type:'strength',times:FSCCT_TUETHU}] },
-    { dow:3, label:'Wednesday', date:addDays(mon,2), type:'strength', times:STR_ALL,   sessions:[{type:'strength',times:STR_ALL}] },
-    { dow:4, label:'Thursday',  date:addDays(mon,3), type:'mixed',    times:['10:00','11:00','13:30','14:30','15:30'], sessions:[{type:'stretch',times:SS_TIMES},{type:'strength',times:FSCCT_TUETHU}] },
-    { dow:5, label:'Friday',    date:addDays(mon,4), type:'strength', times:STR_FRI,   sessions:[{type:'strength',times:STR_FRI}] },
+    { dow:1, label:'Monday',    date:addDays(mon,0), type:'strength', times:STR_ALL   },
+    { dow:2, label:'Tuesday',   date:addDays(mon,1), type:'stretch',  times:STR_TIMES },
+    { dow:3, label:'Wednesday', date:addDays(mon,2), type:'strength', times:STR_ALL   },
+    { dow:4, label:'Thursday',  date:addDays(mon,3), type:'stretch',  times:STR_TIMES },
+    { dow:5, label:'Friday',    date:addDays(mon,4), type:'strength', times:STR_FRI   },
   ];
   var COL = 210, ROW = 32, SL = 10, HDR = 95, LEG = 45, PAD = 24, GAP = 14;
   var canvas = document.createElement('canvas');
@@ -1777,14 +1734,9 @@ function exportTimetable() {
     day.times.forEach(function(t, ti) {
       var bks = bookings.filter(function(b) { return b.date === toYMD(day.date) && b.time === t; }).map(function(b) { return b.member; });
       var cnt = bks.length, full = cnt >= SLOT_LIMIT, tHdr = 24;
-      var slotIsStr = FSCCT_TUETHU.indexOf(t) >= 0 || FSCCT_ALL.indexOf(t) >= 0;
-      var slotIsStretch = SS_TIMES.indexOf(t) >= 0;
-      var mixedBg = (day.type==='mixed') ? (slotIsStr && !slotIsStretch ? '#e8eef8' : slotIsStretch && !slotIsStr ? '#e8f4ee' : '#eef2ff') : (ti%2===0 ? '#e8e8f0' : '#f0f0f8');
-      ctx.fillStyle = full ? '#c0392b' : mixedBg;
+      ctx.fillStyle = full ? '#c0392b' : (ti%2===0 ? '#e8e8f0' : '#f0f0f8');
       ctx.fillRect(x, cY, COL, tHdr);
-      var slotLabel = timeLbl(t);
-      if (day.type==='mixed') { slotLabel += slotIsStr && !slotIsStretch ? ' 💪' : slotIsStretch && !slotIsStr ? ' 🧘' : ''; }
-      ctx.fillStyle = full ? '#fff' : '#1a1a2e'; ctx.font = 'bold 12px sans-serif'; ctx.fillText(slotLabel, x+6, cY+17);
+      ctx.fillStyle = full ? '#fff' : '#1a1a2e'; ctx.font = 'bold 12px sans-serif'; ctx.fillText(timeLbl(t), x+6, cY+17);
       ctx.fillStyle = full ? 'rgba(255,255,255,.8)' : '#9898aa'; ctx.font = '10px sans-serif';
       var ct = cnt+'/'+SLOT_LIMIT+(full?' FULL':''); ctx.fillText(ct, x+COL-ctx.measureText(ct).width-6, cY+17);
       cY += tHdr;
