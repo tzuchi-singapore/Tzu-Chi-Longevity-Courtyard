@@ -119,7 +119,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(–jade)}
 .form-group textarea{resize:vertical;min-height:80px}
 .btn{display:inline-block;padding:.7rem 1.5rem;border-radius:var(–radius-sm);font-family:‘Nunito’,sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;border:none;transition:all .2s}
-.btn-jade{background:var(–jade);color:white}.btn-jade:hover{background:var(–jade2)}
+.btn-jade{background:#1a9e50;color:white;text-shadow:0 1px 2px rgba(0,0,0,.2)}.btn-jade:hover{background:#168040}
 .btn-full{width:100%}
 .btn-danger{background:var(–danger);color:white}.btn-danger:hover{opacity:.85}
 .btn-warn{background:var(–warn);color:white}.btn-warn:hover{opacity:.85}
@@ -516,7 +516,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
     <p id="modalBody"></p>
     <div class="modal-btns">
       <button class="btn btn-outline btn-sm" style="width:auto;font-size:1rem;padding:.6rem 1.4rem;border:2px solid #1a3a6b;color:#1a3a6b;font-weight:700;background:#e8eef8" onclick="closeModal()">Back</button>
-      <button class="btn btn-jade btn-sm" id="modalConfirmBtn" style="width:auto;font-size:1rem;padding:.6rem 1.6rem;font-weight:700" onclick="">Confirm</button>
+      <button class="btn btn-jade btn-sm" id="modalConfirmBtn" style="width:auto;font-size:1.05rem;padding:.7rem 1.8rem;font-weight:800;background:#1a9e50;color:white;border:none;border-radius:8px;box-shadow:0 3px 10px rgba(26,158,80,.4)" onclick="">Confirm</button>
     </div>
   </div>
 </div>
@@ -530,7 +530,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
     <input type="password" id="memberPwInput" placeholder="Enter your password" onkeydown="if(event.key==='Enter')submitMemberLogin()">
     <div class="modal-btns">
       <button class="btn btn-outline btn-sm" style="width:auto" onclick="closeMemberLogin()">Cancel</button>
-      <button class="btn btn-jade btn-sm" style="width:auto" onclick="submitMemberLogin()">Unlock</button>
+      <button class="btn btn-jade btn-sm" style="width:auto;font-size:1rem;padding:.6rem 1.6rem;font-weight:800;background:#1a9e50;color:white;border:none;border-radius:8px;box-shadow:0 3px 10px rgba(26,158,80,.4)" onclick="submitMemberLogin()">🔓 Unlock</button>
     </div>
   </div>
 </div>
@@ -1044,7 +1044,9 @@ function promptBook(ymd, tm, label, type) {
     '📌 ' + label + '<br>📅 ' + fmtDate(parseYMD(ymd)) + ' at <strong>' + timeLbl(tm) + '</strong>';
   var btn = document.getElementById('modalConfirmBtn');
   btn.textContent = tr('bookNow');
-  btn.style.background = '';
+  btn.style.background = '#1a9e50';
+  btn.style.color = 'white';
+  btn.style.boxShadow = '0 3px 10px rgba(26,158,80,.4)';
   btn.onclick = executeAction;
   document.getElementById('confirmModal').classList.remove('hidden');
 }
