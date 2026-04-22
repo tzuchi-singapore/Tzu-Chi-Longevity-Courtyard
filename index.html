@@ -737,6 +737,10 @@ function getMonday(off) {
   m.setHours(0,0,0,0); return m;
 }
 function fmtDate(d) { return d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'}); }
+function fmtDateDay(d) {
+  var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  return d.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'}) + ' (' + days[d.getDay()] + ')';
+}
 function timeLbl(t) {
   var p = t.split(':').map(Number), h = p[0], m = p[1];
   return (h % 12 || 12) + ':' + String(m).padStart(2,'0') + (h < 12 ? 'am' : 'pm');
@@ -1166,7 +1170,7 @@ function renderMyBookings() {
       var past = isSlotPast(b.date, b.time);
       var cc   = !past && canCancel(b.date, b.time);
       html += '<div class="booking-card">' +
-        '<div class="booking-card-left"><strong>' + b.classLabel + '</strong><span>📅 ' + fmtDate(parseYMD(b.date)) + ' at ' + timeLbl(b.time) + '</span></div>' +
+        '<div class="booking-card-left"><strong>' + b.classLabel + '</strong><span>📅 ' + fmtDateDay(parseYMD(b.date)) + ' at ' + timeLbl(b.time) + '</span></div>' +
         '<div style="display:flex;align-items:center;gap:.5rem">' +
         '<span class="status-tag ' + (past ? 'st-past' : 'st-upcoming') + '">' + (past ? tr('past') : tr('upcoming')) + '</span>' +
         (!past ? '<button class="btn-cancel-bk" ' + (cc ? '' : 'disabled title="Cannot cancel within 1hr"') + ' onclick="promptCancel(\'' + b.date + '\',\'' + b.time + '\',\'' + esc(b.classLabel) + '\',\'booking\')">' + tr('cancel') + '</button>' : '') +
@@ -1179,7 +1183,7 @@ function renderMyBookings() {
     myWL.forEach(function(w) {
       var past = isSlotPast(w.date, w.time);
       html += '<div class="booking-card" style="border-left:3px solid var(--warn)">' +
-        '<div class="booking-card-left"><strong>' + w.classLabel + '</strong><span>📅 ' + fmtDate(parseYMD(w.date)) + ' at ' + timeLbl(w.time) + '</span></div>' +
+        '<div class="booking-card-left"><strong>' + w.classLabel + '</strong><span>📅 ' + fmtDateDay(parseYMD(w.date)) + ' at ' + timeLbl(w.time) + '</span></div>' +
         '<div style="display:flex;align-items:center;gap:.5rem">' +
         '<span class="status-tag st-waitlist">⏳ #' + w.position + '</span>' +
         (!past ? '<button class="btn-cancel-bk" onclick="promptCancel(\'' + w.date + '\',\'' + w.time + '\',\'' + esc(w.classLabel) + '\',\'waitlist\')">' + tr('leaveWaitlist') + '</button>' : '') +
