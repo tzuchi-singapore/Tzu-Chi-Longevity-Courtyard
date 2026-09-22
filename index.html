@@ -851,19 +851,20 @@ async function loadAll() {
   ]);
 
   members      = results[0].map(function(r) { return { name: r.name, password: r.password || '' }; });
-  bookings     = results[1].map(function(r) { return { id: r.id, member: r.member, date: r.date, time: r.time, classType: r.class_type || '', classLabel: r.class_label || '' }; });
+  bookings     = results[1].map(function(r) { return { id: r.id, member: r.member, date: r.date, time: (r.time||'').slice(0,5), classType: r.class_type || '', classLabel: r.class_label || '' }; });
   miaRecord    = {};
   results[2].forEach(function(r) { miaRecord[r.member] = r.count; });
-  blockedSlots = results[3].map(function(r) { return { id: r.id, date: r.date, time: r.time, reason: r.reason }; });
+  blockedSlots = results[3].map(function(r) { return { id: r.id, date: r.date, time: r.time ? r.time.slice(0,5) : r.time, reason: r.reason }; });
   announcements= results[4].map(function(r) { return { id: r.id, text: r.text }; });
 
   // Build waitlist with per-slot position numbers
   waitlist = [];
   var posMap = {};
   results[5].forEach(function(r) {
-    var key = r.date + '|' + r.time;
+    var tm5 = (r.time||'').slice(0,5);
+    var key = r.date + '|' + tm5;
     posMap[key] = (posMap[key] || 0) + 1;
-    waitlist.push({ id: r.id, member: r.member, date: r.date, time: r.time, classType: r.class_type, classLabel: r.class_label, position: posMap[key] });
+    waitlist.push({ id: r.id, member: r.member, date: r.date, time: tm5, classType: r.class_type, classLabel: r.class_label, position: posMap[key] });
   });
 }
 
