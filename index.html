@@ -40,7 +40,7 @@
   --radius-sm: 10px;
   --radius-xs: 6px;
 }
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:var(--fs-base);line-height:1.6;-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:var(--fs-base);line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:80px}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--line2);border-radius:99px}
 
 /* ─── LOADING ─────────────────────────────────── */
@@ -402,6 +402,16 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-he
 .admin-collapsible.open .admin-collapse-arrow{transform:rotate(180deg)}
 .admin-collapse-body{display:none;margin-top:.9rem}
 .admin-collapsible.open .admin-collapse-body{display:block}
+
+/* ─── MODAL OVERLAYS ──────────────────────────────────── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(6,21,41,.72);z-index:2000;align-items:center;justify-content:center;padding:1.2rem}
+.modal-overlay:not(.hidden){display:flex}
+.modal{background:var(--white);border-radius:var(--radius);padding:1.6rem 1.4rem;width:100%;max-width:380px;box-shadow:0 12px 40px rgba(6,21,41,.35)}
+.modal h2{font-size:1.15rem;font-weight:800;color:var(--ink);margin-bottom:.6rem}
+.modal p{font-size:.95rem;color:var(--mid);margin-bottom:1rem}
+.modal input[type=password]{width:100%;padding:.7rem .9rem;border:2px solid var(--line2);border-radius:var(--radius-sm);font-size:1rem;outline:none;color:var(--ink);background:var(--bg);box-sizing:border-box;margin-bottom:1rem}
+.modal input[type=password]:focus{border-color:var(--gold)}
+.modal-btns{display:flex;gap:.7rem;justify-content:flex-end}
 </style>
 
 <style id="img-inject">
