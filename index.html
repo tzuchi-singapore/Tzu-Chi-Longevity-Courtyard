@@ -13,6 +13,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   /* Tzu-Chi navy palette */
+  --fs-base: 15px;
   --jade:#1a3a6b;--jade2:#1e4d8c;--jade3:#4a7fc1;--jade-pale:#e8eef8;
   --gold:#b5843a;--gold-light:#e9c46a;--gold-pale:#fef9ec;
   --ink:#0d1f3c;--ink2:#1a3254;--mid:#4a5a75;--soft:#8a99b5;--line:#dde4ef;
@@ -22,7 +23,7 @@
   /* GLOW brand colours from the signage */
   --glow-sage:#7a9e7e;--glow-teal:#5b9aa0;--glow-blue:#6b8cba;--glow-light:#f0f4f0;
 }
-body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;font-size:var(--fs-base)}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--jade3);border-radius:99px;background:#4a7fc1}
 .nav{background:linear-gradient(90deg,#0d1f3c 0%,#1a3254 100%);padding:0 1.5rem;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:300;box-shadow:0 2px 20px rgba(0,0,0,.35)}
 .nav-left{display:flex;align-items:center;gap:.9rem}
@@ -32,10 +33,23 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 .nav-right{display:flex;align-items:center;gap:.7rem}
 .nav-member{font-size:.78rem;color:var(--soft);text-align:right;line-height:1.5;display:none}
 .nav-member strong{color:var(--jade3);display:block}
-.lang-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:white;border-radius:999px;padding:.3rem .8rem;font-size:.75rem;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif}
-.announce-bar{background:linear-gradient(90deg,var(--gold),var(--gold-light));padding:.65rem 1.5rem;display:flex;align-items:center;gap:.6rem;font-size:.82rem;font-weight:600;color:var(--ink)}
-.announce-bar.hidden{display:none}
-.announce-close{background:none;border:none;cursor:pointer;font-size:1.1rem;opacity:.6;margin-left:auto}
+.lang-toggle{display:flex;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:2px;gap:2px}
+.lang-opt{background:none;border:none;color:rgba(255,255,255,.55);border-radius:999px;padding:.22rem .55rem;font-size:.72rem;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;white-space:nowrap}
+.lang-opt.active{background:rgba(255,255,255,.22);color:#fff;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.font-ctrl{display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:2px}
+.font-btn{background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;border-radius:999px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all .15s;line-height:1}
+.font-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+.font-btn:active{transform:scale(.92)}
+.announce-section{padding:.5rem 1.2rem .25rem}
+.announce-card{background:linear-gradient(135deg,#fffbec 0%,#fff8e1 100%);border:1.5px solid #e9c46a;border-left:5px solid #b5843a;border-radius:12px;padding:.85rem 1rem;display:flex;gap:.7rem;align-items:flex-start;margin-bottom:.5rem;box-shadow:0 2px 12px rgba(181,132,58,.15);position:relative;animation:slideDown .3s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.announce-icon{font-size:1.3rem;flex-shrink:0;margin-top:.05rem}
+.announce-body{flex:1;min-width:0}
+.announce-label{font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#8a6200;margin-bottom:.2rem}
+.announce-text-content{font-size:.87rem;font-weight:600;color:#3d2e00;line-height:1.55}
+.announce-dismiss{background:none;border:none;cursor:pointer;color:#b5843a;font-size:1rem;padding:.1rem .3rem;opacity:.7;transition:opacity .2s;flex-shrink:0;margin-top:-.15rem}
+.announce-dismiss:hover{opacity:1}
+.announce-item-admin{padding:.75rem 1rem;background:linear-gradient(135deg,#fffbec,#fff8e1);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:.83rem;display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.4rem;border:1px solid rgba(233,196,106,.3);border-left-width:4px}
 .main{max-width:960px;margin:0 auto;padding:1.5rem 1.2rem 5rem}
 .hero{background:linear-gradient(135deg,#0d1f3c 0%,#152d5c 40%,#1a3a6b 100%);border-radius:var(--radius);padding:2rem 2.5rem;margin-bottom:1.8rem;color:white;position:relative;overflow:hidden;display:flex;align-items:center;gap:1.5rem}
 .hero::before{content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;background:rgba(255,255,255,.04);border-radius:50%}
@@ -221,18 +235,23 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
 </svg></div>
   </div>
   <div class="nav-right">
-    <button class="lang-btn" id="langToggle" onclick="toggleLang()">中文</button>
     <div class="nav-member" id="navMemberInfo">
       <strong id="navMemberName">—</strong>
       <span id="navLockStatus" style="font-size:.7rem;color:var(--jade3)">🔓 Unlocked</span>
     </div>
+    <div class="font-ctrl" title="Adjust text size">
+      <button class="font-btn" onclick="adjustFont(-1)">A−</button>
+      <button class="font-btn" onclick="adjustFont(1)">A+</button>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-opt active" id="langOptEN" onclick="setLang('en')">EN</button>
+      <button class="lang-opt" id="langOptZH" onclick="setLang('zh')">中文</button>
+    </div>
   </div>
 </nav>
 
-<div class="announce-bar hidden" id="announceBanner">
-  <span>📢</span><span id="announceText" style="flex:1"></span>
-  <button class="announce-close" onclick="dismissAnnounce()">✕</button>
-</div>
+<div id="announceBanner" style="display:none"><!-- compat --></div>
+<div class="announce-section" id="announceSection" style="display:none"></div>
 
 <div class="main">
   <div class="hero" style="position:relative">
@@ -280,7 +299,17 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-h
     </div>
   </div>
 
-  <div class="member-bar">
+  <a class="games-card" href="https://tzuchi-singapore.github.io/Singapore-Heritage-Games/?v=6" target="_blank" rel="noopener">
+  <div class="games-icon">🎮</div>
+  <div class="games-text">
+    <div class="games-badge">✨ NEW · PLAY NOW</div>
+    <h3>Singapore Heritage Games</h3>
+    <p>Explore Singapore's history through fun interactive games — challenge your memory and win!</p>
+  </div>
+  <div class="games-arrow">→</div>
+</a>
+
+<div class="member-bar">
     <label id="memberBarLabel">👤 Select Member</label>
     <select id="memberSelect" onchange="onMemberChange()">
       <option value="">— Choose your name —</option>
@@ -734,9 +763,13 @@ function tr(key) {
   return (TR[lang] && TR[lang][key]) || TR['en'][key] || key;
 }
 
-function toggleLang() {
-  lang = lang === 'en' ? 'zh' : 'en';
-  document.getElementById('langToggle').textContent = lang === 'en' ? '中文' : 'EN';
+function toggleLang() { setLang(lang === 'en' ? 'zh' : 'en'); }
+function setLang(l) {
+  lang = l;
+  var enBtn = document.getElementById('langOptEN');
+  var zhBtn = document.getElementById('langOptZH');
+  if (enBtn) { enBtn.classList.toggle('active', lang === 'en'); }
+  if (zhBtn) { zhBtn.classList.toggle('active', lang === 'zh'); }
   applyLang();
   renderSchedule();
   renderMyBookings();
@@ -744,6 +777,13 @@ function toggleLang() {
   updateUnlockBtn();
   updateNavMember();
   populateMemberDropdown();
+}
+
+// Font size adjustment — clamps between 13px and 22px
+var _fsSize = 15;
+function adjustFont(delta) {
+  _fsSize = Math.min(22, Math.max(13, _fsSize + delta));
+  document.documentElement.style.setProperty('--fs-base', _fsSize + 'px');
 }
 
 function applyLang() {
@@ -1674,19 +1714,43 @@ async function removeAnnounce(id) {
 
 function renderAnnounceList() {
   var el = document.getElementById('announceList');
+  if (!el) return;
   if (!announcements.length) { el.innerHTML = '<p style="font-size:.8rem;color:var(--soft)">No announcements.</p>'; return; }
   el.innerHTML = announcements.map(function(a) {
-    return '<div class="announce-item"><span>' + a.text + '</span>' +
-      '<button style="background:none;border:none;cursor:pointer;color:var(--gold);font-size:.9rem;flex-shrink:0" onclick="removeAnnounce(' + a.id + ')">✕</button></div>';
+    return '<div class="announce-item-admin">' +
+      '<div style="flex:1"><span style="font-size:.68rem;font-weight:800;text-transform:uppercase;color:#8a6200;margin-right:.5rem">📢</span>' +
+      '<span>' + escHtml(a.text) + '</span></div>' +
+      '<button style="background:none;border:none;cursor:pointer;color:var(--danger);font-size:.9rem;flex-shrink:0;padding:.1rem .3rem" onclick="removeAnnounce(' + a.id + ')">🗑</button></div>';
   }).join('');
 }
 
+// Session-dismissed announcement ids (no localStorage — comes back on reload)
+var dismissedAnnounces = new Set();
+
 function showAnnounceBanner() {
-  if (!announcements.length) return;
-  document.getElementById('announceText').textContent = announcements[0].text;
-  document.getElementById('announceBanner').classList.remove('hidden');
+  var sec = document.getElementById('announceSection');
+  if (!sec) return;
+  var visible = announcements.filter(function(a) { return !dismissedAnnounces.has(a.id); });
+  if (!visible.length) { sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  sec.innerHTML = visible.map(function(a) {
+    return '<div class="announce-card">' +
+      '<div class="announce-icon">📢</div>' +
+      '<div class="announce-body">' +
+        '<div class="announce-label">Announcement</div>' +
+        '<div class="announce-text-content">' + escHtml(a.text) + '</div>' +
+      '</div>' +
+      '<button class="announce-dismiss" onclick="dismissAnnounce(' + a.id + ')" title="Dismiss">✕</button>' +
+    '</div>';
+  }).join('');
 }
-function dismissAnnounce() { document.getElementById('announceBanner').classList.add('hidden'); }
+function dismissAnnounce(id) {
+  if (id !== undefined) dismissedAnnounces.add(id);
+  showAnnounceBanner();
+}
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
 // ═══════════════════════════════════════════════════════
 // TOAST
