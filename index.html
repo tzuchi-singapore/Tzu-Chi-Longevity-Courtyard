@@ -403,9 +403,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);min-he
 .admin-collapse-body{display:none;margin-top:.9rem}
 .admin-collapsible.open .admin-collapse-body{display:block}
 
+/* ─── HIDDEN UTILITY ─────────────────────────────────── */
+.hidden{display:none !important}
+
 /* ─── MODAL OVERLAYS ──────────────────────────────────── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(6,21,41,.72);z-index:2000;align-items:center;justify-content:center;padding:1.2rem}
-.modal-overlay:not(.hidden){display:flex}
+.modal-overlay{position:fixed;inset:0;background:rgba(6,21,41,.72);z-index:2000;display:flex;align-items:center;justify-content:center;padding:1.2rem}
+.modal-overlay.hidden{display:none !important}
 .modal{background:var(--white);border-radius:var(--radius);padding:1.6rem 1.4rem;width:100%;max-width:380px;box-shadow:0 12px 40px rgba(6,21,41,.35)}
 .modal h2{font-size:1.15rem;font-weight:800;color:var(--ink);margin-bottom:.6rem}
 .modal p{font-size:.95rem;color:var(--mid);margin-bottom:1rem}
@@ -1032,10 +1035,11 @@ function setLang(l) {
 }
 
 // Font size adjustment — clamps between 13px and 22px
-var _fsSize = 15;
+var _fsSize = 16;
 function adjustFont(delta) {
   _fsSize = Math.min(22, Math.max(13, _fsSize + delta));
   document.documentElement.style.setProperty('--fs-base', _fsSize + 'px');
+  document.documentElement.style.fontSize = _fsSize + 'px';
 }
 
 function applyLang() {
